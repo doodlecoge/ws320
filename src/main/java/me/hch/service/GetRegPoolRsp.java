@@ -63,7 +63,7 @@ public class GetRegPoolRsp {
      * 
      * @return
      *     possible object is
-     *     {@link Result }
+     *     {@link me.hch.service.Result }
      *     
      */
     public Result getResult() {
@@ -75,7 +75,7 @@ public class GetRegPoolRsp {
      * 
      * @param value
      *     allowed object is
-     *     {@link Result }
+     *     {@link me.hch.service.Result }
      *     
      */
     public void setResult(Result value) {

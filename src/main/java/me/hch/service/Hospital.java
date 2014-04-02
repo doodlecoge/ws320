@@ -459,7 +459,7 @@ public class Hospital {
          * 
          * <p>
          * Objects of the following type(s) are allowed in the list
-         * {@link Schedual }
+         * {@link me.hch.service.Schedual }
          * 
          * 
          */
@@ -884,7 +884,7 @@ public class Hospital {
              * 
              * <p>
              * Objects of the following type(s) are allowed in the list
-             * {@link Schedual }
+             * {@link me.hch.service.Schedual }
              * 
              * 
              */
