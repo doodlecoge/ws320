@@ -111,7 +111,7 @@ public class GetRegInfoRsp {
      * 
      * @return
      *     possible object is
-     *     {@link me.hch.service.Result }
+     *     {@link Result }
      *     
      */
     public Result getResult() {
@@ -123,7 +123,7 @@ public class GetRegInfoRsp {
      * 
      * @param value
      *     allowed object is
-     *     {@link me.hch.service.Result }
+     *     {@link Result }
      *     
      */
     public void setResult(Result value) {
@@ -434,7 +434,7 @@ public class GetRegInfoRsp {
          * 
          * <p>
          * Objects of the following type(s) are allowed in the list
-         * {@link me.hch.service.PayAccount }
+         * {@link PayAccount }
          * 
          * 
          */
@@ -853,7 +853,7 @@ public class GetRegInfoRsp {
          * 
          * @return
          *     possible object is
-         *     {@link me.hch.service.RegFrom }
+         *     {@link RegFrom }
          *     
          */
         public RegFrom getRegFrom() {
@@ -865,7 +865,7 @@ public class GetRegInfoRsp {
          * 
          * @param value
          *     allowed object is
-         *     {@link me.hch.service.RegFrom }
+         *     {@link RegFrom }
          *     
          */
         public void setRegFrom(RegFrom value) {

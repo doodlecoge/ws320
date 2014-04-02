@@ -52,7 +52,7 @@ public class RegisterRsp {
      * 
      * @return
      *     possible object is
-     *     {@link me.hch.service.Result }
+     *     {@link Result }
      *     
      */
     public Result getResult() {
@@ -64,7 +64,7 @@ public class RegisterRsp {
      * 
      * @param value
      *     allowed object is
-     *     {@link me.hch.service.Result }
+     *     {@link Result }
      *     
      */
     public void setResult(Result value) {

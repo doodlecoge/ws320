@@ -49,7 +49,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.service.RegisterReq }
+     * Create an instance of {@link RegisterReq }
      * 
      */
     public RegisterReq createRegisterReq() {
@@ -129,7 +129,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.service.RegisterReq.RegInfo }
+     * Create an instance of {@link RegisterReq.RegInfo }
      * 
      */
     public RegisterReq.RegInfo createRegisterReqRegInfo() {
@@ -145,7 +145,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.service.RegisterReq.PatientInfo }
+     * Create an instance of {@link RegisterReq.PatientInfo }
      * 
      */
     public RegisterReq.PatientInfo createRegisterReqPatientInfo() {
@@ -153,7 +153,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.service.RegFrom }
+     * Create an instance of {@link RegFrom }
      * 
      */
     public RegFrom createRegFrom() {
@@ -185,7 +185,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.service.PayAccount }
+     * Create an instance of {@link PayAccount }
      * 
      */
     public PayAccount createPayAccount() {
@@ -201,7 +201,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.service.Result }
+     * Create an instance of {@link Result }
      * 
      */
     public Result createResult() {
@@ -249,7 +249,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.service.Schedual }
+     * Create an instance of {@link Schedual }
      * 
      */
     public Schedual createSchedual() {
@@ -265,7 +265,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.service.RegisterRsp }
+     * Create an instance of {@link RegisterRsp }
      * 
      */
     public RegisterRsp createRegisterRsp() {
@@ -297,7 +297,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.service.RegisterReq.RegInfo.RegOperType }
+     * Create an instance of {@link RegisterReq.RegInfo.RegOperType }
      * 
      */
     public RegisterReq.RegInfo.RegOperType createRegisterReqRegInfoRegOperType() {

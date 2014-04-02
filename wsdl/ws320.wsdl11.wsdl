@@ -8,7 +8,7 @@
              xmlns:xsd="http://www.w3.org/2001/XMLSchema"
              xmlns="http://schemas.xmlsoap.org/wsdl/"
              targetNamespace="http://service.hch.me/"
-             name="HelloServiceImplService">
+             name="Ws320ImplService">
     <types>
         <xsd:schema
                 targetNamespace="http://service.hch.me/"
@@ -854,12 +854,6 @@
         <part name="parameters" element="tns:GetRegPoolRsp"/>
     </message>
 
-    <!--<message name="hello">-->
-        <!--<part name="parameters" element="tns:hello"/>-->
-    <!--</message>-->
-    <!--<message name="helloResponse">-->
-        <!--<part name="parameters" element="tns:helloResponse"/>-->
-    <!--</message>-->
 
     <portType name="Ws320">
         <operation name="GetHospInfo">
@@ -911,8 +905,8 @@
         </operation>
 
     </binding>
-    <service name="HelloServiceImplService">
-        <port name="HelloServiceImplPort" binding="tns:Ws320ImplPortBinding">
+    <service name="Ws320ImplService">
+        <port name="Ws320ImplPort" binding="tns:Ws320ImplPortBinding">
             <soap:address location="http://localhost:8080/hello"/>
         </port>
     </service>
