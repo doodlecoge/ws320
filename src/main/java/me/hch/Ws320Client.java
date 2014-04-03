@@ -15,7 +15,14 @@ import java.net.URL;
  */
 public class Ws320Client {
     public static void main(String[] args) throws MalformedURLException {
-        String wsdlLoc = "http://127.0.0.1:8088/aaa?wsdl";
+        /*
+        use this url if deployed in tomcat,
+        otherwise use the next commented out url
+        if published in Ws320Publisher class.
+        */
+        String wsdlLoc = "http://localhost:8080/ws320?wsdl";
+        // String wsdlLoc = "http://127.0.0.1:8088/aaa?wsdl";
+
         String ns = "http://service.hch.me/";
         String serviceName = "CalculatorServiceImpl";
 
