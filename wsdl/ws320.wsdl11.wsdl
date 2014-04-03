@@ -35,7 +35,7 @@
                                                 <xsd:enumeration value="GetHospBasic"/>
                                                 <xsd:enumeration value="GetHospDepartBasic"/>
                                                 <xsd:enumeration value="GetHospDocBasic"/>
-                                                <xsd:enumeration value="GetSchedualList"/>
+                                                <xsd:enumeration value="GetScheduleList"/>
                                             </xsd:restriction>
                                         </xsd:simpleType>
                                     </xsd:element>
@@ -282,7 +282,7 @@
                                             </xsd:sequence>
                                         </xsd:complexType>
                                     </xsd:element>
-                                    <xsd:element ref="tns:Schedual" minOccurs="0" maxOccurs="unbounded"/>
+                                    <xsd:element ref="tns:Schedule" minOccurs="0" maxOccurs="unbounded"/>
                                     <xsd:element name="Doctor" minOccurs="0" maxOccurs="unbounded">
                                         <xsd:complexType>
                                             <xsd:sequence>
@@ -344,7 +344,7 @@
                                                         </xsd:sequence>
                                                     </xsd:complexType>
                                                 </xsd:element>
-                                                <xsd:element ref="tns:Schedual" minOccurs="0" maxOccurs="unbounded"/>
+                                                <xsd:element ref="tns:Schedule" minOccurs="0" maxOccurs="unbounded"/>
                                             </xsd:sequence>
                                         </xsd:complexType>
                                     </xsd:element>
@@ -781,7 +781,7 @@
                     </xsd:sequence>
                 </xsd:complexType>
             </xsd:element>
-            <xsd:element name="Schedual">
+            <xsd:element name="Schedule">
                 <xsd:complexType>
                     <xsd:sequence>
                         <xsd:element ref="tns:WorkDate"/>
