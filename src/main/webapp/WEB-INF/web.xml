@@ -8,7 +8,7 @@
 
     <listener>
         <listener-class>
-            me.hch.Ws230Listener
+            me.hch.Ws320Listener
         </listener-class>
     </listener>
 

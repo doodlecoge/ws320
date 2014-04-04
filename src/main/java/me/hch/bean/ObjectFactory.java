@@ -1,5 +1,5 @@
 
-package me.hch.service;
+package me.hch.bean;
 
 import java.math.BigDecimal;
 import javax.xml.bind.JAXBElement;
@@ -49,7 +49,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.service.RegisterReq }
+     * Create an instance of {@link me.hch.bean.RegisterReq }
      * 
      */
     public RegisterReq createRegisterReq() {
@@ -57,7 +57,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.service.GetRegInfoReq }
+     * Create an instance of {@link me.hch.bean.GetRegInfoReq }
      * 
      */
     public GetRegInfoReq createGetRegInfoReq() {
@@ -65,7 +65,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.service.Hospital }
+     * Create an instance of {@link me.hch.bean.Hospital }
      * 
      */
     public Hospital createHospital() {
@@ -73,7 +73,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.service.GetHospInfoReq }
+     * Create an instance of {@link me.hch.bean.GetHospInfoReq }
      * 
      */
     public GetHospInfoReq createGetHospInfoReq() {
@@ -81,7 +81,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.service.GetRegPoolRsp }
+     * Create an instance of {@link me.hch.bean.GetRegPoolRsp }
      * 
      */
     public GetRegPoolRsp createGetRegPoolRsp() {
@@ -89,7 +89,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.service.GetRegInfoRsp }
+     * Create an instance of {@link me.hch.bean.GetRegInfoRsp }
      * 
      */
     public GetRegInfoRsp createGetRegInfoRsp() {
@@ -97,7 +97,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.service.GetRegPoolReq }
+     * Create an instance of {@link me.hch.bean.GetRegPoolReq }
      * 
      */
     public GetRegPoolReq createGetRegPoolReq() {
@@ -105,7 +105,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.service.Hospital.Depart }
+     * Create an instance of {@link me.hch.bean.Hospital.Depart }
      * 
      */
     public Hospital.Depart createHospitalDepart() {
@@ -113,7 +113,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.service.Hospital.Depart.Doctor }
+     * Create an instance of {@link me.hch.bean.Hospital.Depart.Doctor }
      * 
      */
     public Hospital.Depart.Doctor createHospitalDepartDoctor() {
@@ -121,7 +121,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.service.GetRegInfoReq.PatientIdentify }
+     * Create an instance of {@link me.hch.bean.GetRegInfoReq.PatientIdentify }
      * 
      */
     public GetRegInfoReq.PatientIdentify createGetRegInfoReqPatientIdentify() {
@@ -129,7 +129,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.service.RegisterReq.RegInfo }
+     * Create an instance of {@link me.hch.bean.RegisterReq.RegInfo }
      * 
      */
     public RegisterReq.RegInfo createRegisterReqRegInfo() {
@@ -137,7 +137,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.service.AuthInfo }
+     * Create an instance of {@link me.hch.bean.AuthInfo }
      * 
      */
     public AuthInfo createAuthInfo() {
@@ -145,7 +145,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.service.RegisterReq.PatientInfo }
+     * Create an instance of {@link me.hch.bean.RegisterReq.PatientInfo }
      * 
      */
     public RegisterReq.PatientInfo createRegisterReqPatientInfo() {
@@ -153,7 +153,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.service.RegFrom }
+     * Create an instance of {@link me.hch.bean.RegFrom }
      * 
      */
     public RegFrom createRegFrom() {
@@ -161,7 +161,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.service.GetRegInfoReq.Filter }
+     * Create an instance of {@link me.hch.bean.GetRegInfoReq.Filter }
      * 
      */
     public GetRegInfoReq.Filter createGetRegInfoReqFilter() {
@@ -169,7 +169,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.service.NotifyHospInfoReq }
+     * Create an instance of {@link me.hch.bean.NotifyHospInfoReq }
      * 
      */
     public NotifyHospInfoReq createNotifyHospInfoReq() {
@@ -177,7 +177,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.service.Hospital.HospBasic }
+     * Create an instance of {@link me.hch.bean.Hospital.HospBasic }
      * 
      */
     public Hospital.HospBasic createHospitalHospBasic() {
@@ -185,7 +185,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.service.PayAccount }
+     * Create an instance of {@link me.hch.bean.PayAccount }
      * 
      */
     public PayAccount createPayAccount() {
@@ -193,7 +193,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.service.GetHospInfoReq.Filter }
+     * Create an instance of {@link me.hch.bean.GetHospInfoReq.Filter }
      * 
      */
     public GetHospInfoReq.Filter createGetHospInfoReqFilter() {
@@ -201,7 +201,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.service.Result }
+     * Create an instance of {@link me.hch.bean.Result }
      * 
      */
     public Result createResult() {
@@ -209,7 +209,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.service.GetRegPoolRsp.PoolInfo }
+     * Create an instance of {@link me.hch.bean.GetRegPoolRsp.PoolInfo }
      * 
      */
     public GetRegPoolRsp.PoolInfo createGetRegPoolRspPoolInfo() {
@@ -217,7 +217,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.service.GetHospInfoRsp }
+     * Create an instance of {@link me.hch.bean.GetHospInfoRsp }
      * 
      */
     public GetHospInfoRsp createGetHospInfoRsp() {
@@ -225,7 +225,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.service.NotifyHospInfoRsp }
+     * Create an instance of {@link me.hch.bean.NotifyHospInfoRsp }
      * 
      */
     public NotifyHospInfoRsp createNotifyHospInfoRsp() {
@@ -233,7 +233,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.service.GetRegInfoRsp.Patient }
+     * Create an instance of {@link me.hch.bean.GetRegInfoRsp.Patient }
      * 
      */
     public GetRegInfoRsp.Patient createGetRegInfoRspPatient() {
@@ -241,7 +241,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.service.GetRegInfoRsp.RegInfo }
+     * Create an instance of {@link me.hch.bean.GetRegInfoRsp.RegInfo }
      * 
      */
     public GetRegInfoRsp.RegInfo createGetRegInfoRspRegInfo() {
@@ -249,7 +249,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.service.Schedual }
+     * Create an instance of {@link me.hch.bean.Schedual }
      * 
      */
     public Schedual createSchedual() {
@@ -257,7 +257,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.service.GetRegPoolReq.Filter }
+     * Create an instance of {@link me.hch.bean.GetRegPoolReq.Filter }
      * 
      */
     public GetRegPoolReq.Filter createGetRegPoolReqFilter() {
@@ -265,7 +265,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.service.RegisterRsp }
+     * Create an instance of {@link me.hch.bean.RegisterRsp }
      * 
      */
     public RegisterRsp createRegisterRsp() {
@@ -273,7 +273,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.service.Hospital.Depart.DepartBasic }
+     * Create an instance of {@link me.hch.bean.Hospital.Depart.DepartBasic }
      * 
      */
     public Hospital.Depart.DepartBasic createHospitalDepartDepartBasic() {
@@ -281,7 +281,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.service.Hospital.Depart.Doctor.DocBasic }
+     * Create an instance of {@link me.hch.bean.Hospital.Depart.Doctor.DocBasic }
      * 
      */
     public Hospital.Depart.Doctor.DocBasic createHospitalDepartDoctorDocBasic() {
@@ -289,7 +289,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.service.GetRegInfoReq.PatientIdentify.Other }
+     * Create an instance of {@link me.hch.bean.GetRegInfoReq.PatientIdentify.Other }
      * 
      */
     public GetRegInfoReq.PatientIdentify.Other createGetRegInfoReqPatientIdentifyOther() {
@@ -297,7 +297,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.service.RegisterReq.RegInfo.RegOperType }
+     * Create an instance of {@link me.hch.bean.RegisterReq.RegInfo.RegOperType }
      * 
      */
     public RegisterReq.RegInfo.RegOperType createRegisterReqRegInfoRegOperType() {

@@ -1,5 +1,5 @@
 
-package me.hch.service;
+package me.hch.bean;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -89,7 +89,7 @@ public class GetRegInfoReq {
      * 
      * @return
      *     possible object is
-     *     {@link me.hch.service.AuthInfo }
+     *     {@link me.hch.bean.AuthInfo }
      *     
      */
     public AuthInfo getAuthInfo() {
@@ -101,7 +101,7 @@ public class GetRegInfoReq {
      * 
      * @param value
      *     allowed object is
-     *     {@link me.hch.service.AuthInfo }
+     *     {@link me.hch.bean.AuthInfo }
      *     
      */
     public void setAuthInfo(AuthInfo value) {
@@ -113,7 +113,7 @@ public class GetRegInfoReq {
      * 
      * @return
      *     possible object is
-     *     {@link me.hch.service.GetRegInfoReq.PatientIdentify }
+     *     {@link me.hch.bean.GetRegInfoReq.PatientIdentify }
      *     
      */
     public PatientIdentify getPatientIdentify() {
@@ -125,7 +125,7 @@ public class GetRegInfoReq {
      * 
      * @param value
      *     allowed object is
-     *     {@link me.hch.service.GetRegInfoReq.PatientIdentify }
+     *     {@link me.hch.bean.GetRegInfoReq.PatientIdentify }
      *     
      */
     public void setPatientIdentify(PatientIdentify value) {
@@ -137,7 +137,7 @@ public class GetRegInfoReq {
      * 
      * @return
      *     possible object is
-     *     {@link me.hch.service.GetRegInfoReq.Filter }
+     *     {@link me.hch.bean.GetRegInfoReq.Filter }
      *     
      */
     public Filter getFilter() {
@@ -149,7 +149,7 @@ public class GetRegInfoReq {
      * 
      * @param value
      *     allowed object is
-     *     {@link me.hch.service.GetRegInfoReq.Filter }
+     *     {@link me.hch.bean.GetRegInfoReq.Filter }
      *     
      */
     public void setFilter(Filter value) {
@@ -426,7 +426,7 @@ public class GetRegInfoReq {
          * 
          * @return
          *     possible object is
-         *     {@link me.hch.service.GetRegInfoReq.PatientIdentify.Other }
+         *     {@link me.hch.bean.GetRegInfoReq.PatientIdentify.Other }
          *     
          */
         public Other getOther() {
@@ -438,7 +438,7 @@ public class GetRegInfoReq {
          * 
          * @param value
          *     allowed object is
-         *     {@link me.hch.service.GetRegInfoReq.PatientIdentify.Other }
+         *     {@link me.hch.bean.GetRegInfoReq.PatientIdentify.Other }
          *     
          */
         public void setOther(Other value) {

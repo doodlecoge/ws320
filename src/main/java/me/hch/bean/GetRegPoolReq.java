@@ -1,5 +1,5 @@
 
-package me.hch.service;
+package me.hch.bean;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -62,7 +62,7 @@ public class GetRegPoolReq {
      * 
      * @return
      *     possible object is
-     *     {@link me.hch.service.AuthInfo }
+     *     {@link me.hch.bean.AuthInfo }
      *     
      */
     public AuthInfo getAuthInfo() {
@@ -74,7 +74,7 @@ public class GetRegPoolReq {
      * 
      * @param value
      *     allowed object is
-     *     {@link me.hch.service.AuthInfo }
+     *     {@link me.hch.bean.AuthInfo }
      *     
      */
     public void setAuthInfo(AuthInfo value) {
@@ -86,7 +86,7 @@ public class GetRegPoolReq {
      * 
      * @return
      *     possible object is
-     *     {@link me.hch.service.GetRegPoolReq.Filter }
+     *     {@link me.hch.bean.GetRegPoolReq.Filter }
      *     
      */
     public Filter getFilter() {
@@ -98,7 +98,7 @@ public class GetRegPoolReq {
      * 
      * @param value
      *     allowed object is
-     *     {@link me.hch.service.GetRegPoolReq.Filter }
+     *     {@link me.hch.bean.GetRegPoolReq.Filter }
      *     
      */
     public void setFilter(Filter value) {

@@ -1,5 +1,5 @@
 
-package me.hch.service;
+package me.hch.bean;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -148,7 +148,7 @@ public class RegisterReq {
      * 
      * @return
      *     possible object is
-     *     {@link me.hch.service.AuthInfo }
+     *     {@link me.hch.bean.AuthInfo }
      *     
      */
     public AuthInfo getAuthInfo() {
@@ -160,7 +160,7 @@ public class RegisterReq {
      * 
      * @param value
      *     allowed object is
-     *     {@link me.hch.service.AuthInfo }
+     *     {@link me.hch.bean.AuthInfo }
      *     
      */
     public void setAuthInfo(AuthInfo value) {
@@ -220,7 +220,7 @@ public class RegisterReq {
      * 
      * @return
      *     possible object is
-     *     {@link me.hch.service.RegisterReq.PatientInfo }
+     *     {@link me.hch.bean.RegisterReq.PatientInfo }
      *     
      */
     public PatientInfo getPatientInfo() {
@@ -232,7 +232,7 @@ public class RegisterReq {
      * 
      * @param value
      *     allowed object is
-     *     {@link me.hch.service.RegisterReq.PatientInfo }
+     *     {@link me.hch.bean.RegisterReq.PatientInfo }
      *     
      */
     public void setPatientInfo(PatientInfo value) {
@@ -244,7 +244,7 @@ public class RegisterReq {
      * 
      * @return
      *     possible object is
-     *     {@link me.hch.service.RegisterReq.RegInfo }
+     *     {@link me.hch.bean.RegisterReq.RegInfo }
      *     
      */
     public RegInfo getRegInfo() {
@@ -256,7 +256,7 @@ public class RegisterReq {
      * 
      * @param value
      *     allowed object is
-     *     {@link me.hch.service.RegisterReq.RegInfo }
+     *     {@link me.hch.bean.RegisterReq.RegInfo }
      *     
      */
     public void setRegInfo(RegInfo value) {
@@ -268,7 +268,7 @@ public class RegisterReq {
      * 
      * @return
      *     possible object is
-     *     {@link me.hch.service.RegFrom }
+     *     {@link me.hch.bean.RegFrom }
      *     
      */
     public RegFrom getRegFrom() {
@@ -280,7 +280,7 @@ public class RegisterReq {
      * 
      * @param value
      *     allowed object is
-     *     {@link me.hch.service.RegFrom }
+     *     {@link me.hch.bean.RegFrom }
      *     
      */
     public void setRegFrom(RegFrom value) {
@@ -505,7 +505,7 @@ public class RegisterReq {
          * 
          * @return
          *     possible object is
-         *     {@link me.hch.service.PayAccount }
+         *     {@link me.hch.bean.PayAccount }
          *     
          */
         public PayAccount getPayAccount() {
@@ -517,7 +517,7 @@ public class RegisterReq {
          * 
          * @param value
          *     allowed object is
-         *     {@link me.hch.service.PayAccount }
+         *     {@link me.hch.bean.PayAccount }
          *     
          */
         public void setPayAccount(PayAccount value) {
@@ -814,7 +814,7 @@ public class RegisterReq {
          * 
          * @return
          *     possible object is
-         *     {@link me.hch.service.RegisterReq.RegInfo.RegOperType }
+         *     {@link me.hch.bean.RegisterReq.RegInfo.RegOperType }
          *     
          */
         public RegOperType getRegOperType() {
@@ -826,7 +826,7 @@ public class RegisterReq {
          * 
          * @param value
          *     allowed object is
-         *     {@link me.hch.service.RegisterReq.RegInfo.RegOperType }
+         *     {@link me.hch.bean.RegisterReq.RegInfo.RegOperType }
          *     
          */
         public void setRegOperType(RegOperType value) {

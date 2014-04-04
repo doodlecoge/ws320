@@ -1,5 +1,5 @@
 
-package me.hch.service;
+package me.hch.bean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +48,7 @@ public class GetHospInfoRsp {
      * 
      * @return
      *     possible object is
-     *     {@link me.hch.service.Result }
+     *     {@link me.hch.bean.Result }
      *     
      */
     public Result getResult() {
@@ -60,7 +60,7 @@ public class GetHospInfoRsp {
      * 
      * @param value
      *     allowed object is
-     *     {@link me.hch.service.Result }
+     *     {@link me.hch.bean.Result }
      *     
      */
     public void setResult(Result value) {
@@ -85,7 +85,7 @@ public class GetHospInfoRsp {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link me.hch.service.Hospital }
+     * {@link me.hch.bean.Hospital }
      * 
      * 
      */

@@ -1,5 +1,5 @@
 
-package me.hch.service;
+package me.hch.bean;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -42,7 +42,7 @@ public class NotifyHospInfoReq {
      * 
      * @return
      *     possible object is
-     *     {@link me.hch.service.Hospital }
+     *     {@link me.hch.bean.Hospital }
      *     
      */
     public Hospital getHospital() {
@@ -54,7 +54,7 @@ public class NotifyHospInfoReq {
      * 
      * @param value
      *     allowed object is
-     *     {@link me.hch.service.Hospital }
+     *     {@link me.hch.bean.Hospital }
      *     
      */
     public void setHospital(Hospital value) {

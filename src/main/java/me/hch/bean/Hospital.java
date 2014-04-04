@@ -1,5 +1,5 @@
 
-package me.hch.service;
+package me.hch.bean;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -219,7 +219,7 @@ public class Hospital {
      * 
      * @return
      *     possible object is
-     *     {@link me.hch.service.Hospital.HospBasic }
+     *     {@link me.hch.bean.Hospital.HospBasic }
      *     
      */
     public HospBasic getHospBasic() {
@@ -231,7 +231,7 @@ public class Hospital {
      * 
      * @param value
      *     allowed object is
-     *     {@link me.hch.service.Hospital.HospBasic }
+     *     {@link me.hch.bean.Hospital.HospBasic }
      *     
      */
     public void setHospBasic(HospBasic value) {
@@ -256,7 +256,7 @@ public class Hospital {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link me.hch.service.Hospital.Depart }
+     * {@link me.hch.bean.Hospital.Depart }
      * 
      * 
      */
@@ -422,7 +422,7 @@ public class Hospital {
          * 
          * @return
          *     possible object is
-         *     {@link me.hch.service.Hospital.Depart.DepartBasic }
+         *     {@link me.hch.bean.Hospital.Depart.DepartBasic }
          *     
          */
         public DepartBasic getDepartBasic() {
@@ -434,7 +434,7 @@ public class Hospital {
          * 
          * @param value
          *     allowed object is
-         *     {@link me.hch.service.Hospital.Depart.DepartBasic }
+         *     {@link me.hch.bean.Hospital.Depart.DepartBasic }
          *     
          */
         public void setDepartBasic(DepartBasic value) {
@@ -459,7 +459,7 @@ public class Hospital {
          * 
          * <p>
          * Objects of the following type(s) are allowed in the list
-         * {@link me.hch.service.Schedual }
+         * {@link me.hch.bean.Schedual }
          * 
          * 
          */
@@ -488,7 +488,7 @@ public class Hospital {
          * 
          * <p>
          * Objects of the following type(s) are allowed in the list
-         * {@link me.hch.service.Hospital.Depart.Doctor }
+         * {@link me.hch.bean.Hospital.Depart.Doctor }
          * 
          * 
          */
@@ -847,7 +847,7 @@ public class Hospital {
              * 
              * @return
              *     possible object is
-             *     {@link me.hch.service.Hospital.Depart.Doctor.DocBasic }
+             *     {@link me.hch.bean.Hospital.Depart.Doctor.DocBasic }
              *     
              */
             public DocBasic getDocBasic() {
@@ -859,7 +859,7 @@ public class Hospital {
              * 
              * @param value
              *     allowed object is
-             *     {@link me.hch.service.Hospital.Depart.Doctor.DocBasic }
+             *     {@link me.hch.bean.Hospital.Depart.Doctor.DocBasic }
              *     
              */
             public void setDocBasic(DocBasic value) {
@@ -884,7 +884,7 @@ public class Hospital {
              * 
              * <p>
              * Objects of the following type(s) are allowed in the list
-             * {@link me.hch.service.Schedual }
+             * {@link me.hch.bean.Schedual }
              * 
              * 
              */

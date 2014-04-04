@@ -4,6 +4,6 @@
         version="2.0">
     <endpoint
             name="ws320"
-            implementation="me.hch.service_impl.Ws320Impl"
+            implementation="me.hch.service.Ws320Impl"
             url-pattern="/ws320"/>
 </endpoints>

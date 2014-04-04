@@ -1,6 +1,6 @@
 package me.hch;
 
-import me.hch.service_impl.Ws320Impl;
+import me.hch.service.Ws320Impl;
 
 import javax.xml.ws.Endpoint;
 

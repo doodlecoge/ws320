@@ -1,5 +1,5 @@
 
-package me.hch.service;
+package me.hch.bean;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -111,7 +111,7 @@ public class GetRegInfoRsp {
      * 
      * @return
      *     possible object is
-     *     {@link me.hch.service.Result }
+     *     {@link me.hch.bean.Result }
      *     
      */
     public Result getResult() {
@@ -123,7 +123,7 @@ public class GetRegInfoRsp {
      * 
      * @param value
      *     allowed object is
-     *     {@link me.hch.service.Result }
+     *     {@link me.hch.bean.Result }
      *     
      */
     public void setResult(Result value) {
@@ -135,7 +135,7 @@ public class GetRegInfoRsp {
      * 
      * @return
      *     possible object is
-     *     {@link me.hch.service.GetRegInfoRsp.Patient }
+     *     {@link me.hch.bean.GetRegInfoRsp.Patient }
      *     
      */
     public Patient getPatient() {
@@ -147,7 +147,7 @@ public class GetRegInfoRsp {
      * 
      * @param value
      *     allowed object is
-     *     {@link me.hch.service.GetRegInfoRsp.Patient }
+     *     {@link me.hch.bean.GetRegInfoRsp.Patient }
      *     
      */
     public void setPatient(Patient value) {
@@ -172,7 +172,7 @@ public class GetRegInfoRsp {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link me.hch.service.GetRegInfoRsp.RegInfo }
+     * {@link me.hch.bean.GetRegInfoRsp.RegInfo }
      * 
      * 
      */
@@ -434,7 +434,7 @@ public class GetRegInfoRsp {
          * 
          * <p>
          * Objects of the following type(s) are allowed in the list
-         * {@link me.hch.service.PayAccount }
+         * {@link me.hch.bean.PayAccount }
          * 
          * 
          */
@@ -853,7 +853,7 @@ public class GetRegInfoRsp {
          * 
          * @return
          *     possible object is
-         *     {@link me.hch.service.RegFrom }
+         *     {@link me.hch.bean.RegFrom }
          *     
          */
         public RegFrom getRegFrom() {
@@ -865,7 +865,7 @@ public class GetRegInfoRsp {
          * 
          * @param value
          *     allowed object is
-         *     {@link me.hch.service.RegFrom }
+         *     {@link me.hch.bean.RegFrom }
          *     
          */
         public void setRegFrom(RegFrom value) {

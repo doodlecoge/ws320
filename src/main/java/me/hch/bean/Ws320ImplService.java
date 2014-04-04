@@ -1,4 +1,6 @@
-package me.hch.service;
+package me.hch.bean;
+
+import me.hch.service.Ws320;
 
 import java.net.URL;
 import javax.xml.namespace.QName;

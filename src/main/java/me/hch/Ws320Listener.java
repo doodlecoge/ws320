@@ -9,7 +9,7 @@ import javax.servlet.ServletContextListener;
 /**
  * Created by huaiwang on 14-3-28.
  */
-public class Ws230Listener implements ServletContextListener {
+public class Ws320Listener implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent event) {

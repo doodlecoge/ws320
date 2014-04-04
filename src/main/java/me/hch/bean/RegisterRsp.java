@@ -1,5 +1,5 @@
 
-package me.hch.service;
+package me.hch.bean;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -52,7 +52,7 @@ public class RegisterRsp {
      * 
      * @return
      *     possible object is
-     *     {@link me.hch.service.Result }
+     *     {@link me.hch.bean.Result }
      *     
      */
     public Result getResult() {
@@ -64,7 +64,7 @@ public class RegisterRsp {
      * 
      * @param value
      *     allowed object is
-     *     {@link me.hch.service.Result }
+     *     {@link me.hch.bean.Result }
      *     
      */
     public void setResult(Result value) {

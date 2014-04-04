@@ -8,3 +8,18 @@
 
     public class Ws320Impl implements Ws320
 
+
+# 2014-04-04
+complete:
+    1. wsdl 1.1
+    2. interface structures
+    3. code framework
+
+todo:
+    1. global memory
+    2. db interface & design
+    3. hospital webservice client transfer
+    4. config design
+
+fixme:
+    1. ...

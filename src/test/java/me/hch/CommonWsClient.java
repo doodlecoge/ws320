@@ -53,13 +53,13 @@ public class CommonWsClient {
     public static void main(String[] args) throws AxisFault, ClassNotFoundException {
         // TODO Auto-generated method stub
 
-        final String endPointReference = "http://localhost:8080/axis2/services/WS4SZ";
-        final String targetNamespace = "targ......";
+        final String endPointReference = "http://172.25.7.25:8080/axis2/services/WS4SZ";
+        final String targetNamespace = "http://ws.apache.org/axis2";
 
 
         CommonWsClient client = new CommonWsClient(endPointReference);
 
-        String opName = "getDepartWorkInfo";
+        String opName = "getDepartInfo";
         Object[] opArgs = new Object[]{""};
         Class<?>[] opReturnType = new Class[]{String[].class};
 

@@ -1,5 +1,5 @@
 
-package me.hch.service;
+package me.hch.bean;
 
 import java.math.BigInteger;
 import javax.xml.bind.annotation.XmlAccessType;

@@ -1,10 +1,7 @@
 package me.hch;
 
-import me.hch.service.GetHospInfoReq;
-import me.hch.service.GetHospInfoRsp;
+import me.hch.bean.*;
 import me.hch.service.Ws320;
-import me.hch.service.Ws320ImplService;
-import me.hch.service_impl.Ws320Impl;
 
 import javax.xml.namespace.QName;
 import java.net.MalformedURLException;
@@ -33,6 +30,10 @@ public class Ws320Client {
         );
 
         GetHospInfoReq req = new GetHospInfoReq();
+        AuthInfo authInfo = new AuthInfo();
+        authInfo.setPassword("pass123");
+        authInfo.setUserName("ws12320");
+        req.setAuthInfo(authInfo);
 
         Ws320 p = s.getWs320ImplPort();
         GetHospInfoRsp hospInfo = p.getHospInfo(req);

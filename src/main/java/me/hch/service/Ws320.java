@@ -1,5 +1,7 @@
 package me.hch.service;
 
+import me.hch.bean.*;
+
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebResult;

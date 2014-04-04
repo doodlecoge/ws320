@@ -1,5 +1,5 @@
 
-package me.hch.service;
+package me.hch.bean;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -72,7 +72,7 @@ public class GetHospInfoReq {
      * 
      * @return
      *     possible object is
-     *     {@link me.hch.service.AuthInfo }
+     *     {@link me.hch.bean.AuthInfo }
      *     
      */
     public AuthInfo getAuthInfo() {
@@ -84,7 +84,7 @@ public class GetHospInfoReq {
      * 
      * @param value
      *     allowed object is
-     *     {@link me.hch.service.AuthInfo }
+     *     {@link me.hch.bean.AuthInfo }
      *     
      */
     public void setAuthInfo(AuthInfo value) {
@@ -96,7 +96,7 @@ public class GetHospInfoReq {
      * 
      * @return
      *     possible object is
-     *     {@link me.hch.service.GetHospInfoReq.Filter }
+     *     {@link me.hch.bean.GetHospInfoReq.Filter }
      *     
      */
     public Filter getFilter() {
@@ -108,7 +108,7 @@ public class GetHospInfoReq {
      * 
      * @param value
      *     allowed object is
-     *     {@link me.hch.service.GetHospInfoReq.Filter }
+     *     {@link me.hch.bean.GetHospInfoReq.Filter }
      *     
      */
     public void setFilter(Filter value) {

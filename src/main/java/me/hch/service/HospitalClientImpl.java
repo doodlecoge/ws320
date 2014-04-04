@@ -1,4 +1,4 @@
-package me.hch.net;
+package me.hch.service;
 
 import me.hch.model.Department;
 import me.hch.model.Doctor;
@@ -9,15 +9,15 @@ import java.util.List;
 /**
  * Created by huaiwang on 14-4-3.
  */
-public class HospitalClient {
+public class HospitalClientImpl {
     private final String hospitalCode;
 
-    private HospitalClient(String hospitalCode) {
+    private HospitalClientImpl(String hospitalCode) {
         this.hospitalCode = hospitalCode;
     }
 
-    public static HospitalClient getInstance(String hospitalCode) {
-        return new HospitalClient(hospitalCode);
+    public static HospitalClientImpl getInstance(String hospitalCode) {
+        return new HospitalClientImpl(hospitalCode);
     }
 
     /**

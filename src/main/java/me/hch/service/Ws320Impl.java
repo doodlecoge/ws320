@@ -1,7 +1,7 @@
-package me.hch.service_impl;
+package me.hch.service;
 
-import me.hch.service.*;
-import me.hch.service.Hospital;
+import me.hch.bean.*;
+import me.hch.bean.Hospital;
 
 import javax.annotation.Resource;
 import javax.jws.WebService;
@@ -35,7 +35,13 @@ public class Ws320Impl implements Ws320 {
     }
 
     @Override
-    public GetHospInfoRsp getHospInfo(GetHospInfoReq parameters) {
+    public GetHospInfoRsp getHospInfo(GetHospInfoReq req) {
+        String userName = req.getAuthInfo().getUserName();
+        String password = req.getAuthInfo().getPassword();
+
+        System.out.println(userName + ", " + password);
+
+
         Hospital hospital = new Hospital();
         hospital.setHospName("SDFY");
 
