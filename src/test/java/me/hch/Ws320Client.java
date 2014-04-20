@@ -20,7 +20,7 @@ public class Ws320Client {
         String wsdlLoc = "http://localhost:8080/ws320?wsdl";
         // String wsdlLoc = "http://127.0.0.1:8088/aaa?wsdl";
 
-        String ns = "http://service.hch.me/";
+        String ns = "http://service.hch.me";
         String serviceName = "CalculatorServiceImpl";
 
         // do not use no arguments constructor
@@ -34,6 +34,10 @@ public class Ws320Client {
         authInfo.setPassword("pass123");
         authInfo.setUserName("ws12320");
         req.setAuthInfo(authInfo);
+        GetHospInfoReq.Filter filter = new GetHospInfoReq.Filter();
+        filter.setHospName("SDFE");
+        filter.setOperType("aaaa");
+        req.setFilter(filter);
 
         Ws320 p = s.getWs320ImplPort();
         GetHospInfoRsp hospInfo = p.getHospInfo(req);
