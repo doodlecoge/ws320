@@ -35,7 +35,7 @@ public class Ws320Client {
         authInfo.setUserName("ws12320");
         req.setAuthInfo(authInfo);
         GetHospInfoReq.Filter filter = new GetHospInfoReq.Filter();
-        filter.setHospName("SDFE");
+        filter.setHospName("sss");
         filter.setOperType("aaaa");
         req.setFilter(filter);
 

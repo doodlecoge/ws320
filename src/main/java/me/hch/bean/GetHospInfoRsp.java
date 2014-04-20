@@ -20,8 +20,8 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element ref="{http://service.hch.me/}Result"/>
- *         &lt;element ref="{http://service.hch.me/}Hospital" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element ref="{http://service.hch.me}Result"/>
+ *         &lt;element ref="{http://service.hch.me}Hospital" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -48,7 +48,7 @@ public class GetHospInfoRsp {
      * 
      * @return
      *     possible object is
-     *     {@link me.hch.bean.Result }
+     *     {@link Result }
      *     
      */
     public Result getResult() {
@@ -60,7 +60,7 @@ public class GetHospInfoRsp {
      * 
      * @param value
      *     allowed object is
-     *     {@link me.hch.bean.Result }
+     *     {@link Result }
      *     
      */
     public void setResult(Result value) {
@@ -85,7 +85,7 @@ public class GetHospInfoRsp {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link me.hch.bean.Hospital }
+     * {@link Hospital }
      * 
      * 
      */

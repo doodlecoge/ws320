@@ -20,21 +20,21 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element ref="{http://service.hch.me/}AuthInfo"/>
+ *         &lt;element ref="{http://service.hch.me}AuthInfo"/>
  *         &lt;element name="PatientIdentify">
  *           &lt;complexType>
  *             &lt;complexContent>
  *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *                 &lt;choice>
- *                   &lt;element ref="{http://service.hch.me/}SN" minOccurs="0"/>
- *                   &lt;element ref="{http://service.hch.me/}IdCard"/>
+ *                   &lt;element ref="{http://service.hch.me}SN" minOccurs="0"/>
+ *                   &lt;element ref="{http://service.hch.me}IdCard"/>
  *                   &lt;element name="Other" minOccurs="0">
  *                     &lt;complexType>
  *                       &lt;complexContent>
  *                         &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *                           &lt;sequence>
- *                             &lt;element ref="{http://service.hch.me/}Name" minOccurs="0"/>
- *                             &lt;element ref="{http://service.hch.me/}Phone" minOccurs="0"/>
+ *                             &lt;element ref="{http://service.hch.me}Name" minOccurs="0"/>
+ *                             &lt;element ref="{http://service.hch.me}Phone" minOccurs="0"/>
  *                           &lt;/sequence>
  *                         &lt;/restriction>
  *                       &lt;/complexContent>
@@ -52,9 +52,9 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *                 &lt;sequence>
  *                   &lt;element name="BeginDate" type="{http://www.w3.org/2001/XMLSchema}date"/>
  *                   &lt;element name="EndDate" type="{http://www.w3.org/2001/XMLSchema}date"/>
- *                   &lt;element ref="{http://service.hch.me/}HospName" minOccurs="0"/>
- *                   &lt;element ref="{http://service.hch.me/}DepartName" minOccurs="0"/>
- *                   &lt;element ref="{http://service.hch.me/}DoctorName" minOccurs="0"/>
+ *                   &lt;element ref="{http://service.hch.me}HospName" minOccurs="0"/>
+ *                   &lt;element ref="{http://service.hch.me}DepartName" minOccurs="0"/>
+ *                   &lt;element ref="{http://service.hch.me}DoctorName" minOccurs="0"/>
  *                 &lt;/sequence>
  *               &lt;/restriction>
  *             &lt;/complexContent>
@@ -89,7 +89,7 @@ public class GetRegInfoReq {
      * 
      * @return
      *     possible object is
-     *     {@link me.hch.bean.AuthInfo }
+     *     {@link AuthInfo }
      *     
      */
     public AuthInfo getAuthInfo() {
@@ -101,7 +101,7 @@ public class GetRegInfoReq {
      * 
      * @param value
      *     allowed object is
-     *     {@link me.hch.bean.AuthInfo }
+     *     {@link AuthInfo }
      *     
      */
     public void setAuthInfo(AuthInfo value) {
@@ -169,9 +169,9 @@ public class GetRegInfoReq {
      *       &lt;sequence>
      *         &lt;element name="BeginDate" type="{http://www.w3.org/2001/XMLSchema}date"/>
      *         &lt;element name="EndDate" type="{http://www.w3.org/2001/XMLSchema}date"/>
-     *         &lt;element ref="{http://service.hch.me/}HospName" minOccurs="0"/>
-     *         &lt;element ref="{http://service.hch.me/}DepartName" minOccurs="0"/>
-     *         &lt;element ref="{http://service.hch.me/}DoctorName" minOccurs="0"/>
+     *         &lt;element ref="{http://service.hch.me}HospName" minOccurs="0"/>
+     *         &lt;element ref="{http://service.hch.me}DepartName" minOccurs="0"/>
+     *         &lt;element ref="{http://service.hch.me}DoctorName" minOccurs="0"/>
      *       &lt;/sequence>
      *     &lt;/restriction>
      *   &lt;/complexContent>
@@ -336,15 +336,15 @@ public class GetRegInfoReq {
      *   &lt;complexContent>
      *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
      *       &lt;choice>
-     *         &lt;element ref="{http://service.hch.me/}SN" minOccurs="0"/>
-     *         &lt;element ref="{http://service.hch.me/}IdCard"/>
+     *         &lt;element ref="{http://service.hch.me}SN" minOccurs="0"/>
+     *         &lt;element ref="{http://service.hch.me}IdCard"/>
      *         &lt;element name="Other" minOccurs="0">
      *           &lt;complexType>
      *             &lt;complexContent>
      *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
      *                 &lt;sequence>
-     *                   &lt;element ref="{http://service.hch.me/}Name" minOccurs="0"/>
-     *                   &lt;element ref="{http://service.hch.me/}Phone" minOccurs="0"/>
+     *                   &lt;element ref="{http://service.hch.me}Name" minOccurs="0"/>
+     *                   &lt;element ref="{http://service.hch.me}Phone" minOccurs="0"/>
      *                 &lt;/sequence>
      *               &lt;/restriction>
      *             &lt;/complexContent>
@@ -456,8 +456,8 @@ public class GetRegInfoReq {
          *   &lt;complexContent>
          *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
          *       &lt;sequence>
-         *         &lt;element ref="{http://service.hch.me/}Name" minOccurs="0"/>
-         *         &lt;element ref="{http://service.hch.me/}Phone" minOccurs="0"/>
+         *         &lt;element ref="{http://service.hch.me}Name" minOccurs="0"/>
+         *         &lt;element ref="{http://service.hch.me}Phone" minOccurs="0"/>
          *       &lt;/sequence>
          *     &lt;/restriction>
          *   &lt;/complexContent>

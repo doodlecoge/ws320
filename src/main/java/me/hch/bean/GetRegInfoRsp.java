@@ -23,15 +23,15 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element ref="{http://service.hch.me/}Result"/>
+ *         &lt;element ref="{http://service.hch.me}Result"/>
  *         &lt;element name="Patient" minOccurs="0">
  *           &lt;complexType>
  *             &lt;complexContent>
  *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *                 &lt;sequence>
- *                   &lt;element ref="{http://service.hch.me/}IdCard"/>
- *                   &lt;element ref="{http://service.hch.me/}Name"/>
- *                   &lt;element ref="{http://service.hch.me/}Phone"/>
+ *                   &lt;element ref="{http://service.hch.me}IdCard"/>
+ *                   &lt;element ref="{http://service.hch.me}Name"/>
+ *                   &lt;element ref="{http://service.hch.me}Phone"/>
  *                   &lt;element name="Sex">
  *                     &lt;simpleType>
  *                       &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
@@ -51,7 +51,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *                     &lt;/simpleType>
  *                   &lt;/element>
  *                   &lt;element name="IsBlocked" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
- *                   &lt;element ref="{http://service.hch.me/}PayAccount" maxOccurs="unbounded" minOccurs="0"/>
+ *                   &lt;element ref="{http://service.hch.me}PayAccount" maxOccurs="unbounded" minOccurs="0"/>
  *                 &lt;/sequence>
  *               &lt;/restriction>
  *             &lt;/complexContent>
@@ -62,10 +62,10 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *             &lt;complexContent>
  *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *                 &lt;sequence>
- *                   &lt;element ref="{http://service.hch.me/}HospName"/>
- *                   &lt;element ref="{http://service.hch.me/}SN"/>
- *                   &lt;element ref="{http://service.hch.me/}DepartName"/>
- *                   &lt;element ref="{http://service.hch.me/}DoctorName" minOccurs="0"/>
+ *                   &lt;element ref="{http://service.hch.me}HospName"/>
+ *                   &lt;element ref="{http://service.hch.me}SN"/>
+ *                   &lt;element ref="{http://service.hch.me}DepartName"/>
+ *                   &lt;element ref="{http://service.hch.me}DoctorName" minOccurs="0"/>
  *                   &lt;element name="SelfPay" type="{http://www.w3.org/2001/XMLSchema}decimal"/>
  *                   &lt;element name="InsurePay" type="{http://www.w3.org/2001/XMLSchema}decimal"/>
  *                   &lt;element name="RegDateTime" type="{http://www.w3.org/2001/XMLSchema}dateTime"/>
@@ -76,7 +76,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *                   &lt;element name="UnpayedFee" type="{http://www.w3.org/2001/XMLSchema}decimal" minOccurs="0"/>
  *                   &lt;element name="IsQuit" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *                   &lt;element name="QuitTime" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
- *                   &lt;element ref="{http://service.hch.me/}RegFrom"/>
+ *                   &lt;element ref="{http://service.hch.me}RegFrom"/>
  *                 &lt;/sequence>
  *               &lt;/restriction>
  *             &lt;/complexContent>
@@ -111,7 +111,7 @@ public class GetRegInfoRsp {
      * 
      * @return
      *     possible object is
-     *     {@link me.hch.bean.Result }
+     *     {@link Result }
      *     
      */
     public Result getResult() {
@@ -123,7 +123,7 @@ public class GetRegInfoRsp {
      * 
      * @param value
      *     allowed object is
-     *     {@link me.hch.bean.Result }
+     *     {@link Result }
      *     
      */
     public void setResult(Result value) {
@@ -194,9 +194,9 @@ public class GetRegInfoRsp {
      *   &lt;complexContent>
      *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
      *       &lt;sequence>
-     *         &lt;element ref="{http://service.hch.me/}IdCard"/>
-     *         &lt;element ref="{http://service.hch.me/}Name"/>
-     *         &lt;element ref="{http://service.hch.me/}Phone"/>
+     *         &lt;element ref="{http://service.hch.me}IdCard"/>
+     *         &lt;element ref="{http://service.hch.me}Name"/>
+     *         &lt;element ref="{http://service.hch.me}Phone"/>
      *         &lt;element name="Sex">
      *           &lt;simpleType>
      *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
@@ -216,7 +216,7 @@ public class GetRegInfoRsp {
      *           &lt;/simpleType>
      *         &lt;/element>
      *         &lt;element name="IsBlocked" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
-     *         &lt;element ref="{http://service.hch.me/}PayAccount" maxOccurs="unbounded" minOccurs="0"/>
+     *         &lt;element ref="{http://service.hch.me}PayAccount" maxOccurs="unbounded" minOccurs="0"/>
      *       &lt;/sequence>
      *     &lt;/restriction>
      *   &lt;/complexContent>
@@ -434,7 +434,7 @@ public class GetRegInfoRsp {
          * 
          * <p>
          * Objects of the following type(s) are allowed in the list
-         * {@link me.hch.bean.PayAccount }
+         * {@link PayAccount }
          * 
          * 
          */
@@ -458,10 +458,10 @@ public class GetRegInfoRsp {
      *   &lt;complexContent>
      *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
      *       &lt;sequence>
-     *         &lt;element ref="{http://service.hch.me/}HospName"/>
-     *         &lt;element ref="{http://service.hch.me/}SN"/>
-     *         &lt;element ref="{http://service.hch.me/}DepartName"/>
-     *         &lt;element ref="{http://service.hch.me/}DoctorName" minOccurs="0"/>
+     *         &lt;element ref="{http://service.hch.me}HospName"/>
+     *         &lt;element ref="{http://service.hch.me}SN"/>
+     *         &lt;element ref="{http://service.hch.me}DepartName"/>
+     *         &lt;element ref="{http://service.hch.me}DoctorName" minOccurs="0"/>
      *         &lt;element name="SelfPay" type="{http://www.w3.org/2001/XMLSchema}decimal"/>
      *         &lt;element name="InsurePay" type="{http://www.w3.org/2001/XMLSchema}decimal"/>
      *         &lt;element name="RegDateTime" type="{http://www.w3.org/2001/XMLSchema}dateTime"/>
@@ -472,7 +472,7 @@ public class GetRegInfoRsp {
      *         &lt;element name="UnpayedFee" type="{http://www.w3.org/2001/XMLSchema}decimal" minOccurs="0"/>
      *         &lt;element name="IsQuit" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
      *         &lt;element name="QuitTime" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
-     *         &lt;element ref="{http://service.hch.me/}RegFrom"/>
+     *         &lt;element ref="{http://service.hch.me}RegFrom"/>
      *       &lt;/sequence>
      *     &lt;/restriction>
      *   &lt;/complexContent>
@@ -853,7 +853,7 @@ public class GetRegInfoRsp {
          * 
          * @return
          *     possible object is
-         *     {@link me.hch.bean.RegFrom }
+         *     {@link RegFrom }
          *     
          */
         public RegFrom getRegFrom() {
@@ -865,7 +865,7 @@ public class GetRegInfoRsp {
          * 
          * @param value
          *     allowed object is
-         *     {@link me.hch.bean.RegFrom }
+         *     {@link RegFrom }
          *     
          */
         public void setRegFrom(RegFrom value) {

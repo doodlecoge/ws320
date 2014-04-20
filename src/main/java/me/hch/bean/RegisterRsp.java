@@ -19,8 +19,8 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element ref="{http://service.hch.me/}Result"/>
- *         &lt;element ref="{http://service.hch.me/}SN" minOccurs="0"/>
+ *         &lt;element ref="{http://service.hch.me}Result"/>
+ *         &lt;element ref="{http://service.hch.me}SN" minOccurs="0"/>
  *         &lt;element name="ClinicSerialNo" type="{http://www.w3.org/2001/XMLSchema}unsignedInt" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
@@ -52,7 +52,7 @@ public class RegisterRsp {
      * 
      * @return
      *     possible object is
-     *     {@link me.hch.bean.Result }
+     *     {@link Result }
      *     
      */
     public Result getResult() {
@@ -64,7 +64,7 @@ public class RegisterRsp {
      * 
      * @param value
      *     allowed object is
-     *     {@link me.hch.bean.Result }
+     *     {@link Result }
      *     
      */
     public void setResult(Result value) {

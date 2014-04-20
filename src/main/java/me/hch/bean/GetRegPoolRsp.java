@@ -22,14 +22,14 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element ref="{http://service.hch.me/}Result"/>
+ *         &lt;element ref="{http://service.hch.me}Result"/>
  *         &lt;element name="PoolInfo" maxOccurs="unbounded" minOccurs="0">
  *           &lt;complexType>
  *             &lt;complexContent>
  *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *                 &lt;sequence>
- *                   &lt;element ref="{http://service.hch.me/}StartTime"/>
- *                   &lt;element ref="{http://service.hch.me/}EndTime" minOccurs="0"/>
+ *                   &lt;element ref="{http://service.hch.me}StartTime"/>
+ *                   &lt;element ref="{http://service.hch.me}EndTime" minOccurs="0"/>
  *                   &lt;element name="TotalNum" type="{http://www.w3.org/2001/XMLSchema}unsignedInt" minOccurs="0"/>
  *                   &lt;element name="LeftNum" type="{http://www.w3.org/2001/XMLSchema}unsignedInt"/>
  *                 &lt;/sequence>
@@ -63,7 +63,7 @@ public class GetRegPoolRsp {
      * 
      * @return
      *     possible object is
-     *     {@link me.hch.bean.Result }
+     *     {@link Result }
      *     
      */
     public Result getResult() {
@@ -75,7 +75,7 @@ public class GetRegPoolRsp {
      * 
      * @param value
      *     allowed object is
-     *     {@link me.hch.bean.Result }
+     *     {@link Result }
      *     
      */
     public void setResult(Result value) {
@@ -122,8 +122,8 @@ public class GetRegPoolRsp {
      *   &lt;complexContent>
      *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
      *       &lt;sequence>
-     *         &lt;element ref="{http://service.hch.me/}StartTime"/>
-     *         &lt;element ref="{http://service.hch.me/}EndTime" minOccurs="0"/>
+     *         &lt;element ref="{http://service.hch.me}StartTime"/>
+     *         &lt;element ref="{http://service.hch.me}EndTime" minOccurs="0"/>
      *         &lt;element name="TotalNum" type="{http://www.w3.org/2001/XMLSchema}unsignedInt" minOccurs="0"/>
      *         &lt;element name="LeftNum" type="{http://www.w3.org/2001/XMLSchema}unsignedInt"/>
      *       &lt;/sequence>

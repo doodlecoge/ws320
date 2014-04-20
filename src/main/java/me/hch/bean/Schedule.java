@@ -21,8 +21,8 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element ref="{http://service.hch.me/}WorkDate"/>
- *         &lt;element ref="{http://service.hch.me/}WorkType"/>
+ *         &lt;element ref="{http://service.hch.me}WorkDate"/>
+ *         &lt;element ref="{http://service.hch.me}WorkType"/>
  *         &lt;element name="WorkStatus">
  *           &lt;simpleType>
  *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
@@ -48,8 +48,8 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "workStatus",
     "expertFee"
 })
-@XmlRootElement(name = "Schedual")
-public class Schedual {
+@XmlRootElement(name = "Schedule")
+public class Schedule {
 
     @XmlElement(name = "WorkDate", required = true)
     @XmlSchemaType(name = "date")

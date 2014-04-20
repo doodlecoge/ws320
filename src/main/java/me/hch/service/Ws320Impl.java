@@ -13,7 +13,7 @@ import javax.xml.ws.handler.MessageContext;
 /**
  * Created by hch on 2014/3/30.
  */
-@SchemaValidation(handler = Ws320Validator.class, inbound = true, outbound = true)
+@SchemaValidation(handler = Ws320Validator.class, inbound = true, outbound = false)
 @WebService(
         serviceName = "CalculatorServiceImpl",
         endpointInterface = "me.hch.service.Ws320",

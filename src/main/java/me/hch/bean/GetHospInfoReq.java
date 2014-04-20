@@ -20,7 +20,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element ref="{http://service.hch.me/}AuthInfo"/>
+ *         &lt;element ref="{http://service.hch.me}AuthInfo"/>
  *         &lt;element name="Filter">
  *           &lt;complexType>
  *             &lt;complexContent>
@@ -32,13 +32,13 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *                         &lt;enumeration value="GetHospBasic"/>
  *                         &lt;enumeration value="GetHospDepartBasic"/>
  *                         &lt;enumeration value="GetHospDocBasic"/>
- *                         &lt;enumeration value="GetSchedualList"/>
+ *                         &lt;enumeration value="GetScheduleList"/>
  *                       &lt;/restriction>
  *                     &lt;/simpleType>
  *                   &lt;/element>
- *                   &lt;element ref="{http://service.hch.me/}HospName" minOccurs="0"/>
- *                   &lt;element ref="{http://service.hch.me/}DepartName" minOccurs="0"/>
- *                   &lt;element ref="{http://service.hch.me/}DoctorName" minOccurs="0"/>
+ *                   &lt;element ref="{http://service.hch.me}HospName" minOccurs="0"/>
+ *                   &lt;element ref="{http://service.hch.me}DepartName" minOccurs="0"/>
+ *                   &lt;element ref="{http://service.hch.me}DoctorName" minOccurs="0"/>
  *                   &lt;element name="BeginDate" type="{http://www.w3.org/2001/XMLSchema}date" minOccurs="0"/>
  *                   &lt;element name="EndDate" type="{http://www.w3.org/2001/XMLSchema}date" minOccurs="0"/>
  *                 &lt;/sequence>
@@ -72,7 +72,7 @@ public class GetHospInfoReq {
      * 
      * @return
      *     possible object is
-     *     {@link me.hch.bean.AuthInfo }
+     *     {@link AuthInfo }
      *     
      */
     public AuthInfo getAuthInfo() {
@@ -84,7 +84,7 @@ public class GetHospInfoReq {
      * 
      * @param value
      *     allowed object is
-     *     {@link me.hch.bean.AuthInfo }
+     *     {@link AuthInfo }
      *     
      */
     public void setAuthInfo(AuthInfo value) {
@@ -132,13 +132,13 @@ public class GetHospInfoReq {
      *               &lt;enumeration value="GetHospBasic"/>
      *               &lt;enumeration value="GetHospDepartBasic"/>
      *               &lt;enumeration value="GetHospDocBasic"/>
-     *               &lt;enumeration value="GetSchedualList"/>
+     *               &lt;enumeration value="GetScheduleList"/>
      *             &lt;/restriction>
      *           &lt;/simpleType>
      *         &lt;/element>
-     *         &lt;element ref="{http://service.hch.me/}HospName" minOccurs="0"/>
-     *         &lt;element ref="{http://service.hch.me/}DepartName" minOccurs="0"/>
-     *         &lt;element ref="{http://service.hch.me/}DoctorName" minOccurs="0"/>
+     *         &lt;element ref="{http://service.hch.me}HospName" minOccurs="0"/>
+     *         &lt;element ref="{http://service.hch.me}DepartName" minOccurs="0"/>
+     *         &lt;element ref="{http://service.hch.me}DoctorName" minOccurs="0"/>
      *         &lt;element name="BeginDate" type="{http://www.w3.org/2001/XMLSchema}date" minOccurs="0"/>
      *         &lt;element name="EndDate" type="{http://www.w3.org/2001/XMLSchema}date" minOccurs="0"/>
      *       &lt;/sequence>

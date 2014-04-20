@@ -20,17 +20,17 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element ref="{http://service.hch.me/}AuthInfo"/>
+ *         &lt;element ref="{http://service.hch.me}AuthInfo"/>
  *         &lt;element name="Filter">
  *           &lt;complexType>
  *             &lt;complexContent>
  *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *                 &lt;sequence>
- *                   &lt;element ref="{http://service.hch.me/}HospName"/>
- *                   &lt;element ref="{http://service.hch.me/}DepartName"/>
- *                   &lt;element ref="{http://service.hch.me/}DoctorName" minOccurs="0"/>
- *                   &lt;element ref="{http://service.hch.me/}WorkDate"/>
- *                   &lt;element ref="{http://service.hch.me/}WorkType"/>
+ *                   &lt;element ref="{http://service.hch.me}HospName"/>
+ *                   &lt;element ref="{http://service.hch.me}DepartName"/>
+ *                   &lt;element ref="{http://service.hch.me}DoctorName" minOccurs="0"/>
+ *                   &lt;element ref="{http://service.hch.me}WorkDate"/>
+ *                   &lt;element ref="{http://service.hch.me}WorkType"/>
  *                 &lt;/sequence>
  *               &lt;/restriction>
  *             &lt;/complexContent>
@@ -62,7 +62,7 @@ public class GetRegPoolReq {
      * 
      * @return
      *     possible object is
-     *     {@link me.hch.bean.AuthInfo }
+     *     {@link AuthInfo }
      *     
      */
     public AuthInfo getAuthInfo() {
@@ -74,7 +74,7 @@ public class GetRegPoolReq {
      * 
      * @param value
      *     allowed object is
-     *     {@link me.hch.bean.AuthInfo }
+     *     {@link AuthInfo }
      *     
      */
     public void setAuthInfo(AuthInfo value) {
@@ -116,11 +116,11 @@ public class GetRegPoolReq {
      *   &lt;complexContent>
      *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
      *       &lt;sequence>
-     *         &lt;element ref="{http://service.hch.me/}HospName"/>
-     *         &lt;element ref="{http://service.hch.me/}DepartName"/>
-     *         &lt;element ref="{http://service.hch.me/}DoctorName" minOccurs="0"/>
-     *         &lt;element ref="{http://service.hch.me/}WorkDate"/>
-     *         &lt;element ref="{http://service.hch.me/}WorkType"/>
+     *         &lt;element ref="{http://service.hch.me}HospName"/>
+     *         &lt;element ref="{http://service.hch.me}DepartName"/>
+     *         &lt;element ref="{http://service.hch.me}DoctorName" minOccurs="0"/>
+     *         &lt;element ref="{http://service.hch.me}WorkDate"/>
+     *         &lt;element ref="{http://service.hch.me}WorkType"/>
      *       &lt;/sequence>
      *     &lt;/restriction>
      *   &lt;/complexContent>

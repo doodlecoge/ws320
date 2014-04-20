@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element ref="{http://service.hch.me/}Hospital"/>
+ *         &lt;element ref="{http://service.hch.me}Hospital"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -42,7 +42,7 @@ public class NotifyHospInfoReq {
      * 
      * @return
      *     possible object is
-     *     {@link me.hch.bean.Hospital }
+     *     {@link Hospital }
      *     
      */
     public Hospital getHospital() {
@@ -54,7 +54,7 @@ public class NotifyHospInfoReq {
      * 
      * @param value
      *     allowed object is
-     *     {@link me.hch.bean.Hospital }
+     *     {@link Hospital }
      *     
      */
     public void setHospital(Hospital value) {

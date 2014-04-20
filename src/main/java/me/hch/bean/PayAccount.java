@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="支付类型">
+ *         &lt;element name="AccountType">
  *           &lt;simpleType>
  *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
  *               &lt;enumeration value="支付宝"/>
@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlType;
  *             &lt;/restriction>
  *           &lt;/simpleType>
  *         &lt;/element>
- *         &lt;element name="支付账号" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="AccountNo" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -39,63 +39,63 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "\u652f\u4ed8\u7c7b\u578b",
-    "\u652f\u4ed8\u8d26\u53f7"
+    "accountType",
+    "accountNo"
 })
 @XmlRootElement(name = "PayAccount")
 public class PayAccount {
 
-    @XmlElement(required = true)
-    protected String 支付类型;
-    @XmlElement(required = true)
-    protected String 支付账号;
+    @XmlElement(name = "AccountType", required = true)
+    protected String accountType;
+    @XmlElement(name = "AccountNo", required = true)
+    protected String accountNo;
 
     /**
-     * 获取支付类型属性的值。
+     * 获取accountType属性的值。
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String get支付类型() {
-        return 支付类型;
+    public String getAccountType() {
+        return accountType;
     }
 
     /**
-     * 设置支付类型属性的值。
+     * 设置accountType属性的值。
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void set支付类型(String value) {
-        this.支付类型 = value;
+    public void setAccountType(String value) {
+        this.accountType = value;
     }
 
     /**
-     * 获取支付账号属性的值。
+     * 获取accountNo属性的值。
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String get支付账号() {
-        return 支付账号;
+    public String getAccountNo() {
+        return accountNo;
     }
 
     /**
-     * 设置支付账号属性的值。
+     * 设置accountNo属性的值。
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void set支付账号(String value) {
-        this.支付账号 = value;
+    public void setAccountNo(String value) {
+        this.accountNo = value;
     }
 
 }

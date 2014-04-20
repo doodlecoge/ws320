@@ -26,20 +26,20 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
-    private final static QName _ClinicFee_QNAME = new QName("http://service.hch.me/", "ClinicFee");
-    private final static QName _Name_QNAME = new QName("http://service.hch.me/", "Name");
-    private final static QName _HospName_QNAME = new QName("http://service.hch.me/", "HospName");
-    private final static QName _WorkType_QNAME = new QName("http://service.hch.me/", "WorkType");
-    private final static QName _StartTime_QNAME = new QName("http://service.hch.me/", "StartTime");
-    private final static QName _EndTime_QNAME = new QName("http://service.hch.me/", "EndTime");
-    private final static QName _Phone_QNAME = new QName("http://service.hch.me/", "Phone");
-    private final static QName _RegVia_QNAME = new QName("http://service.hch.me/", "RegVia");
-    private final static QName _WorkDate_QNAME = new QName("http://service.hch.me/", "WorkDate");
-    private final static QName _RegistryFee_QNAME = new QName("http://service.hch.me/", "RegistryFee");
-    private final static QName _IdCard_QNAME = new QName("http://service.hch.me/", "IdCard");
-    private final static QName _SN_QNAME = new QName("http://service.hch.me/", "SN");
-    private final static QName _DoctorName_QNAME = new QName("http://service.hch.me/", "DoctorName");
-    private final static QName _DepartName_QNAME = new QName("http://service.hch.me/", "DepartName");
+    private final static QName _HospName_QNAME = new QName("http://service.hch.me", "HospName");
+    private final static QName _WorkType_QNAME = new QName("http://service.hch.me", "WorkType");
+    private final static QName _EndTime_QNAME = new QName("http://service.hch.me", "EndTime");
+    private final static QName _StartTime_QNAME = new QName("http://service.hch.me", "StartTime");
+    private final static QName _ClinicFee_QNAME = new QName("http://service.hch.me", "ClinicFee");
+    private final static QName _Name_QNAME = new QName("http://service.hch.me", "Name");
+    private final static QName _RegVia_QNAME = new QName("http://service.hch.me", "RegVia");
+    private final static QName _WorkDate_QNAME = new QName("http://service.hch.me", "WorkDate");
+    private final static QName _RegistryFee_QNAME = new QName("http://service.hch.me", "RegistryFee");
+    private final static QName _SN_QNAME = new QName("http://service.hch.me", "SN");
+    private final static QName _IdCard_QNAME = new QName("http://service.hch.me", "IdCard");
+    private final static QName _DepartName_QNAME = new QName("http://service.hch.me", "DepartName");
+    private final static QName _DoctorName_QNAME = new QName("http://service.hch.me", "DoctorName");
+    private final static QName _Phone_QNAME = new QName("http://service.hch.me", "Phone");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: me.hch.service
@@ -49,7 +49,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.bean.RegisterReq }
+     * Create an instance of {@link RegisterReq }
      * 
      */
     public RegisterReq createRegisterReq() {
@@ -57,7 +57,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.bean.GetRegInfoReq }
+     * Create an instance of {@link GetRegInfoReq }
      * 
      */
     public GetRegInfoReq createGetRegInfoReq() {
@@ -65,7 +65,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.bean.Hospital }
+     * Create an instance of {@link Hospital }
      * 
      */
     public Hospital createHospital() {
@@ -73,7 +73,23 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.bean.GetHospInfoReq }
+     * Create an instance of {@link Depart }
+     * 
+     */
+    public Depart createDepart() {
+        return new Depart();
+    }
+
+    /**
+     * Create an instance of {@link Doctor }
+     * 
+     */
+    public Doctor createDoctor() {
+        return new Doctor();
+    }
+
+    /**
+     * Create an instance of {@link GetHospInfoReq }
      * 
      */
     public GetHospInfoReq createGetHospInfoReq() {
@@ -81,7 +97,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.bean.GetRegPoolRsp }
+     * Create an instance of {@link GetRegPoolRsp }
      * 
      */
     public GetRegPoolRsp createGetRegPoolRsp() {
@@ -89,7 +105,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.bean.GetRegInfoRsp }
+     * Create an instance of {@link GetRegInfoRsp }
      * 
      */
     public GetRegInfoRsp createGetRegInfoRsp() {
@@ -97,7 +113,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.bean.GetRegPoolReq }
+     * Create an instance of {@link GetRegPoolReq }
      * 
      */
     public GetRegPoolReq createGetRegPoolReq() {
@@ -105,23 +121,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.bean.Hospital.Depart }
-     * 
-     */
-    public Hospital.Depart createHospitalDepart() {
-        return new Hospital.Depart();
-    }
-
-    /**
-     * Create an instance of {@link me.hch.bean.Hospital.Depart.Doctor }
-     * 
-     */
-    public Hospital.Depart.Doctor createHospitalDepartDoctor() {
-        return new Hospital.Depart.Doctor();
-    }
-
-    /**
-     * Create an instance of {@link me.hch.bean.GetRegInfoReq.PatientIdentify }
+     * Create an instance of {@link GetRegInfoReq.PatientIdentify }
      * 
      */
     public GetRegInfoReq.PatientIdentify createGetRegInfoReqPatientIdentify() {
@@ -129,7 +129,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.bean.RegisterReq.RegInfo }
+     * Create an instance of {@link RegisterReq.RegInfo }
      * 
      */
     public RegisterReq.RegInfo createRegisterReqRegInfo() {
@@ -137,7 +137,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.bean.AuthInfo }
+     * Create an instance of {@link AuthInfo }
      * 
      */
     public AuthInfo createAuthInfo() {
@@ -145,7 +145,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.bean.RegisterReq.PatientInfo }
+     * Create an instance of {@link RegisterReq.PatientInfo }
      * 
      */
     public RegisterReq.PatientInfo createRegisterReqPatientInfo() {
@@ -153,7 +153,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.bean.RegFrom }
+     * Create an instance of {@link RegFrom }
      * 
      */
     public RegFrom createRegFrom() {
@@ -161,7 +161,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.bean.GetRegInfoReq.Filter }
+     * Create an instance of {@link GetRegInfoReq.Filter }
      * 
      */
     public GetRegInfoReq.Filter createGetRegInfoReqFilter() {
@@ -169,7 +169,15 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.bean.NotifyHospInfoReq }
+     * Create an instance of {@link Schedule }
+     * 
+     */
+    public Schedule createSchedule() {
+        return new Schedule();
+    }
+
+    /**
+     * Create an instance of {@link NotifyHospInfoReq }
      * 
      */
     public NotifyHospInfoReq createNotifyHospInfoReq() {
@@ -177,7 +185,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.bean.Hospital.HospBasic }
+     * Create an instance of {@link Hospital.HospBasic }
      * 
      */
     public Hospital.HospBasic createHospitalHospBasic() {
@@ -185,7 +193,23 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.bean.PayAccount }
+     * Create an instance of {@link Depart.DepartBasic }
+     * 
+     */
+    public Depart.DepartBasic createDepartDepartBasic() {
+        return new Depart.DepartBasic();
+    }
+
+    /**
+     * Create an instance of {@link Doctor.DocBasic }
+     * 
+     */
+    public Doctor.DocBasic createDoctorDocBasic() {
+        return new Doctor.DocBasic();
+    }
+
+    /**
+     * Create an instance of {@link PayAccount }
      * 
      */
     public PayAccount createPayAccount() {
@@ -193,7 +217,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.bean.GetHospInfoReq.Filter }
+     * Create an instance of {@link GetHospInfoReq.Filter }
      * 
      */
     public GetHospInfoReq.Filter createGetHospInfoReqFilter() {
@@ -201,7 +225,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.bean.Result }
+     * Create an instance of {@link Result }
      * 
      */
     public Result createResult() {
@@ -209,7 +233,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.bean.GetRegPoolRsp.PoolInfo }
+     * Create an instance of {@link GetRegPoolRsp.PoolInfo }
      * 
      */
     public GetRegPoolRsp.PoolInfo createGetRegPoolRspPoolInfo() {
@@ -217,7 +241,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.bean.GetHospInfoRsp }
+     * Create an instance of {@link GetHospInfoRsp }
      * 
      */
     public GetHospInfoRsp createGetHospInfoRsp() {
@@ -225,7 +249,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.bean.NotifyHospInfoRsp }
+     * Create an instance of {@link NotifyHospInfoRsp }
      * 
      */
     public NotifyHospInfoRsp createNotifyHospInfoRsp() {
@@ -233,7 +257,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.bean.GetRegInfoRsp.Patient }
+     * Create an instance of {@link GetRegInfoRsp.Patient }
      * 
      */
     public GetRegInfoRsp.Patient createGetRegInfoRspPatient() {
@@ -241,7 +265,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.bean.GetRegInfoRsp.RegInfo }
+     * Create an instance of {@link GetRegInfoRsp.RegInfo }
      * 
      */
     public GetRegInfoRsp.RegInfo createGetRegInfoRspRegInfo() {
@@ -249,15 +273,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.bean.Schedual }
-     * 
-     */
-    public Schedual createSchedual() {
-        return new Schedual();
-    }
-
-    /**
-     * Create an instance of {@link me.hch.bean.GetRegPoolReq.Filter }
+     * Create an instance of {@link GetRegPoolReq.Filter }
      * 
      */
     public GetRegPoolReq.Filter createGetRegPoolReqFilter() {
@@ -265,7 +281,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.bean.RegisterRsp }
+     * Create an instance of {@link RegisterRsp }
      * 
      */
     public RegisterRsp createRegisterRsp() {
@@ -273,23 +289,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.bean.Hospital.Depart.DepartBasic }
-     * 
-     */
-    public Hospital.Depart.DepartBasic createHospitalDepartDepartBasic() {
-        return new Hospital.Depart.DepartBasic();
-    }
-
-    /**
-     * Create an instance of {@link me.hch.bean.Hospital.Depart.Doctor.DocBasic }
-     * 
-     */
-    public Hospital.Depart.Doctor.DocBasic createHospitalDepartDoctorDocBasic() {
-        return new Hospital.Depart.Doctor.DocBasic();
-    }
-
-    /**
-     * Create an instance of {@link me.hch.bean.GetRegInfoReq.PatientIdentify.Other }
+     * Create an instance of {@link GetRegInfoReq.PatientIdentify.Other }
      * 
      */
     public GetRegInfoReq.PatientIdentify.Other createGetRegInfoReqPatientIdentifyOther() {
@@ -297,7 +297,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link me.hch.bean.RegisterReq.RegInfo.RegOperType }
+     * Create an instance of {@link RegisterReq.RegInfo.RegOperType }
      * 
      */
     public RegisterReq.RegInfo.RegOperType createRegisterReqRegInfoRegOperType() {
@@ -305,28 +305,10 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link javax.xml.bind.JAXBElement }{@code <}{@link java.math.BigDecimal }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://service.hch.me/", name = "ClinicFee")
-    public JAXBElement<BigDecimal> createClinicFee(BigDecimal value) {
-        return new JAXBElement<BigDecimal>(_ClinicFee_QNAME, BigDecimal.class, null, value);
-    }
-
-    /**
      * Create an instance of {@link javax.xml.bind.JAXBElement }{@code <}{@link String }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://service.hch.me/", name = "Name")
-    public JAXBElement<String> createName(String value) {
-        return new JAXBElement<String>(_Name_QNAME, String.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link javax.xml.bind.JAXBElement }{@code <}{@link String }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://service.hch.me/", name = "HospName")
+    @XmlElementDecl(namespace = "http://service.hch.me", name = "HospName")
     public JAXBElement<String> createHospName(String value) {
         return new JAXBElement<String>(_HospName_QNAME, String.class, null, value);
     }
@@ -335,7 +317,7 @@ public class ObjectFactory {
      * Create an instance of {@link javax.xml.bind.JAXBElement }{@code <}{@link String }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://service.hch.me/", name = "WorkType")
+    @XmlElementDecl(namespace = "http://service.hch.me", name = "WorkType")
     public JAXBElement<String> createWorkType(String value) {
         return new JAXBElement<String>(_WorkType_QNAME, String.class, null, value);
     }
@@ -344,34 +326,43 @@ public class ObjectFactory {
      * Create an instance of {@link javax.xml.bind.JAXBElement }{@code <}{@link javax.xml.datatype.XMLGregorianCalendar }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://service.hch.me/", name = "StartTime")
-    public JAXBElement<XMLGregorianCalendar> createStartTime(XMLGregorianCalendar value) {
-        return new JAXBElement<XMLGregorianCalendar>(_StartTime_QNAME, XMLGregorianCalendar.class, null, value);
+    @XmlElementDecl(namespace = "http://service.hch.me", name = "EndTime")
+    public JAXBElement<XMLGregorianCalendar> createEndTime(XMLGregorianCalendar value) {
+        return new JAXBElement<XMLGregorianCalendar>(_EndTime_QNAME, XMLGregorianCalendar.class, null, value);
     }
 
     /**
      * Create an instance of {@link javax.xml.bind.JAXBElement }{@code <}{@link javax.xml.datatype.XMLGregorianCalendar }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://service.hch.me/", name = "EndTime")
-    public JAXBElement<XMLGregorianCalendar> createEndTime(XMLGregorianCalendar value) {
-        return new JAXBElement<XMLGregorianCalendar>(_EndTime_QNAME, XMLGregorianCalendar.class, null, value);
+    @XmlElementDecl(namespace = "http://service.hch.me", name = "StartTime")
+    public JAXBElement<XMLGregorianCalendar> createStartTime(XMLGregorianCalendar value) {
+        return new JAXBElement<XMLGregorianCalendar>(_StartTime_QNAME, XMLGregorianCalendar.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link javax.xml.bind.JAXBElement }{@code <}{@link java.math.BigDecimal }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.hch.me", name = "ClinicFee")
+    public JAXBElement<BigDecimal> createClinicFee(BigDecimal value) {
+        return new JAXBElement<BigDecimal>(_ClinicFee_QNAME, BigDecimal.class, null, value);
     }
 
     /**
      * Create an instance of {@link javax.xml.bind.JAXBElement }{@code <}{@link String }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://service.hch.me/", name = "Phone")
-    public JAXBElement<String> createPhone(String value) {
-        return new JAXBElement<String>(_Phone_QNAME, String.class, null, value);
+    @XmlElementDecl(namespace = "http://service.hch.me", name = "Name")
+    public JAXBElement<String> createName(String value) {
+        return new JAXBElement<String>(_Name_QNAME, String.class, null, value);
     }
 
     /**
      * Create an instance of {@link javax.xml.bind.JAXBElement }{@code <}{@link String }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://service.hch.me/", name = "RegVia")
+    @XmlElementDecl(namespace = "http://service.hch.me", name = "RegVia")
     public JAXBElement<String> createRegVia(String value) {
         return new JAXBElement<String>(_RegVia_QNAME, String.class, null, value);
     }
@@ -380,7 +371,7 @@ public class ObjectFactory {
      * Create an instance of {@link javax.xml.bind.JAXBElement }{@code <}{@link javax.xml.datatype.XMLGregorianCalendar }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://service.hch.me/", name = "WorkDate")
+    @XmlElementDecl(namespace = "http://service.hch.me", name = "WorkDate")
     public JAXBElement<XMLGregorianCalendar> createWorkDate(XMLGregorianCalendar value) {
         return new JAXBElement<XMLGregorianCalendar>(_WorkDate_QNAME, XMLGregorianCalendar.class, null, value);
     }
@@ -389,7 +380,7 @@ public class ObjectFactory {
      * Create an instance of {@link javax.xml.bind.JAXBElement }{@code <}{@link java.math.BigDecimal }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://service.hch.me/", name = "RegistryFee")
+    @XmlElementDecl(namespace = "http://service.hch.me", name = "RegistryFee")
     public JAXBElement<BigDecimal> createRegistryFee(BigDecimal value) {
         return new JAXBElement<BigDecimal>(_RegistryFee_QNAME, BigDecimal.class, null, value);
     }
@@ -398,16 +389,7 @@ public class ObjectFactory {
      * Create an instance of {@link javax.xml.bind.JAXBElement }{@code <}{@link String }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://service.hch.me/", name = "IdCard")
-    public JAXBElement<String> createIdCard(String value) {
-        return new JAXBElement<String>(_IdCard_QNAME, String.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link javax.xml.bind.JAXBElement }{@code <}{@link String }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://service.hch.me/", name = "SN")
+    @XmlElementDecl(namespace = "http://service.hch.me", name = "SN")
     public JAXBElement<String> createSN(String value) {
         return new JAXBElement<String>(_SN_QNAME, String.class, null, value);
     }
@@ -416,7 +398,25 @@ public class ObjectFactory {
      * Create an instance of {@link javax.xml.bind.JAXBElement }{@code <}{@link String }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://service.hch.me/", name = "DoctorName")
+    @XmlElementDecl(namespace = "http://service.hch.me", name = "IdCard")
+    public JAXBElement<String> createIdCard(String value) {
+        return new JAXBElement<String>(_IdCard_QNAME, String.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link javax.xml.bind.JAXBElement }{@code <}{@link String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.hch.me", name = "DepartName")
+    public JAXBElement<String> createDepartName(String value) {
+        return new JAXBElement<String>(_DepartName_QNAME, String.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link javax.xml.bind.JAXBElement }{@code <}{@link String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://service.hch.me", name = "DoctorName")
     public JAXBElement<String> createDoctorName(String value) {
         return new JAXBElement<String>(_DoctorName_QNAME, String.class, null, value);
     }
@@ -425,9 +425,9 @@ public class ObjectFactory {
      * Create an instance of {@link javax.xml.bind.JAXBElement }{@code <}{@link String }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://service.hch.me/", name = "DepartName")
-    public JAXBElement<String> createDepartName(String value) {
-        return new JAXBElement<String>(_DepartName_QNAME, String.class, null, value);
+    @XmlElementDecl(namespace = "http://service.hch.me", name = "Phone")
+    public JAXBElement<String> createPhone(String value) {
+        return new JAXBElement<String>(_Phone_QNAME, String.class, null, value);
     }
 
 }

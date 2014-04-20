@@ -1,7 +1,7 @@
 package me.hch.service;
 
-import me.hch.model.Department;
-import me.hch.model.Doctor;
+import me.hch.model.DepartInfo;
+import me.hch.model.DoctorInfo;
 import me.hch.model.Schedule;
 
 import java.util.List;
@@ -24,11 +24,11 @@ public class HospitalClientImpl {
      * **************************************************
      */
 
-    public List<Department> getDepartments() {
+    public List<DepartInfo> getDepartments() {
         return null;
     }
 
-    public List<Doctor> getDoctors() {
+    public List<DoctorInfo> getDoctors() {
         return null;
     }
 

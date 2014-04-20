@@ -20,7 +20,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element ref="{http://service.hch.me/}AuthInfo"/>
+ *         &lt;element ref="{http://service.hch.me}AuthInfo"/>
  *         &lt;element name="OperType">
  *           &lt;simpleType>
  *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
@@ -30,15 +30,15 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *             &lt;/restriction>
  *           &lt;/simpleType>
  *         &lt;/element>
- *         &lt;element ref="{http://service.hch.me/}SN" minOccurs="0"/>
+ *         &lt;element ref="{http://service.hch.me}SN" minOccurs="0"/>
  *         &lt;element name="PatientInfo">
  *           &lt;complexType>
  *             &lt;complexContent>
  *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *                 &lt;sequence>
- *                   &lt;element ref="{http://service.hch.me/}IdCard"/>
- *                   &lt;element ref="{http://service.hch.me/}Name"/>
- *                   &lt;element ref="{http://service.hch.me/}Phone" minOccurs="0"/>
+ *                   &lt;element ref="{http://service.hch.me}IdCard"/>
+ *                   &lt;element ref="{http://service.hch.me}Name"/>
+ *                   &lt;element ref="{http://service.hch.me}Phone" minOccurs="0"/>
  *                   &lt;element name="Sex" minOccurs="0">
  *                     &lt;simpleType>
  *                       &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
@@ -57,7 +57,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *                       &lt;/restriction>
  *                     &lt;/simpleType>
  *                   &lt;/element>
- *                   &lt;element ref="{http://service.hch.me/}PayAccount" minOccurs="0"/>
+ *                   &lt;element ref="{http://service.hch.me}PayAccount" minOccurs="0"/>
  *                 &lt;/sequence>
  *               &lt;/restriction>
  *             &lt;/complexContent>
@@ -68,13 +68,13 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *             &lt;complexContent>
  *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *                 &lt;sequence>
- *                   &lt;element ref="{http://service.hch.me/}HospName"/>
- *                   &lt;element ref="{http://service.hch.me/}DepartName"/>
- *                   &lt;element ref="{http://service.hch.me/}DoctorName" minOccurs="0"/>
- *                   &lt;element ref="{http://service.hch.me/}WorkDate"/>
- *                   &lt;element ref="{http://service.hch.me/}WorkType"/>
- *                   &lt;element ref="{http://service.hch.me/}StartTime"/>
- *                   &lt;element ref="{http://service.hch.me/}EndTime"/>
+ *                   &lt;element ref="{http://service.hch.me}HospName"/>
+ *                   &lt;element ref="{http://service.hch.me}DepartName"/>
+ *                   &lt;element ref="{http://service.hch.me}DoctorName" minOccurs="0"/>
+ *                   &lt;element ref="{http://service.hch.me}WorkDate"/>
+ *                   &lt;element ref="{http://service.hch.me}WorkType"/>
+ *                   &lt;element ref="{http://service.hch.me}StartTime"/>
+ *                   &lt;element ref="{http://service.hch.me}EndTime"/>
  *                   &lt;element name="IsPayed" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
  *                   &lt;element name="RegOperType" minOccurs="0">
  *                     &lt;complexType>
@@ -109,7 +109,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *             &lt;/complexContent>
  *           &lt;/complexType>
  *         &lt;/element>
- *         &lt;element ref="{http://service.hch.me/}RegFrom"/>
+ *         &lt;element ref="{http://service.hch.me}RegFrom"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -148,7 +148,7 @@ public class RegisterReq {
      * 
      * @return
      *     possible object is
-     *     {@link me.hch.bean.AuthInfo }
+     *     {@link AuthInfo }
      *     
      */
     public AuthInfo getAuthInfo() {
@@ -160,7 +160,7 @@ public class RegisterReq {
      * 
      * @param value
      *     allowed object is
-     *     {@link me.hch.bean.AuthInfo }
+     *     {@link AuthInfo }
      *     
      */
     public void setAuthInfo(AuthInfo value) {
@@ -268,7 +268,7 @@ public class RegisterReq {
      * 
      * @return
      *     possible object is
-     *     {@link me.hch.bean.RegFrom }
+     *     {@link RegFrom }
      *     
      */
     public RegFrom getRegFrom() {
@@ -280,7 +280,7 @@ public class RegisterReq {
      * 
      * @param value
      *     allowed object is
-     *     {@link me.hch.bean.RegFrom }
+     *     {@link RegFrom }
      *     
      */
     public void setRegFrom(RegFrom value) {
@@ -298,9 +298,9 @@ public class RegisterReq {
      *   &lt;complexContent>
      *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
      *       &lt;sequence>
-     *         &lt;element ref="{http://service.hch.me/}IdCard"/>
-     *         &lt;element ref="{http://service.hch.me/}Name"/>
-     *         &lt;element ref="{http://service.hch.me/}Phone" minOccurs="0"/>
+     *         &lt;element ref="{http://service.hch.me}IdCard"/>
+     *         &lt;element ref="{http://service.hch.me}Name"/>
+     *         &lt;element ref="{http://service.hch.me}Phone" minOccurs="0"/>
      *         &lt;element name="Sex" minOccurs="0">
      *           &lt;simpleType>
      *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
@@ -319,7 +319,7 @@ public class RegisterReq {
      *             &lt;/restriction>
      *           &lt;/simpleType>
      *         &lt;/element>
-     *         &lt;element ref="{http://service.hch.me/}PayAccount" minOccurs="0"/>
+     *         &lt;element ref="{http://service.hch.me}PayAccount" minOccurs="0"/>
      *       &lt;/sequence>
      *     &lt;/restriction>
      *   &lt;/complexContent>
@@ -505,7 +505,7 @@ public class RegisterReq {
          * 
          * @return
          *     possible object is
-         *     {@link me.hch.bean.PayAccount }
+         *     {@link PayAccount }
          *     
          */
         public PayAccount getPayAccount() {
@@ -517,7 +517,7 @@ public class RegisterReq {
          * 
          * @param value
          *     allowed object is
-         *     {@link me.hch.bean.PayAccount }
+         *     {@link PayAccount }
          *     
          */
         public void setPayAccount(PayAccount value) {
@@ -537,13 +537,13 @@ public class RegisterReq {
      *   &lt;complexContent>
      *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
      *       &lt;sequence>
-     *         &lt;element ref="{http://service.hch.me/}HospName"/>
-     *         &lt;element ref="{http://service.hch.me/}DepartName"/>
-     *         &lt;element ref="{http://service.hch.me/}DoctorName" minOccurs="0"/>
-     *         &lt;element ref="{http://service.hch.me/}WorkDate"/>
-     *         &lt;element ref="{http://service.hch.me/}WorkType"/>
-     *         &lt;element ref="{http://service.hch.me/}StartTime"/>
-     *         &lt;element ref="{http://service.hch.me/}EndTime"/>
+     *         &lt;element ref="{http://service.hch.me}HospName"/>
+     *         &lt;element ref="{http://service.hch.me}DepartName"/>
+     *         &lt;element ref="{http://service.hch.me}DoctorName" minOccurs="0"/>
+     *         &lt;element ref="{http://service.hch.me}WorkDate"/>
+     *         &lt;element ref="{http://service.hch.me}WorkType"/>
+     *         &lt;element ref="{http://service.hch.me}StartTime"/>
+     *         &lt;element ref="{http://service.hch.me}EndTime"/>
      *         &lt;element name="IsPayed" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
      *         &lt;element name="RegOperType" minOccurs="0">
      *           &lt;complexType>

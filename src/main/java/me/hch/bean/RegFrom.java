@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element ref="{http://service.hch.me/}RegVia"/>
+ *         &lt;element ref="{http://service.hch.me}RegVia"/>
  *         &lt;element name="Vendor" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="Operator" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
