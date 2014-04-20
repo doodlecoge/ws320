@@ -806,7 +806,7 @@
         </xsd:annotation>
         <xsd:complexType>
             <xsd:sequence>
-                <xsd:element name="支付类型">
+                <xsd:element name="AccountType">
                     <xsd:simpleType>
                         <xsd:restriction base="xsd:string">
                             <xsd:enumeration value="支付宝"/>
@@ -816,7 +816,7 @@
                         </xsd:restriction>
                     </xsd:simpleType>
                 </xsd:element>
-                <xsd:element name="支付账号" type="xsd:string"/>
+                <xsd:element name="AccountNo" type="xsd:string"/>
             </xsd:sequence>
         </xsd:complexType>
     </xsd:element>
