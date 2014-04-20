@@ -1,5 +1,6 @@
 package me.hch.service;
 
+import com.sun.xml.ws.developer.SchemaValidation;
 import me.hch.bean.*;
 import me.hch.bean.Hospital;
 
@@ -12,10 +13,11 @@ import javax.xml.ws.handler.MessageContext;
 /**
  * Created by hch on 2014/3/30.
  */
+@SchemaValidation(handler = Ws320Validator.class, inbound = true, outbound = true)
 @WebService(
         serviceName = "CalculatorServiceImpl",
         endpointInterface = "me.hch.service.Ws320",
-        targetNamespace = "http://service.hch.me/")
+        targetNamespace = "http://service.hch.me")
 public class Ws320Impl implements Ws320 {
     @Resource
     private WebServiceContext wsctx;
