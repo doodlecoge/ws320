@@ -10,6 +10,8 @@
         http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
 
+    <context:property-placeholder location="classpath*:db.properties"></context:property-placeholder>
+
     <mvc:annotation-driven/>
     <context:component-scan base-package="me.hch"/>
 
@@ -23,4 +25,22 @@
         <property name="suffix" value=".jsp"/>
     </bean>
 
+
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="${db.driver}"></property>
+        <property name="url" value="${db.url}/${db.schema}"></property>
+        <property name="username" value="${db.username}"></property>
+        <property name="password" value="${db.password}"></property>
+    </bean>
+
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"></property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect"></prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="format_sql">true</prop>
+            </props>
+        </property>
+    </bean>
 </beans>
