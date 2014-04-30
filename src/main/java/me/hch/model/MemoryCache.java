@@ -11,15 +11,16 @@ import me.hch.bean.Hospital;
  * Created by huaiwang on 14-3-25.
  */
 public class MemoryCache {
-    // hospital -> department -> doctor
-    private Map<String, Map<String, Map<String, String>>> nameIdMap = new HashMap<String, Map<String, Map<String, String>>>();
-
     private Map<String, Hospital> hospitals = new HashMap<String, Hospital>(0);
+
+    private static final MemoryCache ins = new MemoryCache();
 
     private MemoryCache() {
     }
 
-    private static MemoryCache ins = new MemoryCache();
+    public static MemoryCache getInstance() {
+        return ins;
+    }
 
     public void addHospital(Hospital hospital) {
         String hospName = hospital.getHospName();
