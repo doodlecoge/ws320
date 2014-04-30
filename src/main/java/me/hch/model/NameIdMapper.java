@@ -9,8 +9,6 @@ import java.util.Map;
  * Created by hch on 2014/4/26.
  */
 public class NameIdMapper {
-
-
     public class HospitalMapper {
         public String id;
         private Map<String, DepartmentMapper> departments =
@@ -25,20 +23,13 @@ public class NameIdMapper {
 
 
     private Map<String, HospitalMapper> hospitals;
-    private static NameIdMapper ins;
+    private static final NameIdMapper ins = new NameIdMapper();
 
-    {
+    private NameIdMapper() {
         hospitals = new HashMap<String, HospitalMapper>();
     }
 
-    private NameIdMapper() {
-    }
-
     public static NameIdMapper getInstance() {
-        if (ins == null) {
-            ins = new NameIdMapper();
-        }
-
         return ins;
     }
 
@@ -58,6 +49,10 @@ public class NameIdMapper {
         hospitals.put(name, hospitalMapper);
     }
 
+    public String getHospitalId(String hospitalName) {
+        return hospitals.get(hospitalName).id;
+    }
+
     public void addDepartment(String hospitalName, String departmentName, String id) {
         HospitalMapper hospitalMapper = hospitals.get(hospitalName);
         if (hospitalMapper == null) {
@@ -66,6 +61,10 @@ public class NameIdMapper {
         DepartmentMapper departmentMapper = new DepartmentMapper();
         departmentMapper.id = id;
         hospitalMapper.departments.put(departmentName, departmentMapper);
+    }
+
+    public String getDepartmentId(String hospitalName, String departmentName) {
+        return hospitals.get(hospitalName).departments.get(departmentName).id;
     }
 
     public void addDoctor(String hospitalName, String departmentName, String doctorName, String id) {
@@ -80,5 +79,9 @@ public class NameIdMapper {
         }
 
         departmentMapper.doctors.put(doctorName, id);
+    }
+
+    public String getDoctorId(String hospitalName, String departmentName, String doctorName) {
+        return hospitals.get(hospitalName).departments.get(departmentName).doctors.get(doctorName);
     }
 }
