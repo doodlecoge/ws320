@@ -7,6 +7,7 @@ import me.hch.service.client.HisClientFactory;
 import me.hch.service.client.HisClientIface;
 import me.hch.util.Config;
 import me.hch.util.FileUtils;
+import me.hch.util.ReflectionUtils;
 import me.hch.util.TimeUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -44,9 +45,9 @@ public class CacheUpdatingJob extends Thread {
 
 
     private static final String dptInfoTagName = "DepartInfo";
-    private static final String docInfoTagName = "";
-    private static final String dptWorkTagName = "";
-    private static final String docWorkTagName = "";
+    private static final String docInfoTagName = "DoctorInfo";
+    private static final String dptWorkTagName = "DepartCalendar";
+    private static final String docWorkTagName = "DoctorCalendar";
 
     private Map<String, Field> DepartInfoFields;
     private Map<String, Field> DoctorInfoFields;
@@ -169,10 +170,18 @@ public class CacheUpdatingJob extends Thread {
 
     public void loadCacheFromFile(String hospitalId) {
         String ts = TimeUtils.getTimeStamp("yyyy-MM-dd");
-        List<DepartInfo> departInfos = loadHisData(ts, hospitalId, DepartInfo.class, DepartInfoFields);
-        List<DoctorInfo> doctorInfos = loadHisData(ts, hospitalId, DoctorInfo.class, DoctorInfoFields);
-        List<DepartWork> departWorks = loadHisData(ts, hospitalId, DepartWork.class, DepartWorkFields);
-        List<DoctorWork> doctorWorks = loadHisData(ts, hospitalId, DoctorWork.class, DoctorWorkFields);
+        List<DepartInfo> departInfos = loadHisData(dpt_info, dptInfoTagName, ts, hospitalId, DepartInfo.class, DepartInfoFields);
+        List<DoctorInfo> doctorInfos = loadHisData(doc_info, docInfoTagName, ts, hospitalId, DoctorInfo.class, DoctorInfoFields);
+        List<DepartWork> departWorks = loadHisData(dpt_work, dptWorkTagName, ts, hospitalId, DepartWork.class, DepartWorkFields);
+        List<DoctorWork> doctorWorks = loadHisData(doc_work, docWorkTagName, ts, hospitalId, DoctorWork.class, DoctorWorkFields);
+
+        populateCache(
+                hospitalId,
+                departInfos,
+                doctorInfos,
+                departWorks,
+                doctorWorks
+        );
     }
 
     /* although singleton, we still want it to be synchronized */
@@ -181,18 +190,18 @@ public class CacheUpdatingJob extends Thread {
             List<DepartInfo> departInfos,
             List<DoctorInfo> doctorInfos,
             List<DepartWork> departWorks,
-            List<DoctorWork> doctorWorks
-    ) {
+            List<DoctorWork> doctorWorks) {
 
         MemoryCache cache = MemoryCache.getInstance();
         String hospName = cache.getNameById(hospitalId);
 
-        NameIdMapper mapper = NameIdMapper.getInstance();
-        mapper.clearHospital(hospName);
-        mapper.addHospital(hospName, hospitalId);
+        NameIdMapping mapping = NameIdMapping.getInstance();
+        mapping.addHospital(hospName, hospitalId);
 
-        // <dpt id><docId> => doctor schedules
-        Map<String, List<Schedule>> docSchedules = new HashMap<String, List<Schedule>>();
+
+        // <dpt id>:<docId> => doctor schedules
+        Map<String, Map<String, List<Schedule>>> dptDocSchedules = new HashMap<String, Map<String, List<Schedule>>>();
+
         for (DoctorWork a : doctorWorks) {
             Schedule schedule = new Schedule();
 
@@ -206,17 +215,20 @@ public class CacheUpdatingJob extends Thread {
             schedule.setWorkStatus(a.WorkStatus);
             schedule.setExpertFee(new BigDecimal(a.Expertsfee));
 
-            String key = a.DepartId + a.DoctorId;
 
-            if (!docSchedules.containsKey(key)) {
-                docSchedules.put(key, new ArrayList<Schedule>());
+            if (!dptDocSchedules.containsKey(a.DepartId)) {
+                dptDocSchedules.put(a.DepartId, new HashMap<String, List<Schedule>>());
             }
-
-            docSchedules.get(key).add(schedule);
+            Map<String, List<Schedule>> docSchedules = dptDocSchedules.get(a.DepartId);
+            if (!docSchedules.containsKey(a.DoctorId)) {
+                docSchedules.put(a.DoctorId, new ArrayList<Schedule>());
+            }
+            docSchedules.get(a.DoctorId).add(schedule);
         }
 
-        // dpt id => doctors
-        Map<String, List<Doctor>> dptDoctors = new HashMap<String, List<Doctor>>();
+
+        // doc id => doctor
+        Map<String, Doctor> idDoctorMap = new HashMap<String, Doctor>();
         for (DoctorInfo aaa : doctorInfos) {
             Doctor doc = new Doctor();
             doc.setDoctorName(aaa.DoctorName);
@@ -240,16 +252,47 @@ public class CacheUpdatingJob extends Thread {
 
             doc.setDocBasic(docBasic);
 
-
-            List<Schedule> schedules = doc.getSchedule();
-            schedules.clear();
-            schedules.addAll(docSchedules.get(aaa.DepartId + aaa.DoctorId));
-
-            if (!dptDoctors.containsKey(aaa.DepartId)) {
-                dptDoctors.put(aaa.DepartId, new ArrayList<Doctor>());
+            if (idDoctorMap.containsKey(aaa.DoctorId)) {
+                log.warn("duplicate doctor id:" + aaa.DoctorId);
             }
-            dptDoctors.get(aaa.DepartId).add(doc);
+
+            idDoctorMap.put(aaa.DoctorId, doc);
+            mapping.addDoctor(hospName, aaa.DoctorName, aaa.DoctorId);
         }
+
+
+        // dpt id => doctors
+//        Map<String, List<Doctor>> dptDoctors = new HashMap<String, List<Doctor>>();
+//        for (DoctorInfo aaa : doctorInfos) {
+//            Doctor doc = new Doctor();
+//            doc.setDoctorName(aaa.DoctorName);
+//
+//            Doctor.DocBasic docBasic = new Doctor.DocBasic();
+//            docBasic.setDocSex(aaa.DoctorSex);
+//            docBasic.setDocRank(aaa.DoctorRank);
+//            docBasic.setDoctorInro(aaa.DoctorInro);
+//            docBasic.setDocMajor(""); // fixme: ?
+//            docBasic.setIsExpert(Boolean.getBoolean(aaa.IsExpert));
+//            docBasic.setRegistryFee(null);
+//            docBasic.setClinicFee(null);
+//
+//            doc.setDocBasic(docBasic);
+//
+//
+//            String key = aaa.DepartId + ":" + aaa.DoctorId;
+//            if (docSchedules.containsKey(key)) {
+//                List<Schedule> schedules = doc.getSchedule();
+//                schedules.clear();
+//                schedules.addAll(docSchedules.get(key));
+//            }
+//
+//            if (!dptDoctors.containsKey(aaa.DepartId)) {
+//                dptDoctors.put(aaa.DepartId, new ArrayList<Doctor>());
+//            }
+//            dptDoctors.get(aaa.DepartId).add(doc);
+//
+//            mapping.addDoctor(hospName, aaa.DoctorName, aaa.DoctorId);
+//        }
 
 
         // <dpt id> => department schedules
@@ -295,38 +338,40 @@ public class CacheUpdatingJob extends Thread {
             dpt.setDepartBasic(dptBasic);
 
             // schedules
-            List<Schedule> schedules = dpt.getSchedule();
-            schedules.clear();
-            schedules.addAll(dptScheles.get(info.DepartId));
+            if (dptScheles.containsKey(info.DepartId)) {
+                List<Schedule> schedules = dpt.getSchedule();
+                schedules.clear();
+                schedules.addAll(dptScheles.get(info.DepartId));
+            }
 
-            // doctors
-            List<Doctor> doctors = dpt.getDoctor();
-            doctors.clear();
-            doctors.addAll(dptDoctors.get(info.DepartId));
+            // doctors from schedules
+            if (dptDocSchedules.containsKey(info.DepartId)) {
+                Map<String, List<Schedule>> docSchedules = dptDocSchedules.get(info.DepartId);
+                for (String docId : docSchedules.keySet()) {
+                    if (!idDoctorMap.containsKey(docId)) {
+                        log.warn("[" + docId + "] in doc schedule but not int doc info");
+                        continue;
+                    }
+
+                    Doctor doctor = ReflectionUtils.clone(
+                            Doctor.class, idDoctorMap.get(docId)
+                    );
+
+                    List<Schedule> schedule = doctor.getSchedule();
+                    schedule.addAll(docSchedules.get(docId));
+
+                    dpt.getDoctor().add(doctor);
+                }
+            }
 
 
             depts.add(dpt);
+
+            mapping.addDepartment(hospName, info.DepartName, info.DepartId);
         }
 
 
-
         cache.addDeparts(hospName, depts);
-
-
-        // todo: populate name id mapper
-//        NameIdMapper mapper = NameIdMapper.getInstance();
-//
-//        mapper.addHospital(hospName, hospitalId);
-//
-//        for (Depart dept : depts) {
-//            mapper.addDepartment(hospName, D);
-//        }
-
-
-
-
-
-
     }
 
     private void prepareCacheSubFolder(String ts) {
@@ -343,8 +388,8 @@ public class CacheUpdatingJob extends Thread {
     }
 
 
-    private <T> List<T> loadHisData(String ts, String hospitalId, Class<T> klass, Map<String, Field> fields) {
-        String prefix = hospitalId + dpt_info;
+    private <T> List<T> loadHisData(String which, String tagName, String ts, String hospitalId, Class<T> klass, Map<String, Field> fields) {
+        String prefix = hospitalId + which;
         File folder = new File(cacheFolder + File.separator + ts);
 
         File[] files = folder.listFiles(new FileNameStartsWithFilter(prefix));
@@ -358,29 +403,29 @@ public class CacheUpdatingJob extends Thread {
         }
 
         try {
-            return unmarshalHisXml(files[0], klass, fields);
+            return unmarshalHisXml(tagName, files[0], klass, fields);
         } catch (Exception e) {
             throw new Ws320Exception(e);
         }
     }
 
-    private <T> List<T> unmarshalHisXml(File file, Class<T> klass, Map<String, Field> fields) throws DocumentException, NoSuchFieldException, IllegalAccessException, InstantiationException {
+    private <T> List<T> unmarshalHisXml(String tagName, File file, Class<T> klass, Map<String, Field> fields) throws DocumentException, NoSuchFieldException, IllegalAccessException, InstantiationException {
         SAXReader reader = new SAXReader();
         Document document = reader.read(file);
         Element root = document.getRootElement();
         List<Element> dptInfos = root.elements();
 
 
-        List<T> departInfos = new ArrayList<T>();
+        List<T> items = new ArrayList<T>();
         for (int i = 0; i < dptInfos.size(); i++) {
-            Element dptInfo = dptInfos.get(i);
+            Element item = dptInfos.get(i);
 
-            if (!dptInfo.getName().equalsIgnoreCase(dptInfoTagName)) {
-                log.warn(file.getAbsolutePath() + ": tag #" + i + ", name [" + dptInfo.getName() + "] not " + dptInfoTagName);
+            if (!item.getName().equalsIgnoreCase(tagName)) {
+                log.warn(file.getAbsolutePath() + ": tag #" + i + ", name [" + item.getName() + "] not " + dptInfoTagName);
                 continue;
             }
 
-            List<Element> props = dptInfo.elements();
+            List<Element> props = item.elements();
 
             if (props.size() != fields.size()) {
                 throw new Ws320Exception(file.getAbsolutePath() + ": tag #" + i + ", number of children != size of DepartInfo fields");
@@ -393,9 +438,9 @@ public class CacheUpdatingJob extends Thread {
                 field.set(di, prop.getText());
             }
 
-            departInfos.add(di);
+            items.add(di);
         }
-        return departInfos;
+        return items;
     }
 
 

@@ -9,9 +9,16 @@ import java.util.Map;
  * Created by hch on 2014/5/2.
  */
 public class NameIdMapping {
-
+    private static final NameIdMapping ins = new NameIdMapping();
     private Map<String, TheWrapper> hospitals = new HashMap<String, TheWrapper>();
 
+
+    private NameIdMapping() {
+    }
+
+    public static NameIdMapping getInstance() {
+        return ins;
+    }
 
     public void addHospital(String name, String id) {
         TheWrapper wrapper = new TheWrapper();
