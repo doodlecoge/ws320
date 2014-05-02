@@ -1,10 +1,14 @@
 package me.hch.init;
 
+import me.hch.job.CacheUpdatingJob;
 import me.hch.model.HospitalEntity;
+import me.hch.model.HospitalInfo;
+import me.hch.model.MemoryCache;
 import me.hch.util.HibernateUtil;
 import org.hibernate.Session;
 
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -15,6 +19,11 @@ public class PopulateMemoryCache {
 
     public void populateSchedules() {
         populateHospitalFromDb();
+
+        Map<String, String> wsdls = MemoryCache.getInstance().wsdls;
+        for (String s : wsdls.keySet()) {
+            CacheUpdatingJob.getInstance().loadCache(s);
+        }
     }
 
     public void populatePatients() {
@@ -22,19 +31,12 @@ public class PopulateMemoryCache {
     }
 
     private void populateHospitalFromDb() {
-        HospitalEntity entity = new HospitalEntity();
-        entity.setId("sf");
-        entity.setName("name");
-        entity.setAddress("addr");
-        entity.setPhone("phone");
-        entity.setWsdl("wsdl");
-
         Session session = HibernateUtil.currentSession();
-        session.beginTransaction();
-        session.save(entity);
-        session.getTransaction().commit();
+        List<HospitalEntity> list = session.createCriteria(HospitalEntity.class).list();
 
-        List list = session.createCriteria(HospitalEntity.class).list();
-        System.out.println(list.size());
+        MemoryCache memoryCache = MemoryCache.getInstance();
+        for (HospitalEntity entity : list) {
+            memoryCache.addHospital(entity);
+        }
     }
 }

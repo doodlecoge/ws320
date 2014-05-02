@@ -17,6 +17,8 @@ public class FileUtils {
 
         if (!dir.endsWith(File.separator))
             dir += File.separator;
+
+        directory = dir;
     }
 
     public static FileUtils getInstance() {
@@ -42,9 +44,9 @@ public class FileUtils {
             File parentFile = file.getParentFile();
             if (!parentFile.exists()) parentFile.mkdirs();
 
-            BufferedWriter bw = new BufferedWriter(
-                    new FileWriter(directory + fileName)
-            );
+            FileOutputStream fos = new FileOutputStream(directory + fileName);
+            OutputStreamWriter osw = new OutputStreamWriter(fos, "utf8");
+            BufferedWriter bw = new BufferedWriter(osw);
 
             bw.write(content);
             bw.flush();
@@ -78,16 +80,17 @@ public class FileUtils {
 
     public static String getFileContent(File file) throws IOException {
         InputStream is = new FileInputStream(file);
+        InputStreamReader isr = new InputStreamReader(is, "utf8");
+        BufferedReader br = new BufferedReader(isr);
 
-        BufferedInputStream bis = new BufferedInputStream(is);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
         int b;
-        while ((b = bis.read()) != -1) {
+        while ((b = br.read()) != -1) {
             baos.write(b);
         }
 
-        return baos.toString();
+        return baos.toString("utf8");
     }
 
     public static boolean ancestorExists(File file) {
@@ -101,5 +104,19 @@ public class FileUtils {
 
     public static boolean ancestorExists(String path) {
         return ancestorExists(new File(path));
+    }
+
+    public static ByteArrayOutputStream getBytes(String file) throws IOException {
+        new File(file);
+        FileInputStream fis = new FileInputStream(file);
+        BufferedInputStream bis = new BufferedInputStream(fis);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+        int b;
+        while ((b = bis.read()) != -1) {
+            baos.write(b);
+        }
+
+        return baos;
     }
 }

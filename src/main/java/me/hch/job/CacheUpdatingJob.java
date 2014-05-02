@@ -18,8 +18,12 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
+import java.nio.file.CopyOption;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -60,7 +64,7 @@ public class CacheUpdatingJob extends Thread {
         this.cacheFolder = prepareFolder(cache_folder).getAbsolutePath();
 
         String backup_folder = conf.getString("backup_folder");
-        this.backupFolder = prepareFolder(cache_folder).getAbsolutePath();
+        this.backupFolder = prepareFolder(backup_folder).getAbsolutePath();
 
 
         /* fields mapping */
@@ -104,7 +108,11 @@ public class CacheUpdatingJob extends Thread {
         return ins;
     }
 
-    private static boolean stop = false;
+
+    public void loadCache(String hospitalId) {
+        downloadHisData(hospitalId);
+        loadCacheFromFile(hospitalId);
+    }
 
     private File prepareFolder(String baseFolder) {
         File file = new File(baseFolder);
@@ -137,7 +145,7 @@ public class CacheUpdatingJob extends Thread {
         return file;
     }
 
-    public void downloadHisData(String hospitalId) {
+    private void downloadHisData(String hospitalId) {
         String ts = TimeUtils.getTimeStamp("yyyy-MM-dd");
 
         prepareCacheSubFolder(ts);
@@ -168,7 +176,7 @@ public class CacheUpdatingJob extends Thread {
         fu.saveAs(hospitalId + doc_work + sss + ".xml", rst);
     }
 
-    public void loadCacheFromFile(String hospitalId) {
+    private void loadCacheFromFile(String hospitalId) {
         String ts = TimeUtils.getTimeStamp("yyyy-MM-dd");
         List<DepartInfo> departInfos = loadHisData(dpt_info, dptInfoTagName, ts, hospitalId, DepartInfo.class, DepartInfoFields);
         List<DoctorInfo> doctorInfos = loadHisData(doc_info, docInfoTagName, ts, hospitalId, DoctorInfo.class, DoctorInfoFields);
@@ -185,7 +193,7 @@ public class CacheUpdatingJob extends Thread {
     }
 
     /* although singleton, we still want it to be synchronized */
-    public synchronized void populateCache(
+    private synchronized void populateCache(
             String hospitalId,
             List<DepartInfo> departInfos,
             List<DoctorInfo> doctorInfos,
@@ -383,8 +391,31 @@ public class CacheUpdatingJob extends Thread {
     }
 
     private void backupCache(String subFolderName, String hospitalId) {
-        // todo: move existing file to backup folder
+        String folderStr = cacheFolder + File.separator + subFolderName;
+        File folder = new File(folderStr);
 
+
+        File[] files = folder.listFiles(new FileNameStartsWithFilter(hospitalId));
+
+        String subFolderStr = backupFolder + File.separator + subFolderName;
+        File subFolder = new File(subFolderStr);
+        if (!subFolder.exists()) {
+            subFolder.mkdirs();
+        }
+
+        for (File file : files) {
+            String newPath = subFolderStr + File.separator + file.getName();
+            try {
+                Files.move(
+                        file.toPath(),
+                        new File(newPath).toPath(),
+                        StandardCopyOption.ATOMIC_MOVE,
+                        StandardCopyOption.REPLACE_EXISTING
+                );
+            } catch (IOException e) {
+                throw new Ws320Exception(e);
+            }
+        }
     }
 
 
