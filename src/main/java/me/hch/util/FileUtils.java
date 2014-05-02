@@ -11,36 +11,29 @@ public class FileUtils {
     private FileUtils ins;
     private String directory;
 
-
     private FileUtils(String dir) {
-        if (dir == null) dir = "./";
-        if (!dir.endsWith("/")) dir += "/";
-        directory = dir;
+        if (dir == null)
+            dir = "." + File.separator;
+
+        if (!dir.endsWith(File.separator))
+            dir += File.separator;
     }
 
     public static FileUtils getInstance() {
-        return getInstance("./");
+        return getInstance("." + File.separator);
     }
 
     public static FileUtils getInstance(String dir) {
         return new FileUtils(dir);
     }
 
+
+    /* instance methods */
     public String getFileContent(String fileName) throws IOException {
         if (fileName.startsWith("/"))
             fileName = fileName.substring(1);
 
-        InputStream is = new FileInputStream(directory + fileName);
-
-        BufferedInputStream bis = new BufferedInputStream(is);
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
-        int b;
-        while ((b = bis.read()) != -1) {
-            baos.write(b);
-        }
-
-        return baos.toString();
+        return getFileContent(new File(directory + fileName));
     }
 
     public void saveAs(String fileName, String content) {
@@ -62,6 +55,7 @@ public class FileUtils {
     }
 
 
+    /* static methods */
     public static String load(String fileName) {
         InputStream is = FileUtils.class.getClassLoader().getResourceAsStream(fileName);
         if (is == null) is = FileUtils.class.getResourceAsStream(fileName);
@@ -80,5 +74,32 @@ public class FileUtils {
         }
 
         return baos.toString();
+    }
+
+    public static String getFileContent(File file) throws IOException {
+        InputStream is = new FileInputStream(file);
+
+        BufferedInputStream bis = new BufferedInputStream(is);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+        int b;
+        while ((b = bis.read()) != -1) {
+            baos.write(b);
+        }
+
+        return baos.toString();
+    }
+
+    public static boolean ancestorExists(File file) {
+        do {
+            if (file.exists()) return true;
+            else file = file.getParentFile();
+        } while (file != null);
+
+        return false;
+    }
+
+    public static boolean ancestorExists(String path) {
+        return ancestorExists(new File(path));
     }
 }

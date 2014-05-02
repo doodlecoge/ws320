@@ -19,7 +19,7 @@ public class XmlAnalyzerTest {
         List<DepartInfo> departs = XmlAnalyzer.getDeparts(fileContent);
 
         for (DepartInfo depart : departs) {
-            System.out.println(depart.getDepartName());
+            System.out.println(depart.DepartName);
         }
 
 
@@ -27,21 +27,21 @@ public class XmlAnalyzerTest {
         fileContent = FileUtils.getInstance("./ignore").getFileContent("FQYY.getDoctorInfo.xml");
         List<DoctorInfo> doctors = XmlAnalyzer.getDoctors(fileContent);
         for (DoctorInfo doctor : doctors) {
-            System.out.println(doctor.getDoctorName());
+            System.out.println(doctor.DoctorName);
         }
 
         // depart works
         fileContent = FileUtils.getInstance("./ignore").getFileContent("FQYY.getDepartWorkSchedule.xml");
         List<DepartWork> departWorks = XmlAnalyzer.getDepartWorks(fileContent);
         for (DepartWork departWork : departWorks) {
-            System.out.println(departWork.getDepartId());
+            System.out.println(departWork.DepartId);
         }
 
         // doctor works
         fileContent = FileUtils.getInstance("./ignore").getFileContent("FQYY.getDoctorWorkSchedule.xml");
         List<DoctorWork> doctorWorks = XmlAnalyzer.getDoctorWorks(fileContent);
         for (DoctorWork doctorWork : doctorWorks) {
-            System.out.println(doctorWork.getDoctorId());
+            System.out.println(doctorWork.DoctorId);
         }
     }
 }
