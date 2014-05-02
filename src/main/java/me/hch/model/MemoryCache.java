@@ -18,6 +18,7 @@ public class MemoryCache {
     // id => Hospital
     private Map<String, Hospital> hospitals = new HashMap<String, Hospital>(0);
     private Map<String, String> idNameMapper = new HashMap<String, String>();
+    public Map<String, String> wsdls = new HashMap<String, String>();
 
     private static final MemoryCache ins = new MemoryCache();
 
@@ -28,16 +29,16 @@ public class MemoryCache {
         return ins;
     }
 
-    public void addHospital(HospitalInfo hospitalInfo) {
+    public void addHospital(HospitalEntity entity) {
         Hospital.HospBasic basic = new Hospital.HospBasic();
-        basic.setAddress(hospitalInfo.address);
-        basic.setGrade(hospitalInfo.grade);
-        basic.setIntro(hospitalInfo.intro);
-        basic.setPhone(hospitalInfo.phone);
-        basic.setKind(hospitalInfo.kind);
+        basic.setAddress(entity.getAddress());
+        basic.setGrade(entity.getGrade());
+        basic.setIntro(entity.getIntro());
+        basic.setPhone(entity.getPhone());
+        basic.setKind(entity.getKind());
 
         Hospital hospital = new Hospital();
-        hospital.setHospName(hospitalInfo.name);
+        hospital.setHospName(entity.getName());
         hospital.setHospBasic(basic);
 
 
@@ -49,7 +50,8 @@ public class MemoryCache {
             hospitals.put(hospName, hospital);
         }
 
-        idNameMapper.put(hospitalInfo.id, hospName);
+        idNameMapper.put(entity.getId(), hospName);
+        wsdls.put(entity.getId(), entity.getWsdl());
     }
 
     public String getNameById(String id) {
