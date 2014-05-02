@@ -37,9 +37,46 @@
         <property name="dataSource" ref="dataSource"></property>
         <property name="hibernateProperties">
             <props>
-                <prop key="hibernate.dialect"></prop>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</prop>
                 <prop key="hibernate.show_sql">true</prop>
                 <prop key="format_sql">true</prop>
+            </props>
+        </property>
+    </bean>
+
+
+    <bean id="h2Ds" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="${db.driver}"></property>
+        <property name="url" value="${db.url}"></property>
+        <property name="username" value="${db.username}"></property>
+        <property name="password" value="${db.password}"></property>
+    </bean>
+
+    <bean id="h2Sf" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+        <property name="dataSource" ref="h2Ds"></property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="format_sql">true</prop>
+            </props>
+        </property>
+
+    </bean>
+
+    <bean id="h2Tm" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="h2Sf"/>
+    </bean>
+
+    <bean id="transactionProxy" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean"
+          abstract="true">
+        <property name="transactionManager" ref="h2Tm"></property>
+        <property name="transactionAttributes">
+            <props>
+                <prop key="add*">PROPAGATION_REQUIRED,-Exception</prop>
+                <prop key="modify*">PROPAGATION_REQUIRED,-myException</prop>
+                <prop key="del*">PROPAGATION_REQUIRED</prop>
+                <prop key="*">PROPAGATION_REQUIRED</prop>
             </props>
         </property>
     </bean>

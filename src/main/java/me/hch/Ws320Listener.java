@@ -1,10 +1,12 @@
 package me.hch;
 
+import me.hch.init.H2DatabaseInitialize;
 import me.hch.init.PopulateMemoryCache;
 import org.springframework.web.util.WebUtils;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+import java.sql.SQLException;
 
 /**
  * Created by huaiwang on 14-3-28.
@@ -19,16 +21,24 @@ public class Ws320Listener implements ServletContextListener {
         WebUtils.setWebAppRootSystemProperty(event.getServletContext());
 
 
+        try {
+            H2DatabaseInitialize.init();
+        } catch (SQLException e) {
+            //throw new Ws320Exception(e);
+        }
+
         // put initialization code here including
         // Schedule, Hospital, Doctor, Department
         // and Patient in memory data.
 
 
+        PopulateMemoryCache populateMemoryCache = new PopulateMemoryCache();
+
         // load schedules
-        PopulateMemoryCache.populateSchedules();
+        populateMemoryCache.populateSchedules();
 
         // load patients
-        PopulateMemoryCache.populatePatients();
+        populateMemoryCache.populatePatients();
     }
 
     @Override

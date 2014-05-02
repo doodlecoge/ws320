@@ -1,28 +1,40 @@
 package me.hch.init;
 
-import me.hch.bean.Hospital;
-import me.hch.model.MemoryCache;
+import me.hch.model.HospitalEntity;
+import me.hch.util.HibernateUtil;
+import org.hibernate.Session;
+
+import java.util.List;
+
 
 /**
  * Created by huaiwang on 14-3-28.
  */
+
 public class PopulateMemoryCache {
 
-    public static void populateSchedules() {
+    public void populateSchedules() {
+        populateHospitalFromDb();
+    }
+
+    public void populatePatients() {
 
     }
 
-    public static void populatePatients() {
+    private void populateHospitalFromDb() {
+        HospitalEntity entity = new HospitalEntity();
+        entity.setId("sf");
+        entity.setName("name");
+        entity.setAddress("addr");
+        entity.setPhone("phone");
+        entity.setWsdl("wsdl");
 
-    }
+        Session session = HibernateUtil.currentSession();
+        session.beginTransaction();
+        session.save(entity);
+        session.getTransaction().commit();
 
-    private static void populateHospitalFromDb() {
-
-        Hospital hospital = new Hospital();
-        hospital.setHospName("虎丘医院");
-        hospital.id = "FQYY";
-
-
-
+        List list = session.createCriteria(HospitalEntity.class).list();
+        System.out.println(list.size());
     }
 }
