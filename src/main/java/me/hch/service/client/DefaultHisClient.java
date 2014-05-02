@@ -1,6 +1,7 @@
 package me.hch.service.client;
 
 import me.hch.Ws320Exception;
+import me.hch.model.MemoryCache;
 import me.hch.util.Config;
 import me.hch.util.FileUtils;
 import org.apache.axiom.om.OMAbstractFactory;
@@ -70,7 +71,7 @@ public class DefaultHisClient implements HisClientIface {
     }
 
     public String getDoctorInfo(String hospitalId) {
-        String url = urlConfig.getString(hospitalId);
+        String url = MemoryCache.getInstance().wsdls.get(hospitalId);
         String xml = FileUtils.load("confidential/basic-info-req.xml");
         xml = xml.replace("{HOSPITAL-ID}", hospitalId);
 
@@ -92,7 +93,7 @@ public class DefaultHisClient implements HisClientIface {
         xml = xml.replace("{BEGIN-TIME}", beginTime);
         xml = xml.replace("{END-TIME}", endTime);
 
-        String url = urlConfig.getString(hospitalId);
+        String url = MemoryCache.getInstance().wsdls.get(hospitalId);
         return getStringFromWs(url, "getDepartWorkInfo", xml);
     }
 
@@ -112,7 +113,7 @@ public class DefaultHisClient implements HisClientIface {
         xml = xml.replace("{BEGIN-TIME}", beginTime);
         xml = xml.replace("{END-TIME}", endTime);
 
-        String url = urlConfig.getString(hospitalId);
+        String url = MemoryCache.getInstance().wsdls.get(hospitalId);
         return getStringFromWs(url, "getDoctorWorkInfo", xml);
     }
 
