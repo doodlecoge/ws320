@@ -3,12 +3,14 @@ package me.hch.service;
 import com.sun.xml.ws.developer.SchemaValidation;
 import me.hch.bean.*;
 import me.hch.bean.Hospital;
+import me.hch.model.MemoryCache;
 
 import javax.annotation.Resource;
 import javax.jws.WebService;
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.ws.WebServiceContext;
 import javax.xml.ws.handler.MessageContext;
+import java.util.Map;
 
 /**
  * Created by hch on 2014/3/30.
@@ -42,13 +44,12 @@ public class Ws320Impl implements Ws320 {
         String password = req.getAuthInfo().getPassword();
 
         System.out.println(userName + ", " + password);
+        // todo: authenticate code here
 
-
-        Hospital hospital = new Hospital();
-        hospital.setHospName("SDFY");
 
         GetHospInfoRsp rsp = new GetHospInfoRsp();
-        rsp.getHospital().add(hospital);
+        Map<String, Hospital> hospitals = MemoryCache.getInstance().getHospitals();
+        rsp.getHospital().addAll(hospitals.values());
         return rsp;
     }
 

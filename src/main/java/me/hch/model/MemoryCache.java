@@ -54,6 +54,10 @@ public class MemoryCache {
         wsdls.put(entity.getId(), entity.getWsdl());
     }
 
+    public Map<String, Hospital> getHospitals() {
+        return hospitals;
+    }
+
     public String getNameById(String id) {
         return idNameMapper.get(id);
     }
