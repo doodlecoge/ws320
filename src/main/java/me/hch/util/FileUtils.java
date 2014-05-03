@@ -35,7 +35,7 @@ public class FileUtils {
         if (fileName.startsWith("/"))
             fileName = fileName.substring(1);
 
-        return getFileContent(new File(directory + fileName));
+        return getFileContent(new File(directory + fileName), "UTF-8");
     }
 
     public void saveAs(String fileName, String content) {
@@ -78,19 +78,16 @@ public class FileUtils {
         return baos.toString();
     }
 
-    public static String getFileContent(File file) throws IOException {
+    public static String getFileContent(File file, String encoding) throws IOException {
         InputStream is = new FileInputStream(file);
-        InputStreamReader isr = new InputStreamReader(is, "utf8");
-        BufferedReader br = new BufferedReader(isr);
-
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
         int b;
-        while ((b = br.read()) != -1) {
+        while ((b = is.read()) != -1) {
             baos.write(b);
         }
 
-        return baos.toString("utf8");
+        return baos.toString(encoding);
     }
 
     public static boolean ancestorExists(File file) {

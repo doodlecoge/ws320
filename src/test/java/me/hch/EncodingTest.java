@@ -12,7 +12,7 @@ import java.io.IOException;
  */
 public class EncodingTest {
     public static void main(String[] args) throws IOException {
-        File file = new File("E:\\tmp\\cache\\sdfy-dpt-info.xml");
+        File file = new File("E:\\tmp\\cache\\a.txt");
 
         ByteArrayOutputStream bytes = FileUtils.getBytes(file.getAbsolutePath());
         String encoding = getEncoding(bytes);

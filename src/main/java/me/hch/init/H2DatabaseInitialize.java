@@ -31,6 +31,9 @@ public class H2DatabaseInitialize {
 
         execute(sql);
 
+        sql = "drop table if exists ws320.hospitals";
+        execute(sql);
+
 
         sql = "" +
                 "create table if not exists ws320.hospitals" +
@@ -59,8 +62,8 @@ public class H2DatabaseInitialize {
         sql = "insert into ws320.hospitals (id, name, address, phone, wsdl) values ('sdfy', 'sdfy name', 'sdfy addr', '13812345678', 'http://localhost:8080/')";
         execute(sql);
 
-        sql = "insert into ws320.hospitals (id, name, address, phone, wsdl) values ('sdfe', 'sdfe name', 'sdfe addr', '13812345679', 'http://localhost:8080/')";
-        execute(sql);
+//        sql = "insert into ws320.hospitals (id, name, address, phone, wsdl) values ('sdfe', 'sdfe name', 'sdfe addr', '13812345679', 'http://localhost:8080/')";
+//        execute(sql);
     }
 
     public static void execute(String sql) throws SQLException {
