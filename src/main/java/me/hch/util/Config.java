@@ -55,6 +55,10 @@ public class Config {
         return this.config.get(key);
     }
 
+    public int getInt(String key) {
+        return Integer.parseInt(getString(key));
+    }
+
     public Set<String> getKeys() {
         return this.config.keySet();
     }

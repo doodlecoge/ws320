@@ -3,13 +3,17 @@ package me.hch.service;
 import com.sun.xml.ws.developer.SchemaValidation;
 import me.hch.bean.*;
 import me.hch.bean.Hospital;
+import me.hch.job.CacheUpdatingJob;
 import me.hch.model.MemoryCache;
+import me.hch.util.TimeUtils;
 
 import javax.annotation.Resource;
 import javax.jws.WebService;
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.ws.WebServiceContext;
 import javax.xml.ws.handler.MessageContext;
+import java.math.BigInteger;
+import java.util.Calendar;
 import java.util.Map;
 
 /**
@@ -47,9 +51,19 @@ public class Ws320Impl implements Ws320 {
         // todo: authenticate code here
 
 
+        long now = Calendar.getInstance().getTimeInMillis();
+        long diff = now - CacheUpdatingJob.getInstance().lastUpdateTime;
+
         GetHospInfoRsp rsp = new GetHospInfoRsp();
-        Map<String, Hospital> hospitals = MemoryCache.getInstance().getHospitals();
-        rsp.getHospital().addAll(hospitals.values());
+        if (diff > TimeUtils.DayMs * 6) {
+            Result result = new Result();
+            result.setResultCode(BigInteger.valueOf(1));
+            result.setResultMsg("cache not ready");
+            rsp.setResult(result);
+        } else {
+            Map<String, Hospital> hospitals = MemoryCache.getInstance().getHospitals();
+            rsp.getHospital().addAll(hospitals.values());
+        }
         return rsp;
     }
 

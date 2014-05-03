@@ -21,13 +21,9 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
-import java.nio.file.CopyOption;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -36,10 +32,13 @@ import java.util.regex.Pattern;
  */
 public class CacheUpdatingJob extends Thread {
     private static final Logger log = LoggerFactory.getLogger(CacheUpdatingJob.class);
-    public static Config conf = Config.getInstance("cache.properties");
+    public static Config cacheConfig = Config.getInstance("cache.properties");
     public static final CacheUpdatingJob ins = new CacheUpdatingJob();
     private String cacheFolder = null;
     private String backupFolder = null;
+    public long lastUpdateTime = -1;
+    public long lastTryUpdatingTime = -1;
+    private boolean stop = false;
 
 
     private static final String dpt_info = "-dpt-info-";
@@ -60,10 +59,10 @@ public class CacheUpdatingJob extends Thread {
 
     {
         /* cache & backup folder */
-        String cache_folder = conf.getString("cache_folder");
+        String cache_folder = cacheConfig.getString("cache_folder");
         this.cacheFolder = prepareFolder(cache_folder).getAbsolutePath();
 
-        String backup_folder = conf.getString("backup_folder");
+        String backup_folder = cacheConfig.getString("backup_folder");
         this.backupFolder = prepareFolder(backup_folder).getAbsolutePath();
 
 
@@ -103,11 +102,44 @@ public class CacheUpdatingJob extends Thread {
 
     }
 
-
     public static CacheUpdatingJob getInstance() {
         return ins;
     }
 
+    @Override
+    public void run() {
+        while (!stop) {
+            try {
+                long now = Calendar.getInstance().getTimeInMillis();
+
+                // time between two updates should not be too frequent
+                if (now - lastTryUpdatingTime < 60 * 1000) {
+                    _sleep(5000);
+                    continue;
+                } else {
+                    lastTryUpdatingTime = now;
+                }
+
+                long when2update = now - now % TimeUtils.DayMs
+                        + cacheConfig.getInt("update_time")
+                        * TimeUtils.HourMs;
+
+                if (lastUpdateTime > when2update) {
+                    _sleep(TimeUtils.DayMs - lastUpdateTime + when2update);
+                    continue;
+                }
+
+                Map<String, String> wsdls = MemoryCache.getInstance().wsdls;
+                for (String hosId : wsdls.keySet()) {
+                    loadCache(hosId);
+                }
+
+                lastUpdateTime = Calendar.getInstance().getTimeInMillis();
+            } catch (Exception e) {
+                log.error("update job error", e);
+            }
+        }
+    }
 
     public void loadCache(String hospitalId) {
         downloadHisData(hospitalId);

@@ -2,6 +2,7 @@ package me.hch;
 
 import me.hch.init.H2DatabaseInitialize;
 import me.hch.init.PopulateMemoryCache;
+import me.hch.job.CacheUpdatingJob;
 import org.springframework.web.util.WebUtils;
 
 import javax.servlet.ServletContextEvent;
@@ -35,10 +36,14 @@ public class Ws320Listener implements ServletContextListener {
         PopulateMemoryCache populateMemoryCache = new PopulateMemoryCache();
 
         // load schedules
-        populateMemoryCache.populateSchedules();
+//        populateMemoryCache.populateSchedules();
+        populateMemoryCache.populateHospitalFromDb();
 
         // load patients
         populateMemoryCache.populatePatients();
+
+
+        CacheUpdatingJob.getInstance().start();
     }
 
     @Override
@@ -47,5 +52,6 @@ public class Ws320Listener implements ServletContextListener {
         // - release any resources;
         // - save in memory data to database if needed.
 
+        CacheUpdatingJob.getInstance().stop();
     }
 }

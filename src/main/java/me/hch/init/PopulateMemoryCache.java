@@ -18,7 +18,7 @@ import java.util.Map;
 public class PopulateMemoryCache {
 
     public void populateSchedules() {
-        populateHospitalFromDb();
+//        populateHospitalFromDb();
 
         Map<String, String> wsdls = MemoryCache.getInstance().wsdls;
         for (String s : wsdls.keySet()) {
@@ -30,7 +30,7 @@ public class PopulateMemoryCache {
 
     }
 
-    private void populateHospitalFromDb() {
+    public void populateHospitalFromDb() {
         Session session = HibernateUtil.currentSession();
         List<HospitalEntity> list = session.createCriteria(HospitalEntity.class).list();
 

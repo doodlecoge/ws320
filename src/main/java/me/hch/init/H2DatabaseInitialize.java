@@ -64,6 +64,15 @@ public class H2DatabaseInitialize {
 
 //        sql = "insert into ws320.hospitals (id, name, address, phone, wsdl) values ('sdfe', 'sdfe name', 'sdfe addr', '13812345679', 'http://localhost:8080/')";
 //        execute(sql);
+
+
+
+        sql = "" +
+                "create table if not exists ws320.patients" +
+                "(" +
+                "   id int not null primary key," +
+                "" +
+                ")";
     }
 
     public static void execute(String sql) throws SQLException {
