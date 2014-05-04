@@ -59,7 +59,7 @@ public class H2DatabaseInitialize {
         execute(sql);
 
 
-        sql = "insert into ws320.hospitals (id, name, address, phone, wsdl) values ('sdfy', 'sdfy name', 'sdfy addr', '13812345678', 'http://localhost:8080/')";
+        sql = "insert into ws320.hospitals (id, name, address, phone, wsdl) values ('ZYYY', 'ZYYY name', 'ZYYY addr', '13812345678', 'http://localhost:8080/')";
         execute(sql);
 
 //        sql = "insert into ws320.hospitals (id, name, address, phone, wsdl) values ('sdfe', 'sdfe name', 'sdfe addr', '13812345679', 'http://localhost:8080/')";
