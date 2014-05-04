@@ -74,19 +74,26 @@ public class FileUtils {
         } catch (IOException e) {
             throw new Ws320Exception(e);
         }
+        try {
+            bis.close();
+        } catch (IOException e) {
+            throw new Ws320Exception(e);
+        }
 
         return baos.toString();
     }
 
     public static String getFileContent(File file, String encoding) throws IOException {
         InputStream is = new FileInputStream(file);
+        BufferedInputStream bis = new BufferedInputStream(is);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
         int b;
-        while ((b = is.read()) != -1) {
+        while ((b = bis.read()) != -1) {
             baos.write(b);
         }
 
+        bis.close();
         return baos.toString(encoding);
     }
 
@@ -114,6 +121,7 @@ public class FileUtils {
             baos.write(b);
         }
 
+        bis.close();
         return baos;
     }
 
@@ -131,5 +139,7 @@ public class FileUtils {
 
         bis.close();
         bos.close();
+
+        from.delete();
     }
 }
