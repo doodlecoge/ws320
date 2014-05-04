@@ -116,4 +116,20 @@ public class FileUtils {
 
         return baos;
     }
+
+    public static void move(File from, File to) throws IOException {
+        FileInputStream fis = new FileInputStream(from);
+        FileOutputStream fos = new FileOutputStream(to);
+
+        BufferedInputStream bis = new BufferedInputStream(fis);
+        BufferedOutputStream bos = new BufferedOutputStream(fos);
+
+        int b = -1;
+        while ((b = bis.read()) != -1) {
+            bos.write(b);
+        }
+
+        bis.close();
+        bos.close();
+    }
 }

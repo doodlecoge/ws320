@@ -21,8 +21,8 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
+//import java.nio.file.Files;
+//import java.nio.file.StandardCopyOption;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -438,12 +438,13 @@ public class CacheUpdatingJob extends Thread {
         for (File file : files) {
             String newPath = subFolderStr + File.separator + file.getName();
             try {
-                Files.move(
-                        file.toPath(),
-                        new File(newPath).toPath(),
-                        StandardCopyOption.ATOMIC_MOVE,
-                        StandardCopyOption.REPLACE_EXISTING
-                );
+                FileUtils.move(file, new File(newPath));
+//                Files.move(
+//                        file.toPath(),
+//                        new File(newPath).toPath(),
+//                        StandardCopyOption.ATOMIC_MOVE,
+//                        StandardCopyOption.REPLACE_EXISTING
+//                );
             } catch (IOException e) {
                 throw new Ws320Exception(e);
             }
