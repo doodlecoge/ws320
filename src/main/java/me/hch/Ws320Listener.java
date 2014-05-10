@@ -37,13 +37,13 @@ public class Ws320Listener implements ServletContextListener {
 
         // load schedules
 //        populateMemoryCache.populateSchedules();
-        populateMemoryCache.populateHospitalFromDb();
+//        populateMemoryCache.populateHospitalFromDb();
 
         // load patients
-        populateMemoryCache.populatePatients();
+//        populateMemoryCache.populatePatients();
 
 
-        CacheUpdatingJob.getInstance().start();
+//        CacheUpdatingJob.getInstance().start();
     }
 
     @Override
@@ -52,6 +52,6 @@ public class Ws320Listener implements ServletContextListener {
         // - release any resources;
         // - save in memory data to database if needed.
 
-        CacheUpdatingJob.getInstance().stop();
+//        CacheUpdatingJob.getInstance().stop();
     }
 }

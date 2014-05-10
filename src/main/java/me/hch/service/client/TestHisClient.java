@@ -1,7 +1,6 @@
 package me.hch.service.client;
 
 import me.hch.Ws320Exception;
-import me.hch.model.MemoryCache;
 import me.hch.util.Config;
 import me.hch.util.FileUtils;
 
