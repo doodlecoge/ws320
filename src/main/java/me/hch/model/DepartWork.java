@@ -6,9 +6,9 @@ package me.hch.model;
 public class DepartWork {
     public String Hospitalcode;
     public String DepartId;
-    public String WorkStatus;
     public String WorkDate;
     public String WorkType;
+    public String WorkStatus;
     public String Limited;
     public String Registryfee;
     public String Chinicfee;

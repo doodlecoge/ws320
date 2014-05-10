@@ -11,15 +11,32 @@
 
 
 
-Definition of Schedule
-----------------------
+Definitions
+-----------
 
-The schedule is qualified by the following attributes:
+1.  **Schedule**. Schedule is the timetable of
+    a doctor or department showing the working time
+    list of that doctor. It is usually divided in
+    the granularity of half day, called am or pm.
+    Here, for convenient we use the plural form
+    *schedules* to represent the timetable, and
+    the singular word *schedule* is used to stand for
+    one item of the schedules.
+    And then a department's/doctor's schedule is uniquely
+    identified by the following 4/5 attribute.
 
-1. hospital
-2. department
-3. doctor (optional)
-4. date
+    1.  hospital
+    2.  department
+    3.  doctor (if doctor)
+    4.  date
+    5.  am or pm
+
+2.  **Time Frame**. Time frame is the a period of
+    time from the very beginning of a schedules to
+    the very end of the schedules. This is usually
+    7 days of time, can be calculated using:
+
+        min(dates of schedules) ~ max(dates of schedules)
 
 We consider two schedules have the same **identifier**
 if they do have same values for these properties.
@@ -51,23 +68,27 @@ application requests, the **outbound triggers**.
 Inbound Triggers
 ----------------
 
-1.  Duplicate incoming identifiers, there are two
-    situations to handle:
+1.  **Duplication**. Duplicate incoming identifiers,
+    there are two situations to handle:
 
     a.  if all other attributes have same value
         we just ignore and give an warning on this.
 
     b.  else, we report an error.
 
-2.  If one of the current/incoming schedules can not
-    find a matching schedule in incoming/current
-    schedules, and the date lies in the date window
-    intersection of the current and incoming date window.
+2.  **Out of date**. Too old or too early.
+
+    a.  just ignore, and give a warning
+
+3.  **Mismatching**. If one of the current/incoming schedules
+    can not find a matching schedule in incoming/current
+    schedules, and the date lies in the intersection of two
+    time frames.
 
     a.  We should report an error then.
 
-3.  One attribute of a incoming schedule not equal the
-    one of a current schedule with same identifier.
+4.  **Changing**. One attribute of a incoming schedule not
+    equal the one of a current schedule with same identifier.
 
     a.  result in a cancel registration,
     b.  or, an error same as situation (b) in (1).
@@ -80,11 +101,35 @@ Outbound Triggers
     specified values need to be replaced with more
     meaningful values.
 
+    a.  just change the value
 
 Trigger Design
 --------------
 
-function(cur-id, in-id, attr, cur-val, in-val)
+
+1.  inbound
+
+    1.  duplication
+    2.  out of date
+    3.  single identifier (date in intersection of time frames)
+    4.  same identifier, but a attribute changed
+
+2.  outbound
+
+    5.  some schedule need to change value of some attribute
+
+
+
+
+Use Cases
+---------
+
+1.  cancel schedule
+
+
+2.
+
+function(cur-selector, in-selector, attr, cur-val, in-val)
 {
     action
 }
