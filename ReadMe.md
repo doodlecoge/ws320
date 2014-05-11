@@ -103,37 +103,100 @@ Outbound Triggers
 
     a.  just change the value
 
+
+Use Cases
+---------
+
+    Hospitalcode;
+    DepartId;
+    DoctorId;
+    WorkDate;
+    WorkType;
+    WorkStatus;
+    Limited;
+    BeginNo;
+    SpaceNo;
+    Registryfee;
+    Chinicfee;
+    Expertsfee;
+
+
+
+
 Trigger Design
---------------
+==============
+
+Selector Grammar
+----------------
+
+The grammar is described using [ABNF](http://tools.ietf.org/html/rfc5234)
+
+    SELECTOR    =   0KV / KV *("and" KV)                    ; empty selector is allowed
+    KV          =   APM / DATE / "(" K "=" V ")"
+    DATE        =   "date" "=" SQ 4DIGIT-2DIGIT-2DIGIT SQ   ; date format yyyy-MM-dd
+    SQ          =   "'"                                     ; single quote
+    APM         =   "apm" "=" ("'am'" / "'pm'")
+    K           =   "hospital" / "department" / "doctor"
+    V           =   SQ *(ALPHA / DIGIT / WSP) SQ
+    ALPHA       =   %x41-5A / %x61-7A                       ; A-Z / a-z
+    DIGIT       =   %x30-39                                 ; 0-9
 
 
-1.  inbound
+
+An example, any resemblance to a person is purely coincidental:
+
+    (hospital = '人民医院') and (department = '神经内科') and (doctor = '小明') and (date = '2013-05-08') and (apm = 'am')
+
+
+Events to Handle
+----------------
+
+1.  inbound - detection
 
     1.  duplication
     2.  out of date
     3.  single identifier (date in intersection of time frames)
     4.  same identifier, but a attribute changed
 
-2.  outbound
+2.  outbound - replacement
 
-    5.  some schedule need to change value of some attribute
-
-
+    1.  some schedule need to change value of some attribute
 
 
-Use Cases
----------
+Trigger Syntax
+--------------
 
-1.  cancel schedule
+In previous sibling section, for case 1.1, 1.2 and 1.3, we need
+to check identifiers only. For case 1.4 and 2.1, we need to
+specify which attribute changed, and may also need to supply
+two values for the attribute, one for current schedule and the
+other for incoming schedule.
+
+For 1.4, if two different values given, once an identifier matched
+we need to perform an **action**, so an action is also needed.
+
+    selector, attribute, old value, new value, action
+
+The following example will result in a canceling of
+registration for the schedule is being considering.
+
+    selector    =
+    attribute   = work_status
+    new value   = 1
+    old value   = 0
 
 
-2.
 
-function(cur-selector, in-selector, attr, cur-val, in-val)
-{
-    action
-}
+For 2.1, we need to know which attribute to replace and the new
+value for that attribute.
 
-action:
+    selector, attribute, new value
 
-    -   trigger function
+For example:
+
+    selector    = (doctor = '小刚') and (department = '专家门诊')
+    attribute   = department
+    new value   = 儿科
+
+This will replace the department name to 儿科 for all schedules
+that the doctor name is 小刚 and department name is 专家门诊.
