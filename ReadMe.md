@@ -184,6 +184,7 @@ registration for the schedule is being considering.
     attribute   = work_status
     new value   = 1
     old value   = 0
+    action      = cancel registration
 
 
 
