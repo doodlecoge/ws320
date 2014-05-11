@@ -658,33 +658,42 @@
         </xsd:sequence>
     </xsd:complexType>
 
-    <xsd:simpleType name="tRegistryFee" xml:base="xsd:float">
+    <xsd:simpleType name="tRegistryFee">
         <xsd:annotation>
             <xsd:documentation>挂号费</xsd:documentation>
         </xsd:annotation>
-        <xsd:restriction/>
+        <xsd:restriction base="xsd:float">
+            <xsd:minExclusive value="0"/>
+        </xsd:restriction>
     </xsd:simpleType>
 
-    <xsd:simpleType name="tClinicFee" xml:base="xsd:float">
+    <xsd:simpleType name="tClinicFee">
         <xsd:annotation>
             <xsd:documentation>门诊费</xsd:documentation>
         </xsd:annotation>
-        <xsd:restriction/>
+        <xsd:restriction base="xsd:float">
+            <xsd:minExclusive value="0"/>
+
+        </xsd:restriction>
     </xsd:simpleType>
 
 
-    <xsd:simpleType name="tSN" xml:base="xsd:string">
+    <xsd:simpleType name="tSN">
         <xsd:annotation>
             <xsd:documentation>挂号流水号</xsd:documentation>
         </xsd:annotation>
-        <xsd:restriction/>
+        <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="20"/>
+        </xsd:restriction>
     </xsd:simpleType>
 
-    <xsd:simpleType name="tWorkDate" xml:base="xsd:date">
+    <xsd:simpleType name="tWorkDate">
         <xsd:annotation>
             <xsd:documentation>排班日期</xsd:documentation>
         </xsd:annotation>
-        <xsd:restriction/>
+        <xsd:restriction base="xsd:date">
+            <xsd:pattern value="yyyy-MM-dd"/>
+        </xsd:restriction>
     </xsd:simpleType>
 
     <xsd:simpleType name="tWorkType">

@@ -7,7 +7,7 @@
 
     <bean id="ws320Client" class="me.hch.service.client.Ws320Client">
         <property name="defaultUri" value="http://localhost:8080/ws"/>
-        <property name="request" value="classpath:me/hch/client/ws320-request.xml"/>
+        <property name="request" value="classpath:me/hch/service/client/ws320-request.xml"/>
         <property name="messageSender">
             <bean class="org.springframework.ws.transport.http.HttpComponentsMessageSender">
                 <property name="credentials">
