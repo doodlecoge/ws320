@@ -201,3 +201,43 @@ For example:
 
 This will replace the department name to 儿科 for all schedules
 that the doctor name is 小刚 and department name is 专家门诊.
+
+
+Data Structure
+--------------
+
+We have two tasks to do, 1) change detection, and trigger action
+accordingly, a common case is trigger cancel registration for patients
+who have registered a schedule that is being stopped; 2) replace some of the schedule attributes to new
+values, a common case is we need to replace the department to a more
+meaningful name to 3rd party applications.
+
+Task 1) does not affect the final data structure in memory, while
+task 2) does. We must keep both versions (original & replaced)because
+we need to write back to hospital exactly the same values as hospital
+sends to us.
+
+We use **HashMap** to keep all schedules for the sake of fast search,
+the identifier, defined very begin, of the schedule is used as the key.
+We need to record the original schedule identifier so that we can
+get original values and send back to hospital.
+
+
+So the schedule data structure would be like:
+
+    class schedule {
+        original-identifier;
+        other-attributes;
+    }
+
+A schedule can be replaced multiply times, the identifier may change
+accordingly, here is an example:
+
+**before replace**
+> hos1_dpt1_doc1_date1_type1 => schedule(hos1, dpt1, doc1, date1, type1, status1)
+
+**after replace department**
+> hos1_dpt2_doc1_date1_type1 => schedule(hos1, dpt2, doc1, date1, type1, status1)
+
+**after replace status**
+> hos1_dpt2_doc1_date1_type2 => schedule(hos1, dpt2, doc1, date1, type1, status2)

@@ -30,21 +30,281 @@ import java.util.regex.Pattern;
  * Created by huaiwang on 14-4-30.
  */
 public class CacheUpdatingJob extends Thread {
+    private static final Logger log = LoggerFactory.getLogger(CacheUpdatingJob.class);
+    public static Config cacheConfig = Config.getInstance("cache.properties");
+    public static final CacheUpdatingJob ins = new CacheUpdatingJob();
+
+    private static final String dpt_info = "-dpt-info-";
+    private static final String doc_info = "-doc-info-";
+    private static final String dpt_work = "-dpt-work-";
+    private static final String doc_work = "-doc-work-";
+
+
+    private static final String dptInfoTagName = "DepartInfo";
+    private static final String docInfoTagName = "DoctorInfo";
+    private static final String dptWorkTagName = "DepartCalendar";
+    private static final String docWorkTagName = "DoctorCalendar";
+
+    private Map<String, Field> DepartInfoFields;
+    private Map<String, Field> DoctorInfoFields;
+    private Map<String, Field> DepartWorkFields;
+    private Map<String, Field> DoctorWorkFields;
+
+    private String cacheFolder = null;
+    private String backupFolder = null;
+
+
+
+    {
+        /* cache & backup folder */
+        String cache_folder = cacheConfig.getString("cache_folder");
+        this.cacheFolder = prepareFolder(cache_folder).getAbsolutePath();
+
+        String backup_folder = cacheConfig.getString("backup_folder");
+        this.backupFolder = prepareFolder(backup_folder).getAbsolutePath();
+
+
+        /* fields mapping */
+        DepartInfoFields = new HashMap<String, Field>();
+        Field[] fields = DepartInfo.class.getFields();
+        for (Field field : fields) {
+            String name = field.getName();
+            DepartInfoFields.put(name, field);
+        }
+
+
+        DoctorInfoFields = new HashMap<String, Field>();
+        fields = DoctorInfo.class.getFields();
+        for (Field field : fields) {
+            String name = field.getName();
+            DoctorInfoFields.put(name, field);
+        }
+
+
+        DepartWorkFields = new HashMap<String, Field>();
+        fields = DepartWork.class.getFields();
+        for (Field field : fields) {
+            String name = field.getName();
+            DepartWorkFields.put(name, field);
+        }
+
+        DoctorWorkFields = new HashMap<String, Field>();
+        fields = DoctorWork.class.getFields();
+        for (Field field : fields) {
+            String name = field.getName();
+            DoctorWorkFields.put(name, field);
+        }
+    }
+
+    private File prepareFolder(String baseFolder) {
+        File file = new File(baseFolder);
+
+        if (file.isAbsolute()) {
+            if (!FileUtils.ancestorExists(file)) {
+                throw new Ws320Exception("path not exists:" + baseFolder);
+            }
+
+            if (!file.exists()) {
+                file.mkdirs();
+            }
+        }
+        // if the cache_folder is not an absolute path,
+        // we assume it is a direct child folder under web root.
+        else {
+            Pattern ptn = Pattern.compile("[0-9a-zA-Z_\\-]+");
+            Matcher matcher = ptn.matcher(baseFolder);
+            if (!matcher.matches()) {
+                throw new Ws320Exception("name of cache_folder incorrect");
+            }
+            String webroot = System.getProperty("webapp.root");
+            if (webroot == null) {
+                throw new Ws320Exception("system property webapp.root not specified");
+            }
+            file = new File(webroot + "/" + baseFolder);
+            file.mkdir();
+        }
+
+        return file;
+    }
+
+    /***************************************************/
+    /* entry */
+    /***************************************************/
+
+    public void update(String hospitalId) {
+        // 1. download data to disk
+        downloadHisData(hospitalId);
+
+        // 2. unmarshal from xml
+        // 3. error check
+        // 4. trigger invoking if any event
+        // 5. replace cache
+    }
+
+
+    /***************************************************/
+    /* download                                        */
+    /***************************************************/
+
+    private void downloadHisData(String hospitalId) {
+        // use date string as sub folder name
+        String folderName = TimeUtils.getTimeStamp("yyyy-MM-dd");
+
+        // make sure the sub folder exists
+        prepareCacheSubFolder(folderName);
+
+        // backup any existent file
+        backupCache(folderName, hospitalId);
+
+        // download files
+        download(hospitalId, folderName);
+    }
+
+    private void prepareCacheSubFolder(String ts) {
+        File subFolder = new File(cacheFolder + File.separator + ts);
+
+        if (!subFolder.exists()) {
+            subFolder.mkdir();
+        }
+    }
+
+    private void backupCache(String subFolderName, String hospitalId) {
+        String folderStr = cacheFolder + File.separator + subFolderName;
+        File folder = new File(folderStr);
+
+
+        File[] files = folder.listFiles(new FileNameStartsWithFilter(hospitalId));
+
+        String subFolderStr = backupFolder + File.separator + subFolderName;
+        File subFolder = new File(subFolderStr);
+        if (!subFolder.exists()) {
+            subFolder.mkdirs();
+        }
+
+        for (File file : files) {
+            String newPath = subFolderStr + File.separator + file.getName();
+            try {
+                FileUtils.move(file, new File(newPath));
+            } catch (IOException e) {
+                throw new Ws320Exception(e);
+            }
+        }
+    }
+
+    private void download(String hospitalId, String saveTo) {
+        HisClientIface hisClient = HisClientFactory.getHisClient(hospitalId);
+
+        FileUtils fu = FileUtils.getInstance(cacheFolder + File.separator + saveTo);
+        String rst = null;
+        String sss = null;
+
+
+        sss = TimeUtils.getTimeStamp("yyyy-MM-dd-hh-mm-ss");
+        rst = hisClient.getDepartInfo(hospitalId);
+        fu.saveAs(hospitalId + dpt_info + sss + ".xml", rst);
+
+
+        sss = TimeUtils.getTimeStamp("yyyy-MM-dd-hh-mm-ss");
+        rst = hisClient.getDoctorInfo(hospitalId);
+        fu.saveAs(hospitalId + doc_info + sss + ".xml", rst);
+
+        sss = TimeUtils.getTimeStamp("yyyy-MM-dd-hh-mm-ss");
+        rst = hisClient.getDepartWorkSchedule(hospitalId);
+        fu.saveAs(hospitalId + dpt_work + sss + ".xml", rst);
+
+        sss = TimeUtils.getTimeStamp("yyyy-MM-dd-hh-mm-ss");
+        rst = hisClient.getDoctorWorkSchedule(hospitalId);
+        fu.saveAs(hospitalId + doc_work + sss + ".xml", rst);
+    }
+
+
+    /***************************************************/
+    /* unmarshal                                       */
+    /***************************************************/
+
+    private void loadCacheFromFile(String hospitalId) {
+        String ts = TimeUtils.getTimeStamp("yyyy-MM-dd");
+        List<DepartInfo> departInfos = loadHisData(dpt_info, dptInfoTagName, ts, hospitalId, DepartInfo.class, DepartInfoFields);
+        List<DoctorInfo> doctorInfos = loadHisData(doc_info, docInfoTagName, ts, hospitalId, DoctorInfo.class, DoctorInfoFields);
+        List<DepartWork> departWorks = loadHisData(dpt_work, dptWorkTagName, ts, hospitalId, DepartWork.class, DepartWorkFields);
+        List<DoctorWork> doctorWorks = loadHisData(doc_work, docWorkTagName, ts, hospitalId, DoctorWork.class, DoctorWorkFields);
+
+//        populateCache(
+//                hospitalId,
+//                departInfos,
+//                doctorInfos,
+//                departWorks,
+//                doctorWorks
+//        );
+
+    }
+
+        private <T> List<T> loadHisData(String which, String tagName, String ts, String hospitalId, Class<T> klass, Map<String, Field> fields) {
+            String prefix = hospitalId + which;
+            File folder = new File(cacheFolder + File.separator + ts);
+
+            File[] files = folder.listFiles(new FileNameStartsWithFilter(prefix));
+
+            if (files == null) {
+                throw new Ws320Exception("file with prefix [" + prefix + "] not found");
+            }
+
+            if (files.length != 1) {
+                throw new Ws320Exception("expect 1 file start with [" + prefix + "], actual " + files.length);
+            }
+
+            try {
+                return unmarshalHisXml(tagName, files[0], klass, fields);
+            } catch (Exception e) {
+                throw new Ws320Exception(e);
+            }
+        }
+
+    private <T> List<T> unmarshalHisXml(String tagName, File file, Class<T> klass, Map<String, Field> fields) throws DocumentException, NoSuchFieldException, IllegalAccessException, InstantiationException {
+        SAXReader reader = new SAXReader();
+        Document document = reader.read(file);
+        Element root = document.getRootElement();
+        List<Element> dptInfos = root.elements();
+
+
+        List<T> items = new ArrayList<T>();
+        for (int i = 0; i < dptInfos.size(); i++) {
+            Element item = dptInfos.get(i);
+
+            if (!item.getName().equalsIgnoreCase(tagName)) {
+                log.warn(file.getAbsolutePath() + ": tag #" + i + ", name [" + item.getName() + "] not " + dptInfoTagName);
+                continue;
+            }
+
+            List<Element> props = item.elements();
+
+            if (props.size() != fields.size()) {
+                throw new Ws320Exception(file.getAbsolutePath() + ": tag #" + i + ", number of children != size of DepartInfo fields");
+            }
+
+            T di = klass.newInstance();
+
+            for (Element prop : props) {
+                Field field = fields.get(prop.getName());
+                field.set(di, prop.getText());
+            }
+
+            items.add(di);
+        }
+        return items;
+    }
+
 //    private static final Logger log = LoggerFactory.getLogger(CacheUpdatingJob.class);
 //    public static Config cacheConfig = Config.getInstance("cache.properties");
 //    public static final CacheUpdatingJob ins = new CacheUpdatingJob();
-//    private String cacheFolder = null;
-//    private String backupFolder = null;
+
 //    public long lastUpdateTime = -1;
 //    public long lastTryUpdatingTime = -1;
 //    private boolean stop = false;
 //
 //
-//    private static final String dpt_info = "-dpt-info-";
-//    private static final String doc_info = "-doc-info-";
-//    private static final String dpt_work = "-dpt-work-";
-//    private static final String doc_work = "-doc-work-";
-//
+
+    //
 //
 //    private static final String dptInfoTagName = "DepartInfo";
 //    private static final String docInfoTagName = "DoctorInfo";
@@ -145,36 +405,7 @@ public class CacheUpdatingJob extends Thread {
 //        loadCacheFromFile(hospitalId);
 //    }
 //
-//    private File prepareFolder(String baseFolder) {
-//        File file = new File(baseFolder);
-//
-//        if (file.isAbsolute()) {
-//            if (!FileUtils.ancestorExists(file)) {
-//                throw new Ws320Exception("path not exists:" + baseFolder);
-//            }
-//
-//            if (!file.exists()) {
-//                file.mkdirs();
-//            }
-//        }
-//        // if the cache_folder is not an absolute path,
-//        // we assume it is a direct child folder under web root.
-//        else {
-//            Pattern ptn = Pattern.compile("[0-9a-zA-Z_\\-]+");
-//            Matcher matcher = ptn.matcher(baseFolder);
-//            if (!matcher.matches()) {
-//                throw new Ws320Exception("name of cache_folder incorrect");
-//            }
-//            String webroot = System.getProperty("webapp.root");
-//            if (webroot == null) {
-//                throw new Ws320Exception("system property webapp.root not specified");
-//            }
-//            file = new File(webroot + "/" + baseFolder);
-//            file.mkdir();
-//        }
-//
-//        return file;
-//    }
+
 //
 //    private void downloadHisData(String hospitalId) {
 //        String ts = TimeUtils.getTimeStamp("yyyy-MM-dd");
@@ -516,16 +747,16 @@ public class CacheUpdatingJob extends Thread {
 //    }
 //
 //
-//    static class FileNameStartsWithFilter implements FilenameFilter {
-//        private String prefix;
-//
-//        public FileNameStartsWithFilter(String prefix) {
-//            this.prefix = prefix;
-//        }
-//
-//        @Override
-//        public boolean accept(File dir, String name) {
-//            return name.startsWith(prefix);
-//        }
-//    }
+    static class FileNameStartsWithFilter implements FilenameFilter {
+        private String prefix;
+
+        public FileNameStartsWithFilter(String prefix) {
+            this.prefix = prefix;
+        }
+
+        @Override
+        public boolean accept(File dir, String name) {
+            return name.startsWith(prefix);
+        }
+    }
 }
