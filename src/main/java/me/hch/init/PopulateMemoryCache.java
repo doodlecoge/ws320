@@ -1,13 +1,10 @@
 package me.hch.init;
 
-import me.hch.job.CacheUpdatingJob;
-import me.hch.model.HospitalEntity;
-import me.hch.model.HospitalInfo;
+import me.hch.mvc.model.HospitalEntity;
 import me.hch.util.HibernateUtil;
 import org.hibernate.Session;
 
 import java.util.List;
-import java.util.Map;
 
 
 /**

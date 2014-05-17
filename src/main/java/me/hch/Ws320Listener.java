@@ -22,11 +22,11 @@ public class Ws320Listener implements ServletContextListener {
         WebUtils.setWebAppRootSystemProperty(event.getServletContext());
 
 
-        try {
-            H2DatabaseInitialize.init();
-        } catch (SQLException e) {
-            //throw new Ws320Exception(e);
-        }
+//        try {
+//            H2DatabaseInitialize.init();
+//        } catch (SQLException e) {
+//            //throw new Ws320Exception(e);
+//        }
 
         // put initialization code here including
         // Schedule, Hospital, Doctor, Department

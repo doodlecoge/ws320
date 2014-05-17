@@ -2,33 +2,41 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context-3.0.xsd
         http://www.springframework.org/schema/mvc
-        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/jdbc
+        http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
 
 
     <context:property-placeholder location="classpath*:db.properties"></context:property-placeholder>
 
-    <bean class="me.hch.model.HospitalEntity"/>
+    <mvc:annotation-driven/>
+    <context:component-scan base-package="me.hch.mvc"/>
 
-    <bean id="h2Ds" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="${db.driver}"></property>
-        <property name="url" value="${db.url}"></property>
-        <property name="username" value="${db.username}"></property>
-        <property name="password" value="${db.password}"></property>
-    </bean>
+    <jdbc:embedded-database id="h2Ds" type="H2">
+        <jdbc:script location="classpath*:sql/h2.sql"/>
+    </jdbc:embedded-database>
 
-    <bean id="h2Sf" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+    <bean id="h2Sf" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
         <property name="dataSource" ref="h2Ds"></property>
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
                 <prop key="hibernate.show_sql">true</prop>
                 <prop key="format_sql">true</prop>
+                <prop key="default_schema">${db.schema}</prop>
             </props>
+        </property>
+
+        <property name="annotatedClasses">
+            <list>
+                <value>me.hch.mvc.model.HospitalEntity</value>
+            </list>
         </property>
 
     </bean>

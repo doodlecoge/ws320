@@ -14,11 +14,10 @@
     <context:property-placeholder location="classpath*:db.properties"></context:property-placeholder>
 
     <mvc:annotation-driven/>
-    <context:component-scan base-package="me.hch"/>
+    <context:component-scan base-package="me.hch.mvc"/>
 
     <mvc:resources mapping="/css/**" location="/css/"/>
     <mvc:resources mapping="/js/**" location="/js/"/>
-
 
 
     <!-- jsp view resolver -->
@@ -26,4 +25,7 @@
         <property name="prefix" value="/WEB-INF/pages/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
+
+
+    <import resource="classpath*:spring-hibernate.xml"/>
 </beans>

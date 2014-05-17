@@ -1,4 +1,4 @@
-package me.hch.model;
+package me.hch.mvc.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,7 +11,7 @@ import java.io.Serializable;
  */
 
 @Entity
-@Table(name = "hospitals")
+@Table(name = "ws320.hospitals")
 public class HospitalEntity implements Serializable {
 
     @Id
