@@ -26,6 +26,8 @@
         <property name="suffix" value=".jsp"/>
     </bean>
 
+    <bean id="appListener" class="me.hch.AppListener"/>
 
-    <import resource="classpath*:spring-hibernate.xml"/>
+
+    <import resource="/WEB-INF/spring-hibernate.xml"/>
 </beans>
