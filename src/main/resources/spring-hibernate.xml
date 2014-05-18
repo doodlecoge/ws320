@@ -20,6 +20,7 @@
 
     <jdbc:embedded-database id="h2Ds" type="H2">
         <jdbc:script location="classpath*:sql/h2.sql"/>
+        <jdbc:script location="classpath*:sql/h2-data.sql"/>
     </jdbc:embedded-database>
 
     <bean id="h2Sf" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">

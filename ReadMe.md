@@ -241,3 +241,7 @@ accordingly, here is an example:
 
 **after replace status**
 > hos1_dpt2_doc1_date1_type2 => schedule(hos1, dpt2, doc1, date1, type1, status2)
+
+
+Replace Flow
+-----------------

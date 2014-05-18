@@ -54,7 +54,6 @@ public class CacheUpdatingJob extends Thread {
     private String backupFolder = null;
 
 
-
     {
         /* cache & backup folder */
         String cache_folder = cacheConfig.getString("cache_folder");
@@ -129,22 +128,28 @@ public class CacheUpdatingJob extends Thread {
 
     /***************************************************/
     /* entry */
-    /***************************************************/
+
+    /**
+     * ***********************************************
+     */
 
     public void update(String hospitalId) {
         // 1. download data to disk
         downloadHisData(hospitalId);
 
         // 2. unmarshal from xml
+        loadCacheFromFile(hospitalId);
+
         // 3. error check
         // 4. trigger invoking if any event
         // 5. replace cache
     }
 
 
-    /***************************************************/
+    /*-------------------------------------------------*/
     /* download                                        */
-    /***************************************************/
+    /*-------------------------------------------------*/
+
 
     private void downloadHisData(String hospitalId) {
         // use date string as sub folder name
@@ -218,47 +223,42 @@ public class CacheUpdatingJob extends Thread {
     }
 
 
-    /***************************************************/
+    /*-------------------------------------------------*/
     /* unmarshal                                       */
-    /***************************************************/
+    /*-------------------------------------------------*/
 
     private void loadCacheFromFile(String hospitalId) {
         String ts = TimeUtils.getTimeStamp("yyyy-MM-dd");
+
         List<DepartInfo> departInfos = loadHisData(dpt_info, dptInfoTagName, ts, hospitalId, DepartInfo.class, DepartInfoFields);
         List<DoctorInfo> doctorInfos = loadHisData(doc_info, docInfoTagName, ts, hospitalId, DoctorInfo.class, DoctorInfoFields);
         List<DepartWork> departWorks = loadHisData(dpt_work, dptWorkTagName, ts, hospitalId, DepartWork.class, DepartWorkFields);
         List<DoctorWork> doctorWorks = loadHisData(doc_work, docWorkTagName, ts, hospitalId, DoctorWork.class, DoctorWorkFields);
 
-//        populateCache(
-//                hospitalId,
-//                departInfos,
-//                doctorInfos,
-//                departWorks,
-//                doctorWorks
-//        );
+
 
     }
 
-        private <T> List<T> loadHisData(String which, String tagName, String ts, String hospitalId, Class<T> klass, Map<String, Field> fields) {
-            String prefix = hospitalId + which;
-            File folder = new File(cacheFolder + File.separator + ts);
+    private <T> List<T> loadHisData(String which, String tagName, String ts, String hospitalId, Class<T> klass, Map<String, Field> fields) {
+        String prefix = hospitalId + which;
+        File folder = new File(cacheFolder + File.separator + ts);
 
-            File[] files = folder.listFiles(new FileNameStartsWithFilter(prefix));
+        File[] files = folder.listFiles(new FileNameStartsWithFilter(prefix));
 
-            if (files == null) {
-                throw new Ws320Exception("file with prefix [" + prefix + "] not found");
-            }
-
-            if (files.length != 1) {
-                throw new Ws320Exception("expect 1 file start with [" + prefix + "], actual " + files.length);
-            }
-
-            try {
-                return unmarshalHisXml(tagName, files[0], klass, fields);
-            } catch (Exception e) {
-                throw new Ws320Exception(e);
-            }
+        if (files == null) {
+            throw new Ws320Exception("file with prefix [" + prefix + "] not found");
         }
+
+        if (files.length != 1) {
+            throw new Ws320Exception("expect 1 file start with [" + prefix + "], actual " + files.length);
+        }
+
+        try {
+            return unmarshalHisXml(tagName, files[0], klass, fields);
+        } catch (Exception e) {
+            throw new Ws320Exception(e);
+        }
+    }
 
     private <T> List<T> unmarshalHisXml(String tagName, File file, Class<T> klass, Map<String, Field> fields) throws DocumentException, NoSuchFieldException, IllegalAccessException, InstantiationException {
         SAXReader reader = new SAXReader();
@@ -406,7 +406,7 @@ public class CacheUpdatingJob extends Thread {
 //    }
 //
 
-//
+    //
 //    private void downloadHisData(String hospitalId) {
 //        String ts = TimeUtils.getTimeStamp("yyyy-MM-dd");
 //
