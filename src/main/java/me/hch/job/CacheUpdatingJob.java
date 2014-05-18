@@ -6,7 +6,6 @@ import me.hch.service.client.HisClientFactory;
 import me.hch.service.client.HisClientIface;
 import me.hch.util.Config;
 import me.hch.util.FileUtils;
-import me.hch.util.ReflectionUtils;
 import me.hch.util.TimeUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -19,7 +18,6 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.lang.reflect.Field;
-import java.math.BigDecimal;
 //import java.nio.file.Files;
 //import java.nio.file.StandardCopyOption;
 import java.util.*;
@@ -32,7 +30,17 @@ import java.util.regex.Pattern;
 public class CacheUpdatingJob extends Thread {
     private static final Logger log = LoggerFactory.getLogger(CacheUpdatingJob.class);
     public static Config cacheConfig = Config.getInstance("cache.properties");
-    public static final CacheUpdatingJob ins = new CacheUpdatingJob();
+
+    // singleton
+    private static final CacheUpdatingJob ins = new CacheUpdatingJob();
+
+    private CacheUpdatingJob() {
+    }
+
+    public static CacheUpdatingJob getInstance() {
+        return ins;
+    }
+
 
     private static final String dpt_info = "-dpt-info-";
     private static final String doc_info = "-doc-info-";
@@ -45,10 +53,14 @@ public class CacheUpdatingJob extends Thread {
     private static final String dptWorkTagName = "DepartCalendar";
     private static final String docWorkTagName = "DoctorCalendar";
 
+
     private Map<String, Field> DepartInfoFields;
     private Map<String, Field> DoctorInfoFields;
     private Map<String, Field> DepartWorkFields;
     private Map<String, Field> DoctorWorkFields;
+
+    private Map<String, Field> ScheduleFieldMap;
+    private Map<String, Field> DptWorkFieldMap;
 
     private String cacheFolder = null;
     private String backupFolder = null;
@@ -67,31 +79,40 @@ public class CacheUpdatingJob extends Thread {
         DepartInfoFields = new HashMap<String, Field>();
         Field[] fields = DepartInfo.class.getFields();
         for (Field field : fields) {
-            String name = field.getName();
-            DepartInfoFields.put(name, field);
+            DepartInfoFields.put(field.getName(), field);
         }
 
 
         DoctorInfoFields = new HashMap<String, Field>();
         fields = DoctorInfo.class.getFields();
         for (Field field : fields) {
-            String name = field.getName();
-            DoctorInfoFields.put(name, field);
+            DoctorInfoFields.put(field.getName(), field);
         }
 
 
         DepartWorkFields = new HashMap<String, Field>();
         fields = DepartWork.class.getFields();
         for (Field field : fields) {
-            String name = field.getName();
-            DepartWorkFields.put(name, field);
+            DepartWorkFields.put(field.getName(), field);
         }
 
         DoctorWorkFields = new HashMap<String, Field>();
         fields = DoctorWork.class.getFields();
         for (Field field : fields) {
-            String name = field.getName();
-            DoctorWorkFields.put(name, field);
+            DoctorWorkFields.put(field.getName(), field);
+        }
+
+
+        ScheduleFieldMap = new HashMap<String, Field>();
+        fields = Schedule.class.getFields();
+        for (Field field : fields) {
+            ScheduleFieldMap.put(field.getName(), field);
+        }
+
+        DptWorkFieldMap = new HashMap<String, Field>();
+        fields = DepartWork.class.getFields();
+        for (Field field : fields) {
+            DptWorkFieldMap.put(field.getName(), field);
         }
     }
 
@@ -134,14 +155,24 @@ public class CacheUpdatingJob extends Thread {
      */
 
     public void update(String hospitalId) {
+        MemoryCache cache = MemoryCache.getInstance();
         // 1. download data to disk
         downloadHisData(hospitalId);
 
         // 2. unmarshal from xml
-        loadCacheFromFile(hospitalId);
+        Map<String, Schedule> newSchedules = loadCacheFromFile(hospitalId);
 
-        // 3. error check
-        // 4. trigger invoking if any event
+        // 3. error check,
+        // this step is merged in to setp 2.
+
+        // 4. invoke trigger if any event
+        Map<String, Schedule> oldSchedules = cache.getSchedules(hospitalId);
+        if (oldSchedules == null) {
+            cache.setSchedules(hospitalId, newSchedules);
+        } else {
+
+        }
+
         // 5. replace cache
     }
 
@@ -227,7 +258,7 @@ public class CacheUpdatingJob extends Thread {
     /* unmarshal                                       */
     /*-------------------------------------------------*/
 
-    private void loadCacheFromFile(String hospitalId) {
+    private Map<String, Schedule> loadCacheFromFile(String hospitalId) {
         String ts = TimeUtils.getTimeStamp("yyyy-MM-dd");
 
         List<DepartInfo> departInfos = loadHisData(dpt_info, dptInfoTagName, ts, hospitalId, DepartInfo.class, DepartInfoFields);
@@ -235,8 +266,7 @@ public class CacheUpdatingJob extends Thread {
         List<DepartWork> departWorks = loadHisData(dpt_work, dptWorkTagName, ts, hospitalId, DepartWork.class, DepartWorkFields);
         List<DoctorWork> doctorWorks = loadHisData(doc_work, docWorkTagName, ts, hospitalId, DoctorWork.class, DoctorWorkFields);
 
-
-
+        return populateCache(departInfos, doctorInfos, departWorks, doctorWorks);
     }
 
     private <T> List<T> loadHisData(String which, String tagName, String ts, String hospitalId, Class<T> klass, Map<String, Field> fields) {
@@ -285,13 +315,122 @@ public class CacheUpdatingJob extends Thread {
             T di = klass.newInstance();
 
             for (Element prop : props) {
-                Field field = fields.get(prop.getName());
-                field.set(di, prop.getText());
+                String name = prop.getName();
+                Field field = fields.get(name);
+                if (name.equals("WorkDate")) {
+                    field.set(di, extractDateNotTime(prop.getText()));
+                } else {
+                    field.set(di, prop.getText());
+                }
             }
 
             items.add(di);
         }
         return items;
+    }
+
+    private String extractDateNotTime(String str) {
+        Pattern ptn = Pattern.compile("([0-9]{4}-[0-9]{2}-[0-9]{2})");
+        Matcher matcher = ptn.matcher(str);
+        if (matcher.find()) {
+            return matcher.group(1);
+        } else {
+            return str;
+        }
+    }
+
+
+    private Map<String, Schedule> populateCache(List<DepartInfo> departInfos,
+                                                List<DoctorInfo> doctorInfos,
+                                                List<DepartWork> departWorks,
+                                                List<DoctorWork> doctorWorks) {
+
+        // id => dpt
+        Map<String, DepartInfo> departMap = new HashMap<String, DepartInfo>();
+
+        for (DepartInfo departInfo : departInfos) {
+            departMap.put(departInfo.DepartId, departInfo);
+        }
+
+        // id => doc
+        Map<String, DoctorInfo> doctorMap = new HashMap<String, DoctorInfo>();
+
+        for (DoctorInfo doctorInfo : doctorInfos) {
+            doctorMap.put(doctorInfo.DoctorId, doctorInfo);
+        }
+
+
+        Map<String, Schedule> scheduleMap = new HashMap<String, Schedule>();
+
+
+        for (DepartWork departWork : departWorks) {
+            Schedule schedule = new Schedule();
+
+            try {
+                copyFields(schedule, departWork);
+            } catch (Exception e) {
+                log.error("this should never happened", e);
+                continue;
+            }
+
+            schedule.hospitalName = MemoryCache.getInstance().getHospital(schedule.Hospitalcode).getName();
+            DepartInfo dptInfo = departMap.get(schedule.DepartId);
+            if (dptInfo == null) {
+                log.error("department with id [" + schedule.DepartId + "] not found, " + schedule.Hospitalcode);
+                continue;
+            } else {
+                schedule.departmentName = dptInfo.DepartName;
+            }
+
+            scheduleMap.put(schedule.id(), schedule);
+        }
+
+
+        for (DoctorWork doctorWork : doctorWorks) {
+            Schedule schedule = new Schedule();
+
+            try {
+                copyFields(schedule, doctorWork);
+            } catch (Exception e) {
+                log.error("this should never happened", e);
+                continue;
+            }
+
+            schedule.hospitalName = MemoryCache.getInstance().getHospital(schedule.Hospitalcode).getName();
+
+            DepartInfo dptinfo = departMap.get(schedule.DepartId);
+            if (dptinfo == null) {
+                log.error("doctor department with id [" + schedule.DepartId + "] not found, " + schedule.Hospitalcode);
+                continue;
+            } else {
+                schedule.departmentName = dptinfo.DepartName;
+            }
+
+            DoctorInfo docInfo = doctorMap.get(schedule.DoctorId);
+            if (docInfo == null) {
+                log.error("doctor with id [" + schedule.DoctorId + "] not found, " + schedule.Hospitalcode);
+                continue;
+            } else {
+                schedule.doctorName = docInfo.DoctorName;
+            }
+
+            scheduleMap.put(schedule.id(), schedule);
+        }
+
+        return scheduleMap;
+    }
+
+
+    private void copyFields(Schedule schedule, DepartWork work) throws IllegalAccessException, NoSuchFieldException {
+        for (String fieldName : DptWorkFieldMap.keySet()) {
+            Object val = DptWorkFieldMap.get(fieldName).get(work);
+            ScheduleFieldMap.get(fieldName).set(schedule, val);
+        }
+
+        if (work instanceof DoctorWork) {
+            schedule.DoctorId = ((DoctorWork) work).DoctorId;
+            schedule.Expertsfee = ((DoctorWork) work).Expertsfee;
+        }
     }
 
 //    private static final Logger log = LoggerFactory.getLogger(CacheUpdatingJob.class);

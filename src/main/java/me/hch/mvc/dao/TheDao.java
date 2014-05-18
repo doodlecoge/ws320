@@ -1,6 +1,7 @@
 package me.hch.mvc.dao;
 
 import me.hch.mvc.model.HospitalEntity;
+import me.hch.trigger.TriggerInfo;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.classic.Session;
@@ -19,10 +20,12 @@ public class TheDao {
     @Qualifier(value = "h2Sf")
     private SessionFactory sessionFactory;
 
-    public List getHospitals() {
+    public List<HospitalEntity> getHospitals() {
         Session session = sessionFactory.openSession();
         Criteria criteria = session.createCriteria(HospitalEntity.class);
-        return criteria.list();
+        List list = criteria.list();
+        session.close();
+        return list;
     }
 
     public void addHospital() {
@@ -36,9 +39,18 @@ public class TheDao {
         Session session = sessionFactory.openSession();
 
         Object id = session.get(HospitalEntity.class, "id");
-        if(id != null) return;
+        if (id != null) return;
         session.beginTransaction();
         session.save(hos);
         session.getTransaction().commit();
+    }
+
+
+    public List<TriggerInfo> getTriggerInfos() {
+        Session session = sessionFactory.openSession();
+        Criteria criteria = session.createCriteria(TriggerInfo.class);
+        List list = criteria.list();
+        session.close();
+        return list;
     }
 }

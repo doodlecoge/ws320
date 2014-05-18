@@ -29,5 +29,5 @@
     <bean id="appListener" class="me.hch.AppListener"/>
 
 
-    <import resource="/WEB-INF/spring-hibernate.xml"/>
+    <import resource="spring-hibernate.xml"/>
 </beans>

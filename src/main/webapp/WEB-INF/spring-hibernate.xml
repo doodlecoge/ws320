@@ -15,8 +15,8 @@
 
     <context:property-placeholder location="classpath*:db.properties"></context:property-placeholder>
 
-    <mvc:annotation-driven/>
-    <context:component-scan base-package="me.hch.mvc"/>
+    <!--<mvc:annotation-driven/>-->
+    <!--<context:component-scan base-package="me.hch.mvc,me.hch.trigger"/>-->
 
     <jdbc:embedded-database id="h2Ds" type="H2">
         <jdbc:script location="classpath*:sql/h2.sql"/>
@@ -37,6 +37,7 @@
         <property name="annotatedClasses">
             <list>
                 <value>me.hch.mvc.model.HospitalEntity</value>
+                <value>me.hch.trigger.TriggerInfo</value>
             </list>
         </property>
 

@@ -1,21 +1,18 @@
 package me.hch.trigger.impl;
 
-import me.hch.bean.Schedule;
+import me.hch.model.Schedule;
+import me.hch.trigger.AbstractTrigger;
+import me.hch.trigger.TriggerAction;
 import me.hch.trigger.TriggerInfo;
-import me.hch.trigger.TriggerInterface;
 
 /**
  * Created by hch on 2014/5/14.
  */
-public class CancelRegistrationTrigger implements TriggerInterface {
-    @Override
-    public TriggerInterface tryInstantiate(TriggerInfo triggerInfo) {
+public class CancelRegistrationTrigger extends AbstractTrigger {
+    public static AbstractTrigger tryInstantiate(TriggerInfo triggerInfo) {
+        if (TriggerAction.CANCEL_REGISTRATION.name.equals(triggerInfo.getAction()))
+            return new CancelRegistrationTrigger();
         return null;
-    }
-
-    @Override
-    public boolean hasInterest(Schedule schedule) {
-        return false;
     }
 
     @Override

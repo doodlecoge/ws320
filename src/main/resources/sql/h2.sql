@@ -14,8 +14,20 @@ create table if not exists ws320.hospitals
 
    wsdl    varchar(200)    not null,
 
-   constraint pk primary key (id)
+   constraint if not exists pk_id primary key (id)
 );
 
 create index if not exists idx_name on ws320.hospitals(name);
 
+
+create table if not exists ws320.triggers
+(
+  selector  varchar(100) null,
+  attribute varchar(20)  null,
+  oldvalue  varchar(100) null,
+  newvalue  varchar(100) null,
+  action    varchar(100) not null,
+  constraint if not exists pk_action primary key (action)
+);
+
+-- create unique index if not exists uniq_idx on ws320.triggers(action);

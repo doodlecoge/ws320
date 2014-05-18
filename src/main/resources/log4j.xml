@@ -22,4 +22,9 @@
         <appender-ref ref="consoleAppender"/>
     </root>
 
+    <logger name="org">
+        <level value="WARN"/>
+        <appender-ref ref="consoleAppender"/>
+    </logger>
+
 </log4j:configuration>
