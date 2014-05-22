@@ -4,12 +4,11 @@ import me.hch.job.CacheUpdatingJob;
 import me.hch.model.MemoryCache;
 import me.hch.mvc.dao.TheDao;
 import me.hch.mvc.model.HospitalEntity;
-import me.hch.trigger.AbstractTrigger;
+import me.hch.trigger.TriggerInterface;
 import me.hch.trigger.TriggerFactory;
 import me.hch.trigger.TriggerInfo;
 import me.hch.util.Timer;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.web.context.WebApplicationContext;
@@ -39,7 +38,7 @@ public class AppListener implements ApplicationListener<ContextRefreshedEvent> {
         // get triggers
         List<TriggerInfo> triggerInfos = theDao.getTriggerInfos();
         for (TriggerInfo triggerInfo : triggerInfos) {
-            AbstractTrigger trigger = TriggerFactory.getTrigger(triggerInfo);
+            TriggerInterface trigger = TriggerFactory.getTrigger(triggerInfo);
             TriggerFactory.addTriggerInstance(trigger);
         }
 

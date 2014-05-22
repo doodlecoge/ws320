@@ -1,19 +1,19 @@
 package me.hch.trigger.impl;
 
 import me.hch.model.Schedule;
-import me.hch.trigger.TriggerInterface;
 import me.hch.trigger.TriggerAction;
 import me.hch.trigger.TriggerInfo;
+import me.hch.trigger.TriggerInterface;
 
 /**
- * Created by hch on 2014/5/14.
+ * Created by zq on 2014/5/22.
  */
-public class CancelRegistrationTrigger implements TriggerInterface {
+public class ReplaceValueTrigger implements TriggerInterface {
     private TriggerInfo triggerInfo;
 
     @Override
     public boolean hasInterest(TriggerInfo triggerInfo) {
-        if (TriggerAction.CANCEL_REGISTRATION.name.equals(triggerInfo.getAction())) {
+        if (TriggerAction.REPLACE_VALUE.name.equals(triggerInfo.getAction())) {
             this.triggerInfo = triggerInfo;
             return true;
         } else return false;

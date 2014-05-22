@@ -13,5 +13,5 @@ VALUES
 INSERT INTO ws320.triggers
 (selector, attribute, oldvalue, newvalue, action)
 VALUES
-  ('a', 'workstatus', '0', '1', 'cancel_reg'),
+  (NULL, 'workstatus', '0', '1', 'cancel_reg'),
   ('(doctor=''包广勤'')','department','专家门诊','儿科', 'replace_val');

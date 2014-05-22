@@ -13,29 +13,29 @@ import java.util.List;
  */
 public class TriggerFactory {
     private static final Logger log = LoggerFactory.getLogger(TriggerFactory.class);
-    private static final List<AbstractTrigger> triggerInstances = new ArrayList<AbstractTrigger>();
+    private static final List<TriggerInterface> triggerInstances = new ArrayList<TriggerInterface>();
 
-    private static List<Class<? extends AbstractTrigger>> triggers = new ArrayList<Class<? extends AbstractTrigger>>();
+    private static List<Class<? extends TriggerInterface>> triggerClasses = new ArrayList<Class<? extends TriggerInterface>>();
 
-    // add concrete triggers to impl sub package,
+    // add concrete triggerClasses to `impl` sub package,
     // and register them here
     static {
-        triggers.add(CancelRegistrationTrigger.class);
+        triggerClasses.add(CancelRegistrationTrigger.class);
     }
 
-    public static AbstractTrigger getTrigger(TriggerInfo triggerInfo) {
-        for (Class<? extends AbstractTrigger> trigger : triggers) {
+    public static TriggerInterface getTrigger(TriggerInfo triggerInfo) {
+        for (Class<? extends TriggerInterface> triggerClass : triggerClasses) {
             Method method = null;
             try {
-                method = trigger.getMethod("tryInstantiate", TriggerInfo.class);
-                Object t = method.invoke(null, triggerInfo);
-                if (t != null) return (AbstractTrigger) t;
+                TriggerInterface trigger = triggerClass.newInstance();
+                boolean b = trigger.hasInterest(triggerInfo);
+                if (b) return trigger;
             } catch (Exception e) {
-                log.error("get trigger error" + triggerInfo, e);
+                log.error("get triggerClass error" + triggerInfo, e);
             }
         }
 
-        log.error("can not instantiate trigger: " + triggerInfo);
+        log.error("can not instantiate triggerClass: " + triggerInfo);
         return null;
     }
 
@@ -43,11 +43,11 @@ public class TriggerFactory {
         triggerInstances.clear();
     }
 
-    public static void addTriggerInstance(AbstractTrigger trigger) {
+    public static void addTriggerInstance(TriggerInterface trigger) {
         triggerInstances.add(trigger);
     }
 
-    public static List<AbstractTrigger> getTriggerInstances() {
+    public static List<TriggerInterface> getTriggerInstances() {
         return triggerInstances;
     }
 }
