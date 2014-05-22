@@ -25,6 +25,8 @@ public class TriggerInfo {
     // to create trigger instance.
     @Id
     private String action;
+    @Column
+    private String stage;
 
 
     public String toString() {
@@ -32,7 +34,8 @@ public class TriggerInfo {
                 + attribute + ","
                 + oldValue + ","
                 + newValue + ","
-                + action;
+                + action + ","
+                + stage;
     }
 
     public String getSelector() {
@@ -71,7 +74,16 @@ public class TriggerInfo {
         return action;
     }
 
+    public String getStage() {
+        return stage;
+    }
+
+    public void setStage(String stage) {
+        this.stage = stage;
+    }
+
     public void setAction(String action) {
+
         this.action = action;
     }
 }

@@ -27,6 +27,7 @@ create table if not exists ws320.triggers
   oldvalue  varchar(100) null,
   newvalue  varchar(100) null,
   action    varchar(100) not null,
+  stage     varchar(10)  not null,
   constraint if not exists pk_action primary key (action)
 );
 
