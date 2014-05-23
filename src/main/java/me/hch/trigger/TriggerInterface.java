@@ -10,4 +10,6 @@ public interface TriggerInterface {
     public boolean hasInterest(TriggerInfo triggerInfo);
 
     public void handle(Schedule schedule);
+
+    public String getTriggerStage();
 }

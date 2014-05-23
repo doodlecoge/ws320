@@ -4,6 +4,9 @@ import me.hch.Ws320Exception;
 import me.hch.model.*;
 import me.hch.service.client.HisClientFactory;
 import me.hch.service.client.HisClientIface;
+import me.hch.trigger.TriggerFactory;
+import me.hch.trigger.TriggerInterface;
+import me.hch.trigger.TriggerStage;
 import me.hch.util.Config;
 import me.hch.util.FileUtils;
 import me.hch.util.TimeUtils;
@@ -170,7 +173,15 @@ public class CacheUpdatingJob extends Thread {
         if (oldSchedules == null) {
             cache.setSchedules(hospitalId, newSchedules);
         } else {
-
+            List<TriggerInterface> triggerInstances = TriggerFactory.getTriggerInstances();
+            for (String newKey : newSchedules.keySet()) {
+                for (TriggerInterface triggerInstance : triggerInstances) {
+                    if (!TriggerStage.COMPARE.name.equals(triggerInstance.getTriggerStage())) {
+                        continue;
+                    }
+                    triggerInstance.handle(newSchedules.get(newKey));
+                }
+            }
         }
 
         // 5. replace cache
@@ -432,23 +443,6 @@ public class CacheUpdatingJob extends Thread {
             schedule.Expertsfee = ((DoctorWork) work).Expertsfee;
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     /////////

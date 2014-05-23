@@ -23,4 +23,9 @@ public class ReplaceValueTrigger implements TriggerInterface {
     public void handle(Schedule schedule) {
 
     }
+
+    @Override
+    public String getTriggerStage() {
+        return triggerInfo.getStage();
+    }
 }
