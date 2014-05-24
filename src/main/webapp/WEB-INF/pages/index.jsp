@@ -11,14 +11,19 @@
     <title></title>
     <style type="text/css">
         .welcome {
-            font-size: 72px;
+            font-size: 36px;
             font-family: arial, "微软雅黑", "宋体", Tahoma, Geneva, sans-serif;
-            text-align: center;
-            height: 100%;
+            border-bottom: 1px solid #888;
         }
     </style>
 </head>
 <body>
 <div class="welcome">320 WEB SERVICE</div>
+
+<ul>
+    <li>
+        <a href="/trigger">trigger page</a>
+    </li>
+</ul>
 </body>
 </html>

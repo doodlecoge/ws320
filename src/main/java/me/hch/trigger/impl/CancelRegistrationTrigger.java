@@ -28,9 +28,13 @@ public class CancelRegistrationTrigger implements TriggerInterface {
         String id = schedule.id();
         Map<String, Schedule> oldSchedules = MemoryCache.getInstance().getSchedules(schedule.Hospitalcode);
         if (!oldSchedules.containsKey(id)) {
-            // todo: check if time in range, report error if not
+            // todo: check if time in range, report error if it is
         } else {
             Schedule oldSchedule = oldSchedules.get(id);
+            if (schedule.WorkStatus.equals("1") && oldSchedule.WorkStatus.equals("0")) {
+                // todo: perform cancel registration here
+                System.out.println(schedule.hospitalName + "," + schedule.departmentName);
+            }
         }
     }
 

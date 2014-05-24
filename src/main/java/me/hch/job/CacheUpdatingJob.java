@@ -33,6 +33,7 @@ import java.util.regex.Pattern;
 public class CacheUpdatingJob extends Thread {
     private static final Logger log = LoggerFactory.getLogger(CacheUpdatingJob.class);
     public static Config sysConfig = Config.getInstance("system.properties");
+    private MemoryCache cache = MemoryCache.getInstance();
 
     // singleton
     private static final CacheUpdatingJob ins = new CacheUpdatingJob();
@@ -158,7 +159,6 @@ public class CacheUpdatingJob extends Thread {
      */
 
     public void update(String hospitalId) {
-        MemoryCache cache = MemoryCache.getInstance();
         // 1. download data to disk
         downloadHisData(hospitalId);
 
@@ -168,21 +168,8 @@ public class CacheUpdatingJob extends Thread {
         // 3. error check,
         // this step is merged in to setp 2.
 
-        // 4. invoke trigger if any event
-        Map<String, Schedule> oldSchedules = cache.getSchedules(hospitalId);
-        if (oldSchedules == null) {
-            cache.setSchedules(hospitalId, newSchedules);
-        } else {
-            List<TriggerInterface> triggerInstances = TriggerFactory.getTriggerInstances();
-            for (String newKey : newSchedules.keySet()) {
-                for (TriggerInterface triggerInstance : triggerInstances) {
-                    if (!TriggerStage.COMPARE.name.equals(triggerInstance.getTriggerStage())) {
-                        continue;
-                    }
-                    triggerInstance.handle(newSchedules.get(newKey));
-                }
-            }
-        }
+        // 4. invoke `cmp` stage triggers if any event
+        cmpTrigger(hospitalId, newSchedules);
 
         // 5. replace cache
     }
@@ -444,6 +431,27 @@ public class CacheUpdatingJob extends Thread {
         }
     }
 
+
+    /*-------------------------------------------------*/
+    /* unmarshal                                       */
+    /*-------------------------------------------------*/
+    private void cmpTrigger(String hospitalId, Map<String, Schedule> newSchedules) {
+        Map<String, Schedule> oldSchedules = cache.getSchedules(hospitalId);
+        if (oldSchedules == null) {
+            cache.setSchedules(hospitalId, newSchedules);
+            return;
+        }
+
+        List<TriggerInterface> triggers = TriggerFactory.getTriggerInstances();
+        for (String newKey : newSchedules.keySet()) {
+            for (TriggerInterface trigger : triggers) {
+                if (!TriggerStage.COMPARE.name.equals(trigger.getTriggerStage())) {
+                    continue;
+                }
+                trigger.handle(newSchedules.get(newKey));
+            }
+        }
+    }
 
     /////////
     static class FileNameStartsWithFilter implements FilenameFilter {

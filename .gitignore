@@ -5,3 +5,4 @@ confidential
 ignore
 /test/*
 db.properties
+system.properties

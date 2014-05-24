@@ -26,7 +26,7 @@ public class TriggerAction {
     public String index(ModelMap map) {
         List<TriggerInfo> triggerInfos = theDao.getTriggerInfos();
         map.put("triggers", triggerInfos);
-        return "triggers";
+        return "trigger";
     }
 
     @RequestMapping("/update")
