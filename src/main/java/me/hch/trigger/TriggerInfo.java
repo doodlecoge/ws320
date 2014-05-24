@@ -1,9 +1,6 @@
 package me.hch.trigger;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Created by hch on 2014/5/14.
@@ -24,9 +21,11 @@ public class TriggerInfo {
     // action is used by TriggerFactory
     // to create trigger instance.
     @Id
-    private String action;
+    @Enumerated(EnumType.STRING)
+    private TriggerAction action;
     @Column
-    private String stage;
+    @Enumerated(EnumType.STRING)
+    private TriggerStage stage;
 
 
     public String toString() {
@@ -70,20 +69,19 @@ public class TriggerInfo {
         this.newValue = newValue;
     }
 
-    public String getAction() {
+    public TriggerAction getAction() {
         return action;
     }
 
-    public String getStage() {
+    public void setAction(TriggerAction action) {
+        this.action = action;
+    }
+
+    public TriggerStage getStage() {
         return stage;
     }
 
-    public void setStage(String stage) {
+    public void setStage(TriggerStage stage) {
         this.stage = stage;
-    }
-
-    public void setAction(String action) {
-
-        this.action = action;
     }
 }

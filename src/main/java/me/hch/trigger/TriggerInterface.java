@@ -11,5 +11,5 @@ public interface TriggerInterface {
 
     public void handle(Schedule schedule);
 
-    public String getTriggerStage();
+    public TriggerStage getTriggerStage();
 }

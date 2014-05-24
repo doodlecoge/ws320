@@ -4,6 +4,7 @@ import me.hch.model.Schedule;
 import me.hch.trigger.TriggerAction;
 import me.hch.trigger.TriggerInfo;
 import me.hch.trigger.TriggerInterface;
+import me.hch.trigger.TriggerStage;
 
 /**
  * Created by zq on 2014/5/22.
@@ -13,7 +14,7 @@ public class ReplaceValueTrigger implements TriggerInterface {
 
     @Override
     public boolean hasInterest(TriggerInfo triggerInfo) {
-        if (TriggerAction.REPLACE_VALUE.name.equals(triggerInfo.getAction())) {
+        if (TriggerAction.replace_val == triggerInfo.getAction()) {
             this.triggerInfo = triggerInfo;
             return true;
         } else return false;
@@ -25,7 +26,7 @@ public class ReplaceValueTrigger implements TriggerInterface {
     }
 
     @Override
-    public String getTriggerStage() {
+    public TriggerStage getTriggerStage() {
         return triggerInfo.getStage();
     }
 }

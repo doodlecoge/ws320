@@ -445,7 +445,7 @@ public class CacheUpdatingJob extends Thread {
         List<TriggerInterface> triggers = TriggerFactory.getTriggerInstances();
         for (String newKey : newSchedules.keySet()) {
             for (TriggerInterface trigger : triggers) {
-                if (!TriggerStage.COMPARE.name.equals(trigger.getTriggerStage())) {
+                if (TriggerStage.cmp != trigger.getTriggerStage()) {
                     continue;
                 }
                 trigger.handle(newSchedules.get(newKey));

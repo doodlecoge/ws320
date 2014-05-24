@@ -2,10 +2,7 @@ package me.hch.trigger.impl;
 
 import me.hch.model.MemoryCache;
 import me.hch.model.Schedule;
-import me.hch.trigger.TriggerInterface;
-import me.hch.trigger.TriggerAction;
-import me.hch.trigger.TriggerInfo;
-import me.hch.trigger.TriggerStage;
+import me.hch.trigger.*;
 
 import java.util.Map;
 
@@ -17,7 +14,7 @@ public class CancelRegistrationTrigger implements TriggerInterface {
 
     @Override
     public boolean hasInterest(TriggerInfo triggerInfo) {
-        if (TriggerAction.CANCEL_REGISTRATION.name.equals(triggerInfo.getAction())) {
+        if (TriggerAction.cancel_reg == triggerInfo.getAction()) {
             this.triggerInfo = triggerInfo;
             return true;
         } else return false;
@@ -39,7 +36,7 @@ public class CancelRegistrationTrigger implements TriggerInterface {
     }
 
     @Override
-    public String getTriggerStage() {
+    public TriggerStage getTriggerStage() {
         return triggerInfo.getStage();
     }
 }
