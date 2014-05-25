@@ -24,6 +24,9 @@
     <li>
         <a href="/trigger">trigger page</a>
     </li>
+    <li>
+        <a href="/attr">Schedule Attribute Mapping</a>
+    </li>
 </ul>
 </body>
 </html>

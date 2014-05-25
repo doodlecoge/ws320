@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by hch on 2014/5/18.
  */
-public class Schedule extends DoctorWork {
+public class Schedule extends DoctorWork implements Cloneable {
     public String hospitalName;
     public String departmentName;
     public String doctorName;
@@ -18,5 +18,10 @@ public class Schedule extends DoctorWork {
                 + doctorName + "_"
                 + WorkDate + "_"
                 + WorkType;
+    }
+
+    @Override
+    protected Schedule clone() throws CloneNotSupportedException {
+        return this.clone();
     }
 }
