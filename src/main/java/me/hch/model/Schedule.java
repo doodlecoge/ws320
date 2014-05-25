@@ -1,5 +1,7 @@
 package me.hch.model;
 
+import me.hch.Ws320Exception;
+
 import java.io.Serializable;
 
 /**
@@ -21,7 +23,11 @@ public class Schedule extends DoctorWork implements Cloneable {
     }
 
     @Override
-    protected Schedule clone() throws CloneNotSupportedException {
-        return this.clone();
+    public Object clone() {
+        try {
+            return super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new Ws320Exception(e);
+        }
     }
 }

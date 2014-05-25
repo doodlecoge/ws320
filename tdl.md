@@ -31,3 +31,19 @@ todo:
 fixme:
 
     1. ...
+
+
+
+    cache
+      |
+      |--hospital1
+      |    |
+      |    |--schedule1
+      |    |--schedule2
+      |
+      |--hospital2
+      |    |
+      |    |--schedule1
+      |    |--schedule2
+      |
+      |--...
