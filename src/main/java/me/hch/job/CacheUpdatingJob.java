@@ -344,19 +344,11 @@ public class CacheUpdatingJob extends Thread {
                                                 List<DepartWork> departWorks,
                                                 List<DoctorWork> doctorWorks) {
 
-        // id => dpt
-        Map<String, DepartInfo> departMap = new HashMap<String, DepartInfo>();
-
-        for (DepartInfo departInfo : departInfos) {
-            departMap.put(departInfo.DepartId, departInfo);
-        }
-
-        // id => doc
-        Map<String, DoctorInfo> doctorMap = new HashMap<String, DoctorInfo>();
-
-        for (DoctorInfo doctorInfo : doctorInfos) {
-            doctorMap.put(doctorInfo.DoctorId, doctorInfo);
-        }
+        ScheduleCache sc = ScheduleCache.getInstance();
+        sc.addDeparts(departInfos);
+        sc.addDoctors(doctorInfos);
+        Map<String, DepartInfo> departMap = sc.getDeparts();
+        Map<String, DoctorInfo> doctorMap = sc.getDoctors();
 
 
         Map<String, Schedule> scheduleMap = new HashMap<String, Schedule>();
