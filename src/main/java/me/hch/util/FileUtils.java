@@ -1,6 +1,7 @@
 package me.hch.util;
 
 import me.hch.Ws320Exception;
+import me.hch.Ws320RuntimeException;
 
 import java.io.*;
 
@@ -52,7 +53,7 @@ public class FileUtils {
             bw.flush();
             bw.close();
         } catch (IOException e) {
-            throw new Ws320Exception(e);
+            throw new Ws320RuntimeException(e);
         }
     }
 
@@ -61,7 +62,7 @@ public class FileUtils {
     public static String load(String fileName) {
         InputStream is = FileUtils.class.getClassLoader().getResourceAsStream(fileName);
         if (is == null) is = FileUtils.class.getResourceAsStream(fileName);
-        if (is == null) throw new Ws320Exception("file not found[" + fileName + "]");
+        if (is == null) throw new Ws320RuntimeException("file not found[" + fileName + "]");
 
         BufferedInputStream bis = new BufferedInputStream(is);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -72,12 +73,12 @@ public class FileUtils {
                 baos.write(b);
             }
         } catch (IOException e) {
-            throw new Ws320Exception(e);
+            throw new Ws320RuntimeException(e);
         }
         try {
             bis.close();
         } catch (IOException e) {
-            throw new Ws320Exception(e);
+            throw new Ws320RuntimeException(e);
         }
 
         return baos.toString();

@@ -1,7 +1,10 @@
 package me.hch.trigger;
 
+import me.hch.Ws320Exception;
+import me.hch.Ws320RuntimeException;
 import me.hch.model.Schedule;
 
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -13,23 +16,43 @@ import java.util.regex.Pattern;
 public class Selector {
     private static final Pattern ptn = Pattern.compile("\\(([a-zA-Z0-9]+)='([^']+)'\\)");
 
-    private final Map<String, String> kvs = new HashMap<String, String>();
+    private final Map<Field, String> kvs = new HashMap<Field, String>();
 
     private Selector() {
 
     }
 
     public boolean match(Schedule schedule) {
-        // todo: ...
-        return false;
+        for (Field field : kvs.keySet()) {
+            Object val = null;
+            try {
+                val = field.get(schedule);
+            } catch (IllegalAccessException e) {
+                throw new Ws320RuntimeException(e);
+            }
+            if (kvs.get(field).equals(val)) return false;
+        }
+        return true;
     }
 
-    public static Selector getInstance(String query) {
+    public static Selector getInstance(String query) throws Ws320Exception {
+        if (query == null) return null;
+
         Matcher matcher = ptn.matcher(query);
         Selector selector = new Selector();
         selector.kvs.clear();
         while (matcher.find()) {
-            selector.kvs.put(matcher.group(1), matcher.group(2));
+            String k = matcher.group(1);
+            String v = matcher.group(2);
+            ScheduleAttributeMap attr;
+
+            try {
+                attr = ScheduleAttributeMap.valueOf(k);
+            } catch (Exception e) {
+                throw new Ws320Exception("select attribute [" + k + "] does not exists", e);
+            }
+
+            selector.kvs.put(attr.field, v);
         }
         return selector;
     }

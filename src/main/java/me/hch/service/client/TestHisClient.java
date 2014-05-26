@@ -1,6 +1,7 @@
 package me.hch.service.client;
 
 import me.hch.Ws320Exception;
+import me.hch.Ws320RuntimeException;
 import me.hch.util.Config;
 import me.hch.util.FileUtils;
 
@@ -21,7 +22,7 @@ public class TestHisClient implements HisClientIface {
             return FileUtils.getInstance(sysConfig.getString("test_file_folder"))
                     .getFileContent(hospitalId + "-dpt-info.xml");
         } catch (IOException e) {
-            throw new Ws320Exception(e);
+            throw new Ws320RuntimeException(e);
         }
     }
 
@@ -31,7 +32,7 @@ public class TestHisClient implements HisClientIface {
             return FileUtils.getInstance(sysConfig.getString("test_file_folder"))
                     .getFileContent(hospitalId + "-doc-info.xml");
         } catch (IOException e) {
-            throw new Ws320Exception(e);
+            throw new Ws320RuntimeException(e);
         }
 
     }
@@ -42,7 +43,7 @@ public class TestHisClient implements HisClientIface {
             return FileUtils.getInstance(sysConfig.getString("test_file_folder"))
                     .getFileContent(hospitalId + "-dpt-work.xml");
         } catch (IOException e) {
-            throw new Ws320Exception(e);
+            throw new Ws320RuntimeException(e);
         }
 
     }
@@ -53,7 +54,7 @@ public class TestHisClient implements HisClientIface {
             return FileUtils.getInstance(sysConfig.getString("test_file_folder"))
                     .getFileContent(hospitalId + "-doc-work.xml");
         } catch (IOException e) {
-            throw new Ws320Exception(e);
+            throw new Ws320RuntimeException(e);
         }
 
     }

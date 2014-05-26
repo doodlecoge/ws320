@@ -1,6 +1,7 @@
 package me.hch.util;
 
 import me.hch.Ws320Exception;
+import me.hch.Ws320RuntimeException;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -37,7 +38,7 @@ public class Config {
         try {
             properties.load(is);
         } catch (IOException e) {
-            throw new Ws320Exception(e);
+            throw new Ws320RuntimeException(e);
         }
 
         Map<String, String> map = new HashMap<String, String>();

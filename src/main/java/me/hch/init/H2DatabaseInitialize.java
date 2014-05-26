@@ -1,6 +1,7 @@
 package me.hch.init;
 
 import me.hch.Ws320Exception;
+import me.hch.Ws320RuntimeException;
 import me.hch.util.Config;
 
 import java.sql.Connection;
@@ -18,7 +19,7 @@ public class H2DatabaseInitialize {
         try {
             Class.forName(config.getString("db.driver"));
         } catch (ClassNotFoundException e) {
-            throw new Ws320Exception(e);
+            throw new Ws320RuntimeException(e);
         }
     }
 

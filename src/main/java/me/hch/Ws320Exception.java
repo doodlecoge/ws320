@@ -3,7 +3,7 @@ package me.hch;
 /**
  * Created by huaiwang on 14-4-3.
  */
-public class Ws320Exception extends RuntimeException {
+public class Ws320Exception extends Exception {
     public Ws320Exception() {
         super();
     }

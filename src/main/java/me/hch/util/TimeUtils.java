@@ -1,6 +1,7 @@
 package me.hch.util;
 
 import me.hch.Ws320Exception;
+import me.hch.Ws320RuntimeException;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
@@ -52,7 +53,7 @@ public class TimeUtils {
         try {
             d = df.parse(dateStr);
         } catch (ParseException e) {
-            throw new Ws320Exception(e);
+            throw new Ws320RuntimeException(e);
         }
 
         GregorianCalendar cal = new GregorianCalendar();
@@ -60,7 +61,7 @@ public class TimeUtils {
         try {
             return DatatypeFactory.newInstance().newXMLGregorianCalendar(cal);
         } catch (DatatypeConfigurationException e) {
-            throw new Ws320Exception(e);
+            throw new Ws320RuntimeException(e);
         }
     }
 }

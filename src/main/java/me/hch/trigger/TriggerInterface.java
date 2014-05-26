@@ -12,4 +12,6 @@ public interface TriggerInterface {
     public void handle(Schedule schedule);
 
     public TriggerStage getTriggerStage();
+
+    public void setSelector(Selector selector);
 }

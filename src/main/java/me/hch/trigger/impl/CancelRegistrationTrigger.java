@@ -11,6 +11,7 @@ import java.util.Map;
  */
 public class CancelRegistrationTrigger implements TriggerInterface {
     private TriggerInfo triggerInfo;
+    private Selector selector;
 
     @Override
     public boolean hasInterest(TriggerInfo triggerInfo) {
@@ -38,5 +39,10 @@ public class CancelRegistrationTrigger implements TriggerInterface {
     @Override
     public TriggerStage getTriggerStage() {
         return triggerInfo.getStage();
+    }
+
+    @Override
+    public void setSelector(Selector selector) {
+        this.selector = selector;
     }
 }

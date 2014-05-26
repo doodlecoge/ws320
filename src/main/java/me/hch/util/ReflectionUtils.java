@@ -1,6 +1,7 @@
 package me.hch.util;
 
 import me.hch.Ws320Exception;
+import me.hch.Ws320RuntimeException;
 
 import java.lang.reflect.Field;
 
@@ -14,7 +15,7 @@ public class ReflectionUtils {
         try {
             t = klass.newInstance();
         } catch (Exception e) {
-            throw new Ws320Exception(e);
+            throw new Ws320RuntimeException(e);
         }
 
         Field[] declaredFields = klass.getDeclaredFields();
@@ -24,7 +25,7 @@ public class ReflectionUtils {
                 Object val = declaredField.get(obj);
                 declaredField.set(t, val);
             } catch (IllegalAccessException e) {
-                throw new Ws320Exception(e);
+                throw new Ws320RuntimeException(e);
             }
         }
 

@@ -1,6 +1,7 @@
 package me.hch.job;
 
 import me.hch.Ws320Exception;
+import me.hch.Ws320RuntimeException;
 import me.hch.model.*;
 import me.hch.service.client.HisClientFactory;
 import me.hch.service.client.HisClientIface;
@@ -125,7 +126,7 @@ public class CacheUpdatingJob extends Thread {
 
         if (file.isAbsolute()) {
             if (!FileUtils.ancestorExists(file)) {
-                throw new Ws320Exception("path not exists:" + baseFolder);
+                throw new Ws320RuntimeException("path not exists:" + baseFolder);
             }
 
             if (!file.exists()) {
@@ -138,11 +139,11 @@ public class CacheUpdatingJob extends Thread {
             Pattern ptn = Pattern.compile("[0-9a-zA-Z_\\-]+");
             Matcher matcher = ptn.matcher(baseFolder);
             if (!matcher.matches()) {
-                throw new Ws320Exception("name of cache_folder incorrect");
+                throw new Ws320RuntimeException("name of cache_folder incorrect");
             }
             String webroot = System.getProperty("webapp.root");
             if (webroot == null) {
-                throw new Ws320Exception("system property webapp.root not specified");
+                throw new Ws320RuntimeException("system property webapp.root not specified");
             }
             file = new File(webroot + "/" + baseFolder);
             file.mkdir();
@@ -220,7 +221,7 @@ public class CacheUpdatingJob extends Thread {
             try {
                 FileUtils.move(file, new File(newPath));
             } catch (IOException e) {
-                throw new Ws320Exception(e);
+                throw new Ws320RuntimeException(e);
             }
         }
     }
@@ -274,17 +275,17 @@ public class CacheUpdatingJob extends Thread {
         File[] files = folder.listFiles(new FileNameStartsWithFilter(prefix));
 
         if (files == null) {
-            throw new Ws320Exception("file with prefix [" + prefix + "] not found");
+            throw new Ws320RuntimeException("file with prefix [" + prefix + "] not found");
         }
 
         if (files.length != 1) {
-            throw new Ws320Exception("expect 1 file start with [" + prefix + "], actual " + files.length);
+            throw new Ws320RuntimeException("expect 1 file start with [" + prefix + "], actual " + files.length);
         }
 
         try {
             return unmarshalHisXml(tagName, files[0], klass, fields);
         } catch (Exception e) {
-            throw new Ws320Exception(e);
+            throw new Ws320RuntimeException(e);
         }
     }
 
@@ -307,7 +308,7 @@ public class CacheUpdatingJob extends Thread {
             List<Element> props = item.elements();
 
             if (props.size() != fields.size()) {
-                throw new Ws320Exception(file.getAbsolutePath() + ": tag #" + i + ", number of children != size of DepartInfo fields");
+                throw new Ws320RuntimeException(file.getAbsolutePath() + ": tag #" + i + ", number of children != size of DepartInfo fields");
             }
 
             T di = klass.newInstance();

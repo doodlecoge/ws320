@@ -1,5 +1,7 @@
 package me.hch.trigger.impl;
 
+import me.hch.Ws320Exception;
+import me.hch.Ws320RuntimeException;
 import me.hch.model.MemoryCache;
 import me.hch.model.Schedule;
 import me.hch.model.ScheduleFields;
@@ -13,6 +15,7 @@ import java.util.Map;
  */
 public class ReplaceValueTrigger implements TriggerInterface {
     private TriggerInfo triggerInfo;
+    private Selector selector;
 
     @Override
     public boolean hasInterest(TriggerInfo triggerInfo) {
@@ -24,6 +27,9 @@ public class ReplaceValueTrigger implements TriggerInterface {
 
     @Override
     public void handle(Schedule schedule) {
+        if (selector != null && !selector.match(schedule)) {
+            return;
+        }
         Map<String, Schedule> schedules = MemoryCache.getInstance().getSchedules(schedule.Hospitalcode);
 
         String attr = triggerInfo.getAttribute();
@@ -44,7 +50,7 @@ public class ReplaceValueTrigger implements TriggerInterface {
                 field.set(schedule.replaced, triggerInfo.getNewValue());
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new Ws320RuntimeException(e);
         }
 
         schedules.remove(oid);
@@ -54,5 +60,10 @@ public class ReplaceValueTrigger implements TriggerInterface {
     @Override
     public TriggerStage getTriggerStage() {
         return triggerInfo.getStage();
+    }
+
+    @Override
+    public void setSelector(Selector selector) {
+        this.selector = selector;
     }
 }

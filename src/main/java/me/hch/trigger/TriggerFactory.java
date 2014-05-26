@@ -1,5 +1,6 @@
 package me.hch.trigger;
 
+import me.hch.Ws320Exception;
 import me.hch.trigger.impl.CancelRegistrationTrigger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,12 +25,24 @@ public class TriggerFactory {
     }
 
     public static TriggerInterface getTrigger(TriggerInfo triggerInfo) {
+        String query = triggerInfo.getSelector();
+        Selector selector;
+        try {
+            selector = Selector.getInstance(query);
+        } catch (Ws320Exception e) {
+            log.error(query + ", not a valid selector");
+            return null;
+        }
+
         for (Class<? extends TriggerInterface> triggerClass : triggerClasses) {
             Method method = null;
             try {
                 TriggerInterface trigger = triggerClass.newInstance();
                 boolean b = trigger.hasInterest(triggerInfo);
-                if (b) return trigger;
+                if (b) {
+                    trigger.setSelector(selector);
+                    return trigger;
+                }
             } catch (Exception e) {
                 log.error("get triggerClass error" + triggerInfo, e);
             }
