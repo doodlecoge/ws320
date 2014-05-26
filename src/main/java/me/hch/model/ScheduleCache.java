@@ -8,23 +8,17 @@ import java.util.Map;
  * Created by huaiwang on 5/26/14.
  */
 public class ScheduleCache {
+    private final String hospitalId;
     private final Map<String, DepartInfo> departs;
     private final Map<String, DoctorInfo> doctors;
     private final Map<String, Schedule> schedules;
 
-    private static final ScheduleCache instance = new ScheduleCache();
-
-    private ScheduleCache() {
+    public ScheduleCache(String hospitalId) {
+        this.hospitalId = hospitalId;
         departs = new HashMap<String, DepartInfo>();
         doctors = new HashMap<String, DoctorInfo>();
         schedules = new HashMap<String, Schedule>();
     }
-
-    public static ScheduleCache getInstance() {
-        return instance;
-    }
-
-
 
 
     /*------------------------------------------------------------------------*/
@@ -51,4 +45,11 @@ public class ScheduleCache {
 
     /*------------------------------------------------------------------------*/
 
+    public Map<String, Schedule> getSchedules() {
+        return schedules;
+    }
+
+    public String getHospitalId() {
+        return hospitalId;
+    }
 }

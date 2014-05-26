@@ -4,6 +4,7 @@ import me.hch.Ws320Exception;
 import me.hch.Ws320RuntimeException;
 import me.hch.model.MemoryCache;
 import me.hch.model.Schedule;
+import me.hch.model.ScheduleCache;
 import me.hch.model.ScheduleFields;
 import me.hch.trigger.*;
 
@@ -26,35 +27,40 @@ public class ReplaceValueTrigger implements TriggerInterface {
     }
 
     @Override
-    public void handle(Schedule schedule) {
-        if (selector != null && !selector.match(schedule)) {
-            return;
-        }
-        Map<String, Schedule> schedules = MemoryCache.getInstance().getSchedules(schedule.Hospitalcode);
+    public void handle(ScheduleCache sc) {
+        Map<String, Schedule> schedules = sc.getSchedules();
 
-        String attr = triggerInfo.getAttribute();
-        String realAttr = ScheduleAttributeMap.valueOf(attr).realAttr;
-        Field field = ScheduleFields.get(realAttr);
+        // fixme: ConcurrentModificationException
+        for (String sid : schedules.keySet()) {
+            Schedule schedule = schedules.get(sid);
 
-        if (schedule.replaced == null) {
-            Schedule newSchedule = (Schedule) schedule.clone();
-            newSchedule.original = schedule;
-            schedule.replaced = newSchedule;
-        }
+            if (selector != null && !selector.match(schedule)) return;
 
-        String oid = schedule.replaced.id();
+            String attr = triggerInfo.getAttribute();
+            Field field = ScheduleAttributeMap.valueOf(attr).field;
 
-        try {
-            String old = field.get(schedule).toString();
-            if (old.equals(triggerInfo.getOldValue())) {
-                field.set(schedule.replaced, triggerInfo.getNewValue());
+            if (schedule.replaced == null) {
+                Schedule newSchedule = (Schedule) schedule.clone();
+                newSchedule.original = schedule;
+                schedule.replaced = newSchedule;
             }
-        } catch (Exception e) {
-            throw new Ws320RuntimeException(e);
+
+            String oid = schedule.replaced.id();
+
+            try {
+                String old = field.get(schedule).toString();
+                if (old.equals(triggerInfo.getOldValue())) {
+                    field.set(schedule.replaced, triggerInfo.getNewValue());
+                }
+            } catch (Exception e) {
+                throw new Ws320RuntimeException(e);
+            }
+
+            schedules.remove(oid);
+            schedules.put(schedule.replaced.id(), schedule.replaced);
         }
 
-        schedules.remove(oid);
-        schedules.put(schedule.replaced.id(), schedule.replaced);
+
     }
 
     @Override

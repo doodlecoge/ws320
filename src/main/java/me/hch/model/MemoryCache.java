@@ -23,7 +23,8 @@ public class MemoryCache {
 
     private Map<String, HospitalEntity> hospitals = new HashMap<String, HospitalEntity>();
 
-    private Map<String, Map<String, Schedule>> schedules = new HashMap<String, Map<String, Schedule>>();
+    private Map<String, ScheduleCache> schedules =
+            new HashMap<String, ScheduleCache>();
 
     public void addHospital(HospitalEntity hos) {
         hospitals.put(hos.getId(), hos);
@@ -33,16 +34,11 @@ public class MemoryCache {
         return hospitals.get(hosId);
     }
 
-    public void setSchedules(String hospitalId, Map<String, Schedule> schedules) {
-        if (!this.schedules.containsKey(hospitalId)) {
-            this.schedules.put(hospitalId, new HashMap<String, Schedule>());
-        }
-
-        this.schedules.get(hospitalId).clear();
+    public void setSchedules(String hospitalId, ScheduleCache schedules) {
         this.schedules.put(hospitalId, schedules);
     }
 
-    public Map<String, Schedule> getSchedules(String hosId) {
-        return this.schedules.get(hosId);
+    public ScheduleCache getSchedules(String hospitalId) {
+        return this.schedules.get(hospitalId);
     }
 }

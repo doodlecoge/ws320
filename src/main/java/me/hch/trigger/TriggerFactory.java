@@ -2,6 +2,7 @@ package me.hch.trigger;
 
 import me.hch.Ws320Exception;
 import me.hch.trigger.impl.CancelRegistrationTrigger;
+import me.hch.trigger.impl.ReplaceValueTrigger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,6 +23,7 @@ public class TriggerFactory {
     // and register them here
     static {
         triggerClasses.add(CancelRegistrationTrigger.class);
+        triggerClasses.add(ReplaceValueTrigger.class);
     }
 
     public static TriggerInterface getTrigger(TriggerInfo triggerInfo) {

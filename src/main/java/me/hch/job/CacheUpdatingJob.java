@@ -1,6 +1,5 @@
 package me.hch.job;
 
-import me.hch.Ws320Exception;
 import me.hch.Ws320RuntimeException;
 import me.hch.model.*;
 import me.hch.service.client.HisClientFactory;
@@ -152,27 +151,25 @@ public class CacheUpdatingJob extends Thread {
         return file;
     }
 
-    /***************************************************/
-    /* entry */
-
-    /**
-     * ***********************************************
-     */
+    /*-------------------------------------------------*/
+    /* worker                                        */
+    /*-------------------------------------------------*/
 
     public void update(String hospitalId) {
         // 1. download data to disk
         downloadHisData(hospitalId);
 
         // 2. unmarshal from xml
-        Map<String, Schedule> newSchedules = loadCacheFromFile(hospitalId);
+        ScheduleCache sc = loadCacheFromFile(hospitalId);
 
         // 3. error check,
         // this step is merged in to setp 2.
 
         // 4. invoke `cmp` stage triggers if any event
-        cmpTrigger(hospitalId, newSchedules);
+        cmpTrigger(sc);
 
         // 5. replace cache
+        repTrigger(sc);
     }
 
 
@@ -257,7 +254,7 @@ public class CacheUpdatingJob extends Thread {
     /* unmarshal                                       */
     /*-------------------------------------------------*/
 
-    private Map<String, Schedule> loadCacheFromFile(String hospitalId) {
+    private ScheduleCache loadCacheFromFile(String hospitalId) {
         String ts = TimeUtils.getTimeStamp("yyyy-MM-dd");
 
         List<DepartInfo> departInfos = loadHisData(dpt_info, dptInfoTagName, ts, hospitalId, DepartInfo.class, DepartInfoFields);
@@ -265,7 +262,7 @@ public class CacheUpdatingJob extends Thread {
         List<DepartWork> departWorks = loadHisData(dpt_work, dptWorkTagName, ts, hospitalId, DepartWork.class, DepartWorkFields);
         List<DoctorWork> doctorWorks = loadHisData(doc_work, docWorkTagName, ts, hospitalId, DoctorWork.class, DoctorWorkFields);
 
-        return populateCache(departInfos, doctorInfos, departWorks, doctorWorks);
+        return populateCache(hospitalId, departInfos, doctorInfos, departWorks, doctorWorks);
     }
 
     private <T> List<T> loadHisData(String which, String tagName, String ts, String hospitalId, Class<T> klass, Map<String, Field> fields) {
@@ -339,19 +336,20 @@ public class CacheUpdatingJob extends Thread {
     }
 
 
-    private Map<String, Schedule> populateCache(List<DepartInfo> departInfos,
-                                                List<DoctorInfo> doctorInfos,
-                                                List<DepartWork> departWorks,
-                                                List<DoctorWork> doctorWorks) {
+    private ScheduleCache populateCache(String hospitalId,
+                                        List<DepartInfo> departInfos,
+                                        List<DoctorInfo> doctorInfos,
+                                        List<DepartWork> departWorks,
+                                        List<DoctorWork> doctorWorks) {
 
-        ScheduleCache sc = ScheduleCache.getInstance();
+        ScheduleCache sc = new ScheduleCache(hospitalId);
         sc.addDeparts(departInfos);
         sc.addDoctors(doctorInfos);
         Map<String, DepartInfo> departMap = sc.getDeparts();
         Map<String, DoctorInfo> doctorMap = sc.getDoctors();
 
 
-        Map<String, Schedule> scheduleMap = new HashMap<String, Schedule>();
+        Map<String, Schedule> scheduleMap = sc.getSchedules();
 
 
         for (DepartWork departWork : departWorks) {
@@ -408,11 +406,12 @@ public class CacheUpdatingJob extends Thread {
             scheduleMap.put(schedule.id(), schedule);
         }
 
-        return scheduleMap;
+        return sc;
     }
 
 
-    private void copyFields(Schedule schedule, DepartWork work) throws IllegalAccessException, NoSuchFieldException {
+    private void copyFields(Schedule schedule, DepartWork work)
+            throws IllegalAccessException, NoSuchFieldException {
         for (String fieldName : DptWorkFieldMap.keySet()) {
             Object val = DptWorkFieldMap.get(fieldName).get(work);
             ScheduleFieldMap.get(fieldName).set(schedule, val);
@@ -426,23 +425,31 @@ public class CacheUpdatingJob extends Thread {
 
 
     /*-------------------------------------------------*/
-    /* unmarshal                                       */
+    /* change detection                                */
     /*-------------------------------------------------*/
-    private void cmpTrigger(String hospitalId, Map<String, Schedule> newSchedules) {
-        Map<String, Schedule> oldSchedules = cache.getSchedules(hospitalId);
-        if (oldSchedules == null) {
-            cache.setSchedules(hospitalId, newSchedules);
-            return;
-        }
-
+    private void cmpTrigger(ScheduleCache newScheduleCache) {
         List<TriggerInterface> triggers = TriggerFactory.getTriggerInstances();
-        for (String newKey : newSchedules.keySet()) {
-            for (TriggerInterface trigger : triggers) {
-                if (TriggerStage.cmp != trigger.getTriggerStage()) {
-                    continue;
-                }
-                trigger.handle(newSchedules.get(newKey));
+
+        for (TriggerInterface trigger : triggers) {
+            if (TriggerStage.cmp != trigger.getTriggerStage()) {
+                continue;
             }
+            trigger.handle(newScheduleCache);
+        }
+    }
+
+
+    /*-------------------------------------------------*/
+    /* replace schedule attribute as needed            */
+    /*-------------------------------------------------*/
+    private void repTrigger(ScheduleCache sc) {
+        List<TriggerInterface> triggers = TriggerFactory.getTriggerInstances();
+
+        for (TriggerInterface trigger : triggers) {
+            if (TriggerStage.rep != trigger.getTriggerStage()) {
+                continue;
+            }
+            trigger.handle(sc);
         }
     }
 

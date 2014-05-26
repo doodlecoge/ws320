@@ -2,6 +2,7 @@ package me.hch.trigger.impl;
 
 import me.hch.model.MemoryCache;
 import me.hch.model.Schedule;
+import me.hch.model.ScheduleCache;
 import me.hch.trigger.*;
 
 import java.util.Map;
@@ -22,16 +23,27 @@ public class CancelRegistrationTrigger implements TriggerInterface {
     }
 
     @Override
-    public void handle(Schedule schedule) {
-        String id = schedule.id();
-        Map<String, Schedule> oldSchedules = MemoryCache.getInstance().getSchedules(schedule.Hospitalcode);
-        if (!oldSchedules.containsKey(id)) {
-            // todo: check if time in range, report error if it is
-        } else {
-            Schedule oldSchedule = oldSchedules.get(id);
-            if (schedule.WorkStatus.equals("1") && oldSchedule.WorkStatus.equals("0")) {
-                // todo: perform cancel registration here
-                System.out.println(schedule.hospitalName + "," + schedule.departmentName);
+    public void handle(ScheduleCache sc) {
+        MemoryCache mc = MemoryCache.getInstance();
+        String hospitalId = sc.getHospitalId();
+        ScheduleCache oldSc = mc.getSchedules(hospitalId);
+
+        if (oldSc == null) return;
+
+        Map<String, Schedule> schedules = sc.getSchedules();
+        Map<String, Schedule> oldSchedules = oldSc.getSchedules();
+
+
+        for (String sid : schedules.keySet()) {
+            if (!oldSchedules.containsKey(sid)) {
+                continue;
+            }
+            Schedule oldSche = oldSchedules.get(sid);
+            Schedule newSche = schedules.get(sid);
+            if ("1".equals(newSche.WorkStatus) &&
+                    "0".equals(oldSche.WorkStatus)) {
+                // todo: add cancel registration code here
+                System.out.println("=================" + newSche.hospitalName + "," + newSche.departmentName);
             }
         }
     }
