@@ -26,7 +26,7 @@
                 var el = $(e.target);
                 var id = el.val();
 
-                $('#ifrm').attr('src', './' + id);
+                $('#ifrm').attr('src', '<%= request.getContextPath() %>/sche/' + id);
 //                get_xml(id);
             });
         });

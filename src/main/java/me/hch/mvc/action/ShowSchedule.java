@@ -46,17 +46,17 @@ public class ShowSchedule {
     public String show(@PathVariable("hospitalId") String hospitalId, ModelMap map) {
         ScheduleCache sc = MemoryCache.getInstance().getSchedules(hospitalId);
         Document doc = sc.getData();
-        return doc.asXML();
+//        return doc.asXML();
 
-//        OutputFormat format = OutputFormat.createPrettyPrint();
-//        format.setEncoding("UTF-8");
-//        StringWriter sw = new StringWriter();
-//        XMLWriter writer = new XMLWriter(sw, format);
-//        try {
-//            writer.write(doc);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        return sw.toString();
+        OutputFormat format = OutputFormat.createPrettyPrint();
+        format.setEncoding("UTF-8");
+        StringWriter sw = new StringWriter();
+        XMLWriter writer = new XMLWriter(sw, format);
+        try {
+            writer.write(doc);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return sw.toString();
     }
 }
