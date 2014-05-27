@@ -3,17 +3,17 @@ package me.hch.model;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by huaiwang on 5/26/14.
  */
 public class ScheduleCache {
+    private static final Logger log = LoggerFactory.getLogger(ScheduleCache.class);
     private final String hospitalId;
     private final Map<String, DepartInfo> departs;
     private final Map<String, DoctorInfo> doctors;
@@ -68,12 +68,20 @@ public class ScheduleCache {
     /*------------------------------------------------------------------------*/
 
     public Document getData() {
+        // depart name => depart object
+        Map<String, DepartInfo> departMap = new HashMap<String, DepartInfo>();
+        for (DepartInfo dptInfo : departs.values()) {
+            departMap.put(dptInfo.DepartName, dptInfo);
+        }
+
         Map<String, List<Schedule>> scheduleMap =
                 new HashMap<String, List<Schedule>>();
 
         for (Schedule schedule : schedules.values()) {
-            String key = schedule.DepartId;
-            if (schedule.DoctorId != null) key += "_" + schedule.DoctorId;
+            if (schedule.replaced != null) schedule = schedule.replaced;
+
+            String key = schedule.departmentName;
+            if (schedule.doctorName != null) key += "." + schedule.doctorName;
 
             if (!scheduleMap.containsKey(key)) {
                 scheduleMap.put(key, new ArrayList<Schedule>());
@@ -86,68 +94,117 @@ public class ScheduleCache {
                 new HashMap<String, List<DoctorInfo>>();
 
         for (DoctorInfo doctorInfo : doctors.values()) {
-            String key = doctorInfo.DepartId;
+            String dptId = doctorInfo.DepartId;
+            if (!departs.containsKey(dptId)) {
+                // todo: error handling
+                log.error("dpt not found: " + dptId);
+                continue;
+            }
+            DepartInfo dptInfo = departs.get(dptId);
+            String key = dptInfo.DepartName;
             if (!doctorMap.containsKey(key)) {
                 doctorMap.put(key, new ArrayList<DoctorInfo>());
             }
             doctorMap.get(key).add(doctorInfo);
         }
 
-        // construct xml
+
         final String ns = "http://service.hch.me";
         Document document = DocumentHelper.createDocument();
         Element elDpts = document.addElement("Departments", ns);
+        Set<String> dptNames = new HashSet<String>();
 
-        for (DepartInfo dptInfo : departs.values()) {
+        for (String key : scheduleMap.keySet()) {
+            // fixme: should check that dpt and doc name do not contains dot(.).
+            String dptName = key.split(".")[0];
+
+            if (dptNames.contains(dptName)) continue;
+            else dptNames.add(dptName);
+
+            // add a department
+            DepartInfo dptInfo = departMap.get(dptName);
             Element elDpt = elDpts.addElement("Department", ns);
             elDpt.addAttribute("name", dptInfo.DepartName);
-            // todo: add other attributes for department element
 
 
-            List<DoctorInfo> docList = doctorMap.get(dptInfo.DepartId);
-            if (docList != null && docList.size() > 0) {
+            // add doctors
+            List<DoctorInfo> docInfos = doctorMap.get(dptName);
+            if (docInfos != null && docInfos.size() > 0) {
                 Element elDocs = elDpt.addElement("Doctors", ns);
 
-                for (DoctorInfo docInfo : docList) {
+                for (DoctorInfo docInfo : docInfos) {
                     Element elDoc = elDocs.addElement("Doctor", ns);
                     elDoc.addAttribute("name", docInfo.DoctorName);
-                    // todo: add other attributes for doctor element
 
 
-                    String key = docInfo.DepartId + "_" + docInfo.DoctorId;
-                    List<Schedule> docScheList = scheduleMap.get(key);
+                    String skey = dptInfo.DepartName + "@" + docInfo.DoctorName;
+                    List<Schedule> sches = scheduleMap.get(skey);
+                    // to be continued here
 
-                    if (docScheList != null && docScheList.size() > 0) {
-                        Element elSches = elDoc.addElement("Schedules", ns);
-
-                        for (Schedule schedule : docScheList) {
-                            Element elSche = elSches.addElement("Schedule", ns);
-                            Element elWorkDate = elSche.addElement("WorkDate", ns);
-                            elWorkDate.addText(schedule.WorkDate);
-                            Element elWorkType = elSche.addElement("WorkType", ns);
-                            elWorkType.addText(schedule.WorkType);
-                            // todo: add other attributes for schedule element
-                        }
-                    }
                 }
             }
 
+            for (DoctorInfo docInfo : docInfos) {
 
-            List<Schedule> docScheList = scheduleMap.get(dptInfo.DepartId);
-
-            if (docScheList != null && docScheList.size() > 0) {
-                Element elSches = elDpt.addElement("Schedules", ns);
-
-                for (Schedule schedule : docScheList) {
-                    Element elSche = elSches.addElement("Schedule", ns);
-                    Element elWorkDate = elSche.addElement("WorkDate", ns);
-                    elWorkDate.addText(schedule.WorkDate);
-                    Element elWorkType = elSche.addElement("WorkType", ns);
-                    elWorkType.addText(schedule.WorkType);
-                    // todo: add other attributes for schedule element
-                }
             }
+            List<Schedule> sches = scheduleMap.get(key);
         }
+
+        // construct xml
+//        final String ns = "http://service.hch.me";
+//        Document document = DocumentHelper.createDocument();
+//        Element elDpts = document.addElement("Departments", ns);
+//
+//        for (DepartInfo dptInfo : departs.values()) {
+//            Element elDpt = elDpts.addElement("Department", ns);
+//            elDpt.addAttribute("name", dptInfo.DepartName);
+//            // todo: add other attributes for department element
+//
+//
+//            List<DoctorInfo> docList = doctorMap.get(dptInfo.DepartId);
+//            if (docList != null && docList.size() > 0) {
+//                Element elDocs = elDpt.addElement("Doctors", ns);
+//
+//                for (DoctorInfo docInfo : docList) {
+//                    Element elDoc = elDocs.addElement("Doctor", ns);
+//                    elDoc.addAttribute("name", docInfo.DoctorName);
+//                    // todo: add other attributes for doctor element
+//
+//
+//                    String key = docInfo.DepartId + "_" + docInfo.DoctorId;
+//                    List<Schedule> docScheList = scheduleMap.get(key);
+//
+//                    if (docScheList != null && docScheList.size() > 0) {
+//                        Element elSches = elDoc.addElement("Schedules", ns);
+//
+//                        for (Schedule schedule : docScheList) {
+//                            Element elSche = elSches.addElement("Schedule", ns);
+//                            Element elWorkDate = elSche.addElement("WorkDate", ns);
+//                            elWorkDate.addText(schedule.WorkDate);
+//                            Element elWorkType = elSche.addElement("WorkType", ns);
+//                            elWorkType.addText(schedule.WorkType);
+//                            // todo: add other attributes for schedule element
+//                        }
+//                    }
+//                }
+//            }
+//
+//
+//            List<Schedule> docScheList = scheduleMap.get(dptInfo.DepartId);
+//
+//            if (docScheList != null && docScheList.size() > 0) {
+//                Element elSches = elDpt.addElement("Schedules", ns);
+//
+//                for (Schedule schedule : docScheList) {
+//                    Element elSche = elSches.addElement("Schedule", ns);
+//                    Element elWorkDate = elSche.addElement("WorkDate", ns);
+//                    elWorkDate.addText(schedule.WorkDate);
+//                    Element elWorkType = elSche.addElement("WorkType", ns);
+//                    elWorkType.addText(schedule.WorkType);
+//                    // todo: add other attributes for schedule element
+//                }
+//            }
+//        }
 
         return document;
     }
