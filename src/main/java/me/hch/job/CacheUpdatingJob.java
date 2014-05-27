@@ -33,7 +33,7 @@ import java.util.regex.Pattern;
 public class CacheUpdatingJob extends Thread {
     private static final Logger log = LoggerFactory.getLogger(CacheUpdatingJob.class);
     public static Config sysConfig = Config.getInstance("system.properties");
-    private MemoryCache cache = MemoryCache.getInstance();
+    private final MemoryCache cache = MemoryCache.getInstance();
 
     // singleton
     private static final CacheUpdatingJob ins = new CacheUpdatingJob();
@@ -171,8 +171,7 @@ public class CacheUpdatingJob extends Thread {
         // 5. replace cache
         repTrigger(sc);
 
-
-        System.out.println(sc.toString());
+        cache.setSchedules(hospitalId, sc);
     }
 
 

@@ -27,6 +27,9 @@
     <li>
         <a href="/attr">Schedule Attribute Mapping</a>
     </li>
+    <li>
+        <a href="/sche">Show Schedule Xml</a>
+    </li>
 </ul>
 </body>
 </html>

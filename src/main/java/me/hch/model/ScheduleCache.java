@@ -67,7 +67,7 @@ public class ScheduleCache {
 
     /*------------------------------------------------------------------------*/
 
-    public String toString() {
+    public Document getData() {
         Map<String, List<Schedule>> scheduleMap =
                 new HashMap<String, List<Schedule>>();
 
@@ -126,6 +126,7 @@ public class ScheduleCache {
                             elWorkDate.addText(schedule.WorkDate);
                             Element elWorkType = elSche.addElement("WorkType", ns);
                             elWorkType.addText(schedule.WorkType);
+                            // todo: add other attributes for schedule element
                         }
                     }
                 }
@@ -143,11 +144,12 @@ public class ScheduleCache {
                     elWorkDate.addText(schedule.WorkDate);
                     Element elWorkType = elSche.addElement("WorkType", ns);
                     elWorkType.addText(schedule.WorkType);
+                    // todo: add other attributes for schedule element
                 }
             }
         }
 
-        return document.asXML();
+        return document;
     }
 
 }

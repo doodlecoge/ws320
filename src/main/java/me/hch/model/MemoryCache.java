@@ -34,6 +34,10 @@ public class MemoryCache {
         return hospitals.get(hosId);
     }
 
+    public Map<String, HospitalEntity> getHospitals() {
+        return hospitals;
+    }
+
     public void setSchedules(String hospitalId, ScheduleCache schedules) {
         this.schedules.put(hospitalId, schedules);
     }
