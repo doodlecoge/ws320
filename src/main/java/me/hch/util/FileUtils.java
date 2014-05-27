@@ -31,6 +31,11 @@ public class FileUtils {
     }
 
 
+    public static String getFileContent(File file) throws IOException {
+        return getFileContent(file, "UTF-8");
+    }
+
+
     /* instance methods */
     public String getFileContent(String fileName) throws IOException {
         if (fileName.startsWith("/"))
@@ -62,7 +67,8 @@ public class FileUtils {
     public static String load(String fileName) {
         InputStream is = FileUtils.class.getClassLoader().getResourceAsStream(fileName);
         if (is == null) is = FileUtils.class.getResourceAsStream(fileName);
-        if (is == null) throw new Ws320RuntimeException("file not found[" + fileName + "]");
+        if (is == null)
+            throw new Ws320RuntimeException("file not found[" + fileName + "]");
 
         BufferedInputStream bis = new BufferedInputStream(is);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();

@@ -291,6 +291,7 @@ public class CacheUpdatingJob extends Thread {
 
     private <T> List<T> unmarshalHisXml(String tagName, File file, Class<T> klass, Map<String, Field> fields) throws DocumentException, NoSuchFieldException, IllegalAccessException, InstantiationException {
         SAXReader reader = new SAXReader();
+        reader.setEncoding("UTF-8");
         Document document = reader.read(file);
         Element root = document.getRootElement();
         List<Element> dptInfos = root.elements();
@@ -301,14 +302,17 @@ public class CacheUpdatingJob extends Thread {
             Element item = dptInfos.get(i);
 
             if (!item.getName().equalsIgnoreCase(tagName)) {
-                log.warn(file.getAbsolutePath() + ": tag #" + i + ", name [" + item.getName() + "] not " + dptInfoTagName);
+                log.warn(file.getAbsolutePath() + ": tag #" + i + ", name [" +
+                        item.getName() + "] not " + dptInfoTagName);
                 continue;
             }
 
             List<Element> props = item.elements();
 
             if (props.size() != fields.size()) {
-                throw new Ws320RuntimeException(file.getAbsolutePath() + ": tag #" + i + ", number of children != size of DepartInfo fields");
+                throw new Ws320RuntimeException(file.getAbsolutePath() +
+                        ": tag #" + i +
+                        ", number of children != size of DepartInfo fields");
             }
 
             T di = klass.newInstance();

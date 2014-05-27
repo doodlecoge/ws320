@@ -68,8 +68,6 @@ public class ScheduleCache {
     /*------------------------------------------------------------------------*/
 
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-
         Map<String, List<Schedule>> scheduleMap =
                 new HashMap<String, List<Schedule>>();
 
@@ -96,44 +94,60 @@ public class ScheduleCache {
         }
 
         // construct xml
-        for (DepartInfo departInfo : departs.values()) {
-            sb.append("<dpt>").append(departInfo.DepartName);
+        final String ns = "http://service.hch.me";
+        Document document = DocumentHelper.createDocument();
+        Element elDpts = document.addElement("Departments", ns);
 
-            List<DoctorInfo> docList = doctorMap.get(departInfo.DepartId);
+        for (DepartInfo dptInfo : departs.values()) {
+            Element elDpt = elDpts.addElement("Department", ns);
+            elDpt.addAttribute("name", dptInfo.DepartName);
+            // todo: add other attributes for department element
+
+
+            List<DoctorInfo> docList = doctorMap.get(dptInfo.DepartId);
             if (docList != null && docList.size() > 0) {
+                Element elDocs = elDpt.addElement("Doctors", ns);
+
                 for (DoctorInfo docInfo : docList) {
-                    sb.append("<doc>").append(docInfo.DoctorName);
+                    Element elDoc = elDocs.addElement("Doctor", ns);
+                    elDoc.addAttribute("name", docInfo.DoctorName);
+                    // todo: add other attributes for doctor element
+
 
                     String key = docInfo.DepartId + "_" + docInfo.DoctorId;
                     List<Schedule> docScheList = scheduleMap.get(key);
 
                     if (docScheList != null && docScheList.size() > 0) {
+                        Element elSches = elDoc.addElement("Schedules", ns);
+
                         for (Schedule schedule : docScheList) {
-                            sb.append("<sche>").append(schedule.WorkDate)
-                                    .append(",").append(schedule.WorkType)
-                                    .append("</sche>");
+                            Element elSche = elSches.addElement("Schedule", ns);
+                            Element elWorkDate = elSche.addElement("WorkDate", ns);
+                            elWorkDate.addText(schedule.WorkDate);
+                            Element elWorkType = elSche.addElement("WorkType", ns);
+                            elWorkType.addText(schedule.WorkType);
                         }
                     }
-
-                    sb.append("</doc>");
                 }
             }
 
 
-            List<Schedule> docScheList = scheduleMap.get(departInfo.DepartId);
+            List<Schedule> docScheList = scheduleMap.get(dptInfo.DepartId);
 
             if (docScheList != null && docScheList.size() > 0) {
+                Element elSches = elDpt.addElement("Schedules", ns);
+
                 for (Schedule schedule : docScheList) {
-                    sb.append("<sche>").append(schedule.WorkDate)
-                            .append(",").append(schedule.WorkType)
-                            .append("</sche>");
+                    Element elSche = elSches.addElement("Schedule", ns);
+                    Element elWorkDate = elSche.addElement("WorkDate", ns);
+                    elWorkDate.addText(schedule.WorkDate);
+                    Element elWorkType = elSche.addElement("WorkType", ns);
+                    elWorkType.addText(schedule.WorkType);
                 }
             }
-
-            sb.append("</dpt>");
         }
 
-        return sb.toString();
+        return document.asXML();
     }
 
 }
