@@ -29,8 +29,8 @@ public class ReplaceValueTrigger implements TriggerInterface {
     @Override
     public void handle(ScheduleCache sc) {
         Map<String, Schedule> schedules = sc.getSchedules();
+        Map<String, Schedule> replaceds = sc.getSchedules();
 
-        // fixme: ConcurrentModificationException
         for (String sid : schedules.keySet()) {
             Schedule schedule = schedules.get(sid);
 
@@ -56,8 +56,8 @@ public class ReplaceValueTrigger implements TriggerInterface {
                 throw new Ws320RuntimeException(e);
             }
 
-            schedules.remove(oid);
-            schedules.put(schedule.replaced.id(), schedule.replaced);
+            replaceds.remove(oid);
+            replaceds.put(schedule.replaced.id(), schedule.replaced);
         }
 
 
