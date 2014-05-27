@@ -170,6 +170,9 @@ public class CacheUpdatingJob extends Thread {
 
         // 5. replace cache
         repTrigger(sc);
+
+
+        System.out.println(sc.toString());
     }
 
 
