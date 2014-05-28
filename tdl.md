@@ -13,7 +13,7 @@ Stories
 To Do List
 ==========
 
-# 2014-04-04
+## 2014-04-04
 
 complete:
 
@@ -34,16 +34,9 @@ fixme:
 
 
 
-    cache
-      |
-      |--hospital1
-      |    |
-      |    |--schedule1
-      |    |--schedule2
-      |
-      |--hospital2
-      |    |
-      |    |--schedule1
-      |    |--schedule2
-      |
-      |--...
+## 2014-05-28
+
+*   to do list
+    1.  add real hisclient code instead of loading data from local files;
+    2.  reconstruct ws320.xsd;
+    3.
