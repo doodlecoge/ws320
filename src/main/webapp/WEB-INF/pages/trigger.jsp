@@ -10,7 +10,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <html>
 <head>
-    <title></title>
+    <title>Triggers</title>
     <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/css/common.css"/>
 </head>
 <body>

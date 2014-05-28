@@ -11,13 +11,11 @@
 
 <html>
 <head>
-    <title></title>
-    <script type="text/javascript"
-            src="<%= request.getContextPath() %>/js/jquery-1.11.1.js"></script>
+    <title>Show Schedule XML</title>
     <style type="text/css">
         #ifrm {
             width: 100%;
-            height: 90%;
+            height: 80%;
         }
     </style>
     <script type="text/javascript">
@@ -55,7 +53,7 @@
         no attributes
     </c:when>
     <c:otherwise>
-        <select id="sel">
+        Choose a Hospital: <select id="sel">
             <option value="">please select</option>
             <c:forEach items="${hospitals}" var="hospital">
                 <option value='<c:out value="${hospital.key}"/>'>
@@ -65,8 +63,6 @@
         </select>
     </c:otherwise>
 </c:choose>
-
-<hr/>
 
 <iframe id="ifrm"/>
 

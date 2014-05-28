@@ -8,17 +8,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title></title>
-    <style type="text/css">
-        .welcome {
-            font-size: 36px;
-            font-family: arial, "微软雅黑", "宋体", Tahoma, Geneva, sans-serif;
-            border-bottom: 1px solid #888;
-        }
-    </style>
+    <title>首页</title>
 </head>
 <body>
-<div class="welcome">320 WEB SERVICE</div>
+
 
 <ul>
     <li>
