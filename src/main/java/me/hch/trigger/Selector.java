@@ -30,7 +30,7 @@ public class Selector {
             } catch (IllegalAccessException e) {
                 throw new Ws320RuntimeException(e);
             }
-            if (kvs.get(field).equals(val)) return false;
+            if (!kvs.get(field).equals(val)) return false;
         }
         return true;
     }

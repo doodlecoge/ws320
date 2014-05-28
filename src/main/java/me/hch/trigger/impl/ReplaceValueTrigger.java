@@ -7,6 +7,8 @@ import me.hch.model.Schedule;
 import me.hch.model.ScheduleCache;
 import me.hch.model.ScheduleFields;
 import me.hch.trigger.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
 import java.util.Map;
@@ -15,6 +17,7 @@ import java.util.Map;
  * Created by zq on 2014/5/22.
  */
 public class ReplaceValueTrigger implements TriggerInterface {
+    private static final Logger log = LoggerFactory.getLogger(ReplaceValueTrigger.class);
     private TriggerInfo triggerInfo;
     private Selector selector;
 
@@ -29,15 +32,26 @@ public class ReplaceValueTrigger implements TriggerInterface {
     @Override
     public void handle(ScheduleCache sc) {
         Map<String, Schedule> schedules = sc.getSchedules();
-        Map<String, Schedule> replaceds = sc.getSchedules();
+        Map<String, Schedule> replaceds = sc.getReplacedSchedules();
 
         for (String sid : schedules.keySet()) {
             Schedule schedule = schedules.get(sid);
 
-            if (selector != null && !selector.match(schedule)) return;
+            if (selector != null && !selector.match(schedule)) continue;
 
             String attr = triggerInfo.getAttribute();
             Field field = ScheduleAttributeMap.valueOf(attr).field;
+            String old = null;
+            try {
+                old = field.get(schedule).toString();
+            } catch (IllegalAccessException e) {
+                log.error(field.getName(), e);
+                continue;
+            }
+            if (!old.equals(triggerInfo.getOldValue())) {
+                continue;
+            }
+
 
             if (schedule.replaced == null) {
                 Schedule newSchedule = (Schedule) schedule.clone();
@@ -48,10 +62,7 @@ public class ReplaceValueTrigger implements TriggerInterface {
             String oid = schedule.replaced.id();
 
             try {
-                String old = field.get(schedule).toString();
-                if (old.equals(triggerInfo.getOldValue())) {
-                    field.set(schedule.replaced, triggerInfo.getNewValue());
-                }
+                field.set(schedule.replaced, triggerInfo.getNewValue());
             } catch (Exception e) {
                 throw new Ws320RuntimeException(e);
             }

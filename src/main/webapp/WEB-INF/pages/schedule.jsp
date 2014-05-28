@@ -26,6 +26,7 @@
                 var el = $(e.target);
                 var id = el.val();
 
+                if(id != "")
                 $('#ifrm').attr('src', '<%= request.getContextPath() %>/sche/' + id);
 //                get_xml(id);
             });
@@ -55,6 +56,7 @@
     </c:when>
     <c:otherwise>
         <select id="sel">
+            <option value="">please select</option>
             <c:forEach items="${hospitals}" var="hospital">
                 <option value='<c:out value="${hospital.key}"/>'>
                     <c:out value="${hospital.value}"/>
