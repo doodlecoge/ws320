@@ -21,11 +21,66 @@ public class Ws320Endpoint {
             namespace = NAME_SPACE
     )
     @ResponsePayload
-    public Element handleRequest(@RequestPayload Element xml) {
+    public Element handleGetHospInfoRequest(@RequestPayload Element xml) {
         Document document = DocumentHelper.createDocument();
         Element ele = document.addElement("GetHospInfoResponse", NAME_SPACE);
-        ele.setText("0000000000000000");
+        ele.setText("GetHospInfoResponse");
         return ele;
 
     }
+
+
+    @PayloadRoot(
+            localPart = "GetRegInfoRequest",
+            namespace = NAME_SPACE
+    )
+    @ResponsePayload
+    public Element handleGetRegInfoRequest(@RequestPayload Element xml) {
+        Document document = DocumentHelper.createDocument();
+        Element ele = document.addElement("GetRegInfoResponse", NAME_SPACE);
+        ele.setText("GetRegInfoResponse");
+        return ele;
+
+    }
+
+
+    @PayloadRoot(
+            localPart = "GetRegPoolRequest",
+            namespace = NAME_SPACE
+    )
+    @ResponsePayload
+    public Element handleGetRegPoolRequest(@RequestPayload Element xml) {
+        Document document = DocumentHelper.createDocument();
+        Element ele = document.addElement("GetRegPoolResponse", NAME_SPACE);
+        ele.setText("GetRegPoolResponse");
+        return ele;
+
+    }
+
+
+    @PayloadRoot(
+            localPart = "NotifyHospInfoRequest",
+            namespace = NAME_SPACE
+    )
+    @ResponsePayload
+    public Element handleNotifyHospInfoRequest(@RequestPayload Element xml) {
+        Document document = DocumentHelper.createDocument();
+        Element ele = document.addElement("NotifyHospInfoResponse", NAME_SPACE);
+        ele.setText("NotifyHospInfoResponse");
+        return ele;
+    }
+
+
+    @PayloadRoot(
+            localPart = "RegisterRequest",
+            namespace = NAME_SPACE
+    )
+    @ResponsePayload
+    public Element handleRegisterRequest(@RequestPayload Element xml) {
+        Document document = DocumentHelper.createDocument();
+        Element ele = document.addElement("RegisterResponse", NAME_SPACE);
+        ele.setText("RegisterResponse");
+        return ele;
+    }
+
 }
