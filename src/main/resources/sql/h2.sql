@@ -31,4 +31,15 @@ create table if not exists ws320.triggers
   constraint if not exists pk_action primary key (action)
 );
 
--- create unique index if not exists uniq_idx on ws320.triggers(action);
+
+create table if not exists ws320.patients
+(
+  id  varchar(18) not null,
+  name  varchar(10) not null,
+  sex varchar(1) not null,
+  phone varchar(16) not null,
+  insurence_type  int null,
+
+  constraint if not exists pk_action primary key (action)
+
+);

@@ -281,9 +281,8 @@
                   </restriction>
                 </simpleType>
               </element>
-              <element name="Birth" type="date"
-                       minOccurs="0"/>
-              <element name="InsureType">
+              <element name="Birth" type="date" minOccurs="0"/>
+                <element name="InsureType">
                 <annotation>
                   <documentation>
                     0: 自费, 1: 市民卡, 2: 园区医保
