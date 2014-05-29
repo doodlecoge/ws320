@@ -10,33 +10,48 @@ Stories
     2.  replace some of schedule properties if match pattern
 
 
-To Do List
-==========
+Task Tracking System
+====================
 
-## 2014-04-04
-
-complete:
-
-    1. wsdl 1.1
-    2. interface structures
-    3. code framework
-
-todo:
-
-    1. global memory
-    2. db interface & design
-    3. hospital webservice client transfer
-    4. config design
-
-fixme:
-
-    1. ...
+We use `to do list` to keep current task need to perform, and `completed list`
+to track all completed tasks. The `history` keep track of all actions including
+*add*, *finish* and *reopen* a task. We create a record in `to do list` for a
+new task, and when finished we move it to `completed list`, while reopening a
+task we will moving corresponding record from `completed list` to `to do list`.
 
 
+the grammar for each history task:
 
-## 2014-05-28
+    history     = date op to_do_id
+    date        = day "/" month "/" year
+    op          = "+" / "-" / "*"
+    to_do_id    = "TD" 3DIGIT
 
-*   to do list
-    1.  add real hisclient code instead of loading data from local files;
-    2.  reconstruct ws320.xsd;
-    3.
+
+`op` meanings:
+
+    + add a to do task;
+    - finish a to do task;
+    * reopen a to do task, because of a bug or unfinished.
+
+
+to do list
+----------
+
+1.  `TD004` add real hisclient code instead of loading data from local files;
+1.  `TD005` patient & register tables
+
+
+completed list
+--------------
+
+1.  `TD001` ws320.xsd
+2.  `TD002` memory cache
+3.  `TD003` trigger design
+
+
+history
+-------
+
+*   2014/05/28 + `TD004`
+*   2014/05/29 + `TD005`
