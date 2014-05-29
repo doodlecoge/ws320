@@ -9,20 +9,26 @@
 <html>
 <head>
     <title>首页</title>
+    <style type="text/css">
+        .menu li {
+            line-height: 25px;
+        }
+    </style>
 </head>
 <body>
-
-
-<ul>
+<ol class="menu">
+    <li>
+        <a href="/ws/ws320.wsdl">wsdl</a>
+    </li>
     <li>
         <a href="/trigger">trigger page</a>
     </li>
     <li>
-        <a href="/attr">Schedule Attribute Mapping</a>
+        <a href="/attr">Schedole Attribute Mapping</a>
     </li>
     <li>
-        <a href="/sche">Show Schedule Xml</a>
+        <a href="/sche">Show Schedole Xml</a>
     </li>
-</ul>
+</ol>
 </body>
 </html>
