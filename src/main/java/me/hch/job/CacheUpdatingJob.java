@@ -472,4 +472,12 @@ public class CacheUpdatingJob extends Thread {
             return name.startsWith(prefix);
         }
     }
+
+
+    @Override
+    public void run() {
+        while (true) {
+
+        }
+    }
 }
