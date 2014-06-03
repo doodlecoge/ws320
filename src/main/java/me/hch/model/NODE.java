@@ -16,4 +16,7 @@ public class NODE {
     public static String ATTR_NAME = "Name";
     public static String PHONE = "Phone";
 
+    public static String RESULT = "Result";
+    public static String RESULT_CODE = "ResultCode";
+    public static String RESULT_MESSAGE = "ResultMsg";
 }

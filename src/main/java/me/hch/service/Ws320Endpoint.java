@@ -2,17 +2,14 @@ package me.hch.service;
 
 import me.hch.model.MemoryCache;
 import me.hch.model.NODE;
-import me.hch.model.ScheduleCache;
-import me.hch.mvc.model.HospitalEntity;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
-
-import java.util.Map;
 
 /**
  * Created by hch on 2014/5/9.
@@ -22,27 +19,20 @@ import java.util.Map;
 public class Ws320Endpoint {
     private static final String NS = "http://service.hch.me";
     private static final MemoryCache cache = MemoryCache.getInstance();
+    private Ws320Service service;
 
-    @PayloadRoot(
-            localPart = "GetHospInfoRequest",
-            namespace = NS
-    )
+    @Autowired
+    public Ws320Endpoint(Ws320Service service) {
+        this.service = service;
+    }
+
     @ResponsePayload
+    @PayloadRoot(localPart = "GetHospInfoRequest", namespace = NS)
     public Element handleGetHospInfoRequest(@RequestPayload Element xml) {
         String hospitalName = getHospitalName(xml);
         Document document = DocumentHelper.createDocument();
         Element resp = document.addElement(NODE.GET_HOSPITAL_RESPONSE, NS);
-
-        if (hospitalName == null) {
-            Map<String, HospitalEntity> hospitals = cache.getHospitals();
-            for (HospitalEntity hospital : hospitals.values()) {
-                addHospital(resp, hospital);
-            }
-        } else {
-            HospitalEntity hospital = cache.getHospitalByName(hospitalName);
-            addHospital(resp, hospital);
-        }
-        return resp;
+        return service.getHospitalResponse(hospitalName);
     }
 
     private String getHospitalName(Element req) {
@@ -55,27 +45,9 @@ public class Ws320Endpoint {
         }
     }
 
-    private void addHospital(Element resp, HospitalEntity hospital) {
-        ScheduleCache schedules = cache.getSchedules(hospital.getId());
 
-        if (schedules == null) return;
-
-        Element elHospital = resp.addElement(NODE.HOSPITAL);
-        elHospital.addAttribute(NODE.ATTR_NAME, hospital.getName());
-        Element elBasic = elHospital.addElement(NODE.BASIC, NS);
-        Element elPhone = elBasic.addElement(NODE.PHONE, NS);
-        elPhone.setText(hospital.getPhone());
-        // todo: add hospital basic info
-
-        elHospital.add(schedules.getData().getRootElement());
-    }
-
-
-    @PayloadRoot(
-            localPart = "GetRegInfoRequest",
-            namespace = NS
-    )
     @ResponsePayload
+    @PayloadRoot(localPart = "GetRegInfoRequest", namespace = NS)
     public Element handleGetRegInfoRequest(@RequestPayload Element xml) {
         Document document = DocumentHelper.createDocument();
         Element ele = document.addElement("GetRegInfoResponse", NS);
@@ -85,11 +57,8 @@ public class Ws320Endpoint {
     }
 
 
-    @PayloadRoot(
-            localPart = "GetRegPoolRequest",
-            namespace = NS
-    )
     @ResponsePayload
+    @PayloadRoot(localPart = "GetRegPoolRequest", namespace = NS)
     public Element handleGetRegPoolRequest(@RequestPayload Element xml) {
         Document document = DocumentHelper.createDocument();
         Element ele = document.addElement("GetRegPoolResponse", NS);
@@ -99,11 +68,8 @@ public class Ws320Endpoint {
     }
 
 
-    @PayloadRoot(
-            localPart = "NotifyHospInfoRequest",
-            namespace = NS
-    )
     @ResponsePayload
+    @PayloadRoot(localPart = "NotifyHospInfoRequest", namespace = NS)
     public Element handleNotifyHospInfoRequest(@RequestPayload Element xml) {
         Document document = DocumentHelper.createDocument();
         Element ele = document.addElement("NotifyHospInfoResponse", NS);
@@ -112,11 +78,8 @@ public class Ws320Endpoint {
     }
 
 
-    @PayloadRoot(
-            localPart = "RegisterRequest",
-            namespace = NS
-    )
     @ResponsePayload
+    @PayloadRoot(localPart = "RegisterRequest", namespace = NS)
     public Element handleRegisterRequest(@RequestPayload Element xml) {
         Document document = DocumentHelper.createDocument();
         Element ele = document.addElement("RegisterResponse", NS);
