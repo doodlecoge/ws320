@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS ws320.orders
 (
   sn              VARCHAR(20) NOT NULL, -- pk
 
-  -- 未取号:wqh, 已取号:yqh, 已退号:yth
+  -- 未取号:wqh, 已取号:yqh, 已退号:yth, shuang yue, taofei
   order_status    varchar(10) not null default 'wqh',
 
   hospital_id     VARCHAR(10) NOT NULL,
@@ -62,6 +62,8 @@ CREATE TABLE IF NOT EXISTS ws320.orders
   patient_id      VARCHAR(18) NOT NULL, -- fk
   patient_name    VARCHAR(10) NOT NULL,
   patient_phone   VARCHAR(20) NOT NULL,
+
+  insureance_type varchar(20) not null,
 
   work_date       DATE        NOT NULL,
   apm             VARCHAR(2)  NOT NULL,

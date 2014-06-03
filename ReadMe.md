@@ -30,6 +30,7 @@ Definitions
     3.  doctor (if doctor)
     4.  date
     5.  am or pm
+    6.  begin & end time
 
 2.  **Time Frame**. Time frame is the a period of
     time from the very beginning of a schedules to
