@@ -4,5 +4,7 @@
         <UserName>aaaa</UserName>
         <Password>bbbb</Password>
     </AuthInfo>
-    <Filter></Filter>
+    <Filter>
+      <HospName>ZYYY name</HospName>
+    </Filter>
 </GetHospInfoRequest>

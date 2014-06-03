@@ -34,6 +34,13 @@ public class MemoryCache {
         return hospitals.get(hosId);
     }
 
+    public HospitalEntity getHospitalByName(String hosName) {
+        for (HospitalEntity hos : hospitals.values()) {
+            if (hos.getName().equals(hosName)) return hos;
+        }
+        return null;
+    }
+
     public Map<String, HospitalEntity> getHospitals() {
         return hospitals;
     }

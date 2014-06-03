@@ -397,7 +397,7 @@
 
   <complexType name="tHospital">
     <sequence>
-      <element name="HospBasic" minOccurs="0">
+      <element name="Basic" minOccurs="0">
         <annotation>
           <documentation>医院基本数据</documentation>
         </annotation>
@@ -450,7 +450,7 @@
 
   <complexType name="tDepart">
     <sequence>
-      <element name="DepartBasic" minOccurs="0">
+      <element name="Basic" minOccurs="0">
         <annotation>
           <documentation>科室基本信息</documentation>
         </annotation>
@@ -524,7 +524,7 @@
 
   <complexType name="tDoctor">
     <sequence>
-      <element name="DocBasic" minOccurs="0">
+      <element name="Basic" minOccurs="0">
         <annotation>
           <documentation>医生基本信息</documentation>
         </annotation>
