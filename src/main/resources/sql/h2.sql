@@ -34,23 +34,27 @@ CREATE TABLE IF NOT EXISTS ws320.triggers
 
 CREATE TABLE IF NOT EXISTS ws320.patients
 (
-  id             VARCHAR(18) NOT NULL,
-  name           VARCHAR(10) NOT NULL,
---   sex            VARCHAR(1)  NOT NULL,
---   phone          VARCHAR(16) NOT NULL,
---   insurance_type INT         NULL,
-  blocked        VARCHAR(1)  NOT NULL DEFAULT 'N',
+  patient_id VARCHAR(18) NOT NULL,
+  name       VARCHAR(10) NOT NULL,
+  is_blocked VARCHAR(1) DEFAULT 'N',
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMEP,
+  CONSTRAINT IF NOT EXISTS pk_id PRIMARY KEY (patient_id)
+);
 
-  CONSTRAINT IF NOT EXISTS pk_id PRIMARY KEY (id)
-
+CREATE TABLE IF NOT EXISTS ws320.block_histories (
+  id         INT AUTO_INCREMENT,
+  patient_id VARCHAR(18),
+  operation  VARCHAR(3), -- block | cancel
+  reason     VARCHAR(20),
+  when       DATETIME DEFAULT CURRENT_TIMESTAMEP
 );
 
 CREATE TABLE IF NOT EXISTS ws320.orders
 (
-  sn              VARCHAR(20) NOT NULL, -- pk
+  order_id        VARCHAR(20) NOT NULL, -- pk
 
-  -- 未取号:wqh, 已取号:yqh, 已退号:yth, shuang yue, taofei
-  order_status    varchar(10) not null default 'wqh',
+  -- 未取号,已取号,已退号,爽约,逃费
+  order_status    VARCHAR(10) NOT NULL DEFAULT '未取号',
 
   hospital_id     VARCHAR(10) NOT NULL,
   hospital_name   VARCHAR(20) NOT NULL,
@@ -63,7 +67,7 @@ CREATE TABLE IF NOT EXISTS ws320.orders
   patient_name    VARCHAR(10) NOT NULL,
   patient_phone   VARCHAR(20) NOT NULL,
 
-  insureance_type varchar(20) not null,
+  insureance_type VARCHAR(20) NOT NULL,
 
   work_date       DATE        NOT NULL,
   apm             VARCHAR(2)  NOT NULL,
@@ -77,5 +81,20 @@ CREATE TABLE IF NOT EXISTS ws320.orders
   pay_account     VARCHAR(20) NULL,
   pay_amount      FLOAT       NULL,
 
-  created_on datetime not null
+  created_on      DATETIME    NOT NULL,
+  CONSTRAINT IF NOT EXISTS pk_order_id PRIMARY KEY (order_id)
 );
+
+
+CREATE TABLE IF NOT EXISTS ws320.order_histories (
+  id        INT AUTO_INCREMENT,
+  order_id  INT         NOT NULL,
+  vendor    VARCHAR(20) NOT NULL,
+  who       VARCHAR(20) NOT NULL,
+  operation VARCHAR(3)  NOT NULL, -- add | del | mod
+  what      VARCHAR(20) NOT NULL,
+  old       VARCHAR(20) NULL,
+  new       VARCHAR(20) NULL,
+  when      DATETIME DEFAULT CURRENT_TIMESTAMEP,
+  CONSTRAINT IF NOT EXISTS pk_order_his_id PRIMARY KEY (id)
+)
