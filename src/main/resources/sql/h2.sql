@@ -37,17 +37,22 @@ CREATE TABLE IF NOT EXISTS ws320.patients
   patient_id VARCHAR(18) NOT NULL,
   name       VARCHAR(10) NOT NULL,
   is_blocked VARCHAR(1) DEFAULT 'N',
-  created_at DATETIME DEFAULT CURRENT_TIMESTAMEP,
-  CONSTRAINT IF NOT EXISTS pk_id PRIMARY KEY (patient_id)
+  blocked_at DATETIME    NOT NULL,
+  created_at DATETIME    NOT NULL,
+  CONSTRAINT IF NOT EXISTS pk_patient_id PRIMARY KEY (patient_id)
 );
 
 CREATE TABLE IF NOT EXISTS ws320.block_histories (
   id         INT AUTO_INCREMENT,
-  patient_id VARCHAR(18),
-  operation  VARCHAR(3), -- block | cancel
-  reason     VARCHAR(20),
-  when       DATETIME DEFAULT CURRENT_TIMESTAMEP
+  patient_id VARCHAR(18) NOT NULL,
+  operation  VARCHAR(3)  NOT NULL, -- block | cancel
+  reason     VARCHAR(20) NOT NULL,
+  when       DATETIME    NOT NULL,
+  operator   VARCHAR(18) NULL
 );
+
+-- id: 1, patient_id: 110111199901016611, operation: block, reason: cancel 2
+-- registrations in 7 days, when: 2014-01-01 10:10:10, operator:
 
 CREATE TABLE IF NOT EXISTS ws320.orders
 (
@@ -85,16 +90,30 @@ CREATE TABLE IF NOT EXISTS ws320.orders
   CONSTRAINT IF NOT EXISTS pk_order_id PRIMARY KEY (order_id)
 );
 
-
 CREATE TABLE IF NOT EXISTS ws320.order_histories (
-  id        INT AUTO_INCREMENT,
-  order_id  INT         NOT NULL,
-  vendor    VARCHAR(20) NOT NULL,
-  who       VARCHAR(20) NOT NULL,
-  operation VARCHAR(3)  NOT NULL, -- add | del | mod
-  what      VARCHAR(20) NOT NULL,
-  old       VARCHAR(20) NULL,
-  new       VARCHAR(20) NULL,
-  when      DATETIME DEFAULT CURRENT_TIMESTAMEP,
+  id         INT AUTO_INCREMENT,
+  order_id   INT         NOT NULL,
+  patient_id VARCHAR(18) NOT NULL, -- for query cancel times quickly
+  vendor_id  VARCHAR(20) NOT NULL,
+  operator   VARCHAR(20) NOT NULL,
+  operation  VARCHAR(3)  NOT NULL, -- 添加,删除,修改
+  what       VARCHAR(20) NOT NULL,
+  old        VARCHAR(20) NULL,
+  new        VARCHAR(20) NULL,
+  when       DATETIME    NOT NULL,
   CONSTRAINT IF NOT EXISTS pk_order_his_id PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS ws320.configs (
+  key         VARCHAR(20)  NOT NULL,
+  value       VARCHAR(200) NOT NULL,
+  description VARCHAR(200) NOT NULL,
+  CONSTRAINT IF NOT EXISTS pk_key PRIMARY KEY (key)
+);
+
+CREATE TABLE IF NOT EXISTS vendors (
+  vendor_id   VARCHAR(20) NOT NULL,
+  password    VARCHAR(20) NOT NULL,
+  description VARCHAR(50) NULL,
+  CONSTRAINT IF NOT EXISTS pk_vendor_id PRIMARY KEY (vendor_id)
 )
