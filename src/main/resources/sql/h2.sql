@@ -79,14 +79,14 @@ CREATE TABLE IF NOT EXISTS ws320.orders
   start_time      TIME        NOT NULL,
   end_time        TIME        NOT NULL,
 
-  register_from   VARCHAR(20) NOT NULL,
+  vendor_id       VARCHAR(20) NOT NULL,
   operator        VARCHAR(20) NULL,
 
   is_payed        VARCHAR(1)  NOT NULL DEFAULT 'N',
   pay_account     VARCHAR(20) NULL,
   pay_amount      FLOAT       NULL,
 
-  created_on      DATETIME    NOT NULL,
+  created_at      DATETIME    NOT NULL,
   CONSTRAINT IF NOT EXISTS pk_order_id PRIMARY KEY (order_id)
 );
 
