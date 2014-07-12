@@ -97,4 +97,5 @@ public class HttpWsClient implements HisClientIface {
 
         return el.getText();
     }
+
 }

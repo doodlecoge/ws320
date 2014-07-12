@@ -44,6 +44,7 @@ public class HttpEngine {
 
     public static void main(String[] args) throws Exception {
         String base = "http://172.25.61.4:8080";
+
         String wsdl = base + "/axis2/services/WS4SZ?wsdl";
 
         HttpEngine eng = new HttpEngine();
