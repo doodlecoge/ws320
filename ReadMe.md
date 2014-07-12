@@ -246,3 +246,35 @@ accordingly, here is an example:
 
 Replace Flow
 -----------------
+
+
+
+Database Design
+---------------
+
+1. patients
+    - id
+    - name
+    - created at
+2. bookings
+    - id (auto generated)
+    - department name
+    - department id
+    - ...
+    - patient id
+    - ...
+    - crated at
+3. booking_histories
+    - who
+    - oper = add | mod | del
+    - what
+    - old value
+    - new value
+    - when
+4. filter
+    - selector
+    - attribute
+    - oldvalue
+    - newvalue
+    - action
+    - stage
