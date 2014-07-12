@@ -65,8 +65,9 @@ public class FileUtils {
 
     /* static methods */
     public static String load(String fileName) {
-        InputStream is = FileUtils.class.getClassLoader().getResourceAsStream(fileName);
-        if (is == null) is = FileUtils.class.getResourceAsStream(fileName);
+        InputStream is = FileUtils.class.getResourceAsStream(fileName);
+        if (is == null)
+            is = FileUtils.class.getClassLoader().getResourceAsStream(fileName);
         if (is == null)
             throw new Ws320RuntimeException("file not found[" + fileName + "]");
 
