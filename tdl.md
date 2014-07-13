@@ -40,6 +40,8 @@ to do list
 
 1.  `TD004` add real hisclient code instead of loading data from local files;
 1.  `TD005` patient & register tables
+1.  `TD006` db interface
+1.  `TD007` add trigger config web page - add/remove/modify trigger
 
 
 completed list
@@ -53,5 +55,5 @@ completed list
 history
 -------
 
-*   2014/05/28 + `TD004`
-*   2014/05/29 + `TD005`
+1.  2014/05/28 + `TD004`
+1.  2014/05/29 + `TD005`

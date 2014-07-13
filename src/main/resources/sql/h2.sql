@@ -46,9 +46,9 @@ CREATE TABLE IF NOT EXISTS ws320.block_histories (
   id         INT AUTO_INCREMENT,
   patient_id VARCHAR(18) NOT NULL,
   operation  VARCHAR(3)  NOT NULL, -- block | cancel
+  operator   VARCHAR(18) NULL,
   reason     VARCHAR(20) NOT NULL,
   when       DATETIME    NOT NULL,
-  operator   VARCHAR(18) NULL
 );
 
 -- id: 1, patient_id: 110111199901016611, operation: block, reason: cancel 2
@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS ws320.orders
   doctor_id       VARCHAR(10) NULL,
   doctor_name     VARCHAR(20) NULL,
 
-  patient_id      VARCHAR(18) NOT NULL, -- fk
+  patient_id      VARCHAR(18) NOT NULL,
   patient_name    VARCHAR(10) NOT NULL,
   patient_phone   VARCHAR(20) NOT NULL,
 
@@ -93,27 +93,27 @@ CREATE TABLE IF NOT EXISTS ws320.orders
 CREATE TABLE IF NOT EXISTS ws320.order_histories (
   id         INT AUTO_INCREMENT,
   order_id   INT         NOT NULL,
-  patient_id VARCHAR(18) NOT NULL, -- for query cancel times quickly
+  patient_id VARCHAR(18) NOT NULL, -- redundant, for query cancel times quickly
   vendor_id  VARCHAR(20) NOT NULL,
   operator   VARCHAR(20) NOT NULL,
-  operation  VARCHAR(3)  NOT NULL, -- 添加,删除,修改
+  operation  VARCHAR(2)  NOT NULL, -- 挂号,退号,修改
   what       VARCHAR(20) NOT NULL,
-  old        VARCHAR(20) NULL,
-  new        VARCHAR(20) NULL,
+  old_value  VARCHAR(20) NULL,
+  new_value  VARCHAR(20) NULL,
   when       DATETIME    NOT NULL,
   CONSTRAINT IF NOT EXISTS pk_order_his_id PRIMARY KEY (id)
 );
 
 CREATE TABLE IF NOT EXISTS ws320.configs (
-  key         VARCHAR(20)  NOT NULL,
-  value       VARCHAR(200) NOT NULL,
-  description VARCHAR(200) NOT NULL,
+  key        VARCHAR(20)  NOT NULL,
+  value      VARCHAR(200) NOT NULL,
+  annotation VARCHAR(200) NOT NULL,
   CONSTRAINT IF NOT EXISTS pk_key PRIMARY KEY (key)
 );
 
 CREATE TABLE IF NOT EXISTS vendors (
-  vendor_id   VARCHAR(20) NOT NULL,
-  password    VARCHAR(20) NOT NULL,
-  description VARCHAR(50) NULL,
+  vendor_id  VARCHAR(20) NOT NULL,
+  password   VARCHAR(20) NOT NULL,
+  annotation VARCHAR(50) NULL,
   CONSTRAINT IF NOT EXISTS pk_vendor_id PRIMARY KEY (vendor_id)
 )
