@@ -1,6 +1,7 @@
 package me.hch.mvc.dao;
 
 import me.hch.mvc.model.HospitalEntity;
+import me.hch.mvc.model.User;
 import me.hch.trigger.TriggerInfo;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
@@ -49,6 +50,15 @@ public class TheDao {
     public List<TriggerInfo> getTriggerInfos() {
         Session session = sessionFactory.openSession();
         Criteria criteria = session.createCriteria(TriggerInfo.class);
+        List list = criteria.list();
+        session.close();
+        return list;
+    }
+
+
+    public List<User> getUsers() {
+        Session session = sessionFactory.openSession();
+        Criteria criteria = session.createCriteria(User.class);
         List list = criteria.list();
         session.close();
         return list;

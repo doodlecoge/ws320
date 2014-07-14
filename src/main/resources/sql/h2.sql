@@ -111,9 +111,27 @@ CREATE TABLE IF NOT EXISTS ws320.configs (
   CONSTRAINT IF NOT EXISTS pk_key PRIMARY KEY (key)
 );
 
-CREATE TABLE IF NOT EXISTS vendors (
+CREATE TABLE IF NOT EXISTS ws320.vendors (
   vendor_id  VARCHAR(20) NOT NULL,
   password   VARCHAR(20) NOT NULL,
   annotation VARCHAR(50) NULL,
   CONSTRAINT IF NOT EXISTS pk_vendor_id PRIMARY KEY (vendor_id)
-)
+);
+
+
+-------------------------
+-- test use
+-------------------------
+
+CREATE TABLE IF NOT EXISTS ws320.users (
+  id   INT AUTO_INCREMENT,
+  name VARCHAR(20) NOT NULL,
+  sex  VARCHAR(10)  NOT NULL,
+  CONSTRAINT IF NOT EXISTS pk_id PRIMARY KEY (id)
+);
+
+INSERT INTO
+  ws320.users (name, sex)
+VALUES
+  ('tom', 'Male'),
+  ('jerry', 'Female');

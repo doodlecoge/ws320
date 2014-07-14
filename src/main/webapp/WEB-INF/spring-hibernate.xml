@@ -38,6 +38,7 @@
             <list>
                 <value>me.hch.mvc.model.HospitalEntity</value>
                 <value>me.hch.trigger.TriggerInfo</value>
+                <value>me.hch.mvc.model.User</value>
             </list>
         </property>
 
