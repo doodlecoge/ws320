@@ -83,14 +83,5 @@ public class User {
             }
             throw new Ws320RuntimeException("not found:" + value);
         }
-
-        @Override
-        public Map<String, Sex> getValueEnumMap() {
-            Map<String, Sex> map = new HashMap<String, Sex>();
-            for (Sex sex : Sex.values()) {
-                map.put(sex.value, sex);
-            }
-            return map;
-        }
     }
 }
