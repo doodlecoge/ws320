@@ -19,7 +19,7 @@
     <!--<context:component-scan base-package="me.hch.mvc,me.hch.trigger"/>-->
 
     <jdbc:embedded-database id="h2Ds" type="H2">
-        <jdbc:script location="classpath*:sql/h2.sql"/>
+        <jdbc:script location="classpath*:sql/h2.sql" encoding="utf8"/>
         <jdbc:script location="classpath*:sql/h2-data.sql" encoding="utf8"/>
     </jdbc:embedded-database>
 
