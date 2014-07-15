@@ -1,6 +1,7 @@
 package me.hch.mvc.dao;
 
 import me.hch.Ws320RuntimeException;
+import me.hch.mvc.model.BlockHistory;
 import me.hch.mvc.model.HospitalEntity;
 import me.hch.mvc.model.Patient;
 import me.hch.mvc.model.User;
@@ -70,10 +71,7 @@ public class TheDao {
 
 
     /* patients                                                          */
-
-    /**
-     * *****************************************************************
-     */
+    /*===================================================================*/
 
     public List<Patient> getPatients() {
         Session session = sessionFactory.openSession();

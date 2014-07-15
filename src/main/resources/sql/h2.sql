@@ -39,18 +39,24 @@ CREATE TABLE IF NOT EXISTS ws320.patients
   is_blocked VARCHAR(1) DEFAULT 'N',
   blocked_at DATETIME    NULL,
   unblock_at DATETIME    NULL,
-  created_at DATETIME    NOT NULL default CURRENT_TIMESTAMP,
+  created_at DATETIME    NOT NULL DEFAULT CURRENT_TIMESTAMP,
   CONSTRAINT IF NOT EXISTS pk_patient_id PRIMARY KEY (patient_id)
 );
 
 CREATE TABLE IF NOT EXISTS ws320.block_histories (
   id         INT AUTO_INCREMENT,
   patient_id VARCHAR(18) NOT NULL,
-  operation  VARCHAR(3)  NOT NULL, -- block | cancel
+  operation  VARCHAR(10) NOT NULL, -- block | unblock
+  vendor_id  VARCHAR(20) NULL,
   operator   VARCHAR(18) NULL,
   reason     VARCHAR(20) NOT NULL,
   when       DATETIME    NOT NULL,
 );
+
+INSERT INTO
+  ws320.block_histories (id, patient_id, operation, operator, reason, when)
+VALUES
+  (1, '321', 'block', 'sys', 'no reason', '2014-07-13 12:12:12');
 
 -- id: 1, patient_id: 110111199901016611, operation: block, reason: cancel 2
 -- registrations in 7 days, when: 2014-01-01 10:10:10, operator:
@@ -127,7 +133,7 @@ CREATE TABLE IF NOT EXISTS ws320.vendors (
 CREATE TABLE IF NOT EXISTS ws320.users (
   id   INT AUTO_INCREMENT,
   name VARCHAR(20) NOT NULL,
-  sex  VARCHAR(10)  NOT NULL,
+  sex  VARCHAR(10) NOT NULL,
   CONSTRAINT IF NOT EXISTS pk_id PRIMARY KEY (id)
 );
 

@@ -1,13 +1,17 @@
 package me.hch.mvc.model;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import java.sql.Time;
 import java.util.Date;
 
 /**
  * Created by huaiwang on 14-4-3.
  */
+@Entity
+@Table(name = "orders", schema = "ws320")
 public class Order {
     @Id
     @Column(name = "order_id")

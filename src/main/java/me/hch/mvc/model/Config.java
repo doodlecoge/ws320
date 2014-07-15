@@ -9,12 +9,13 @@ import javax.persistence.Table;
  * Created by huaiwang on 7/11/14.
  */
 @Entity
-@Table(name = "vendors", schema = "ws320")
+@Table(name = "configs", schema = "ws320")
 public class Config {
     @Id
     private String key;
     @Column
     private String value;
+    @Column
     private String description;
 
     public String getKey() {
