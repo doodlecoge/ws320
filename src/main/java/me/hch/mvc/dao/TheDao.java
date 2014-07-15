@@ -70,7 +70,10 @@ public class TheDao {
 
 
     /* patients                                                          */
-    /*********************************************************************/
+
+    /**
+     * *****************************************************************
+     */
 
     public List<Patient> getPatients() {
         Session session = sessionFactory.openSession();
@@ -140,6 +143,25 @@ public class TheDao {
             Patient patient = (Patient) p;
             patient.setIsBlocked(Patient.YesNo.YES);
             patient.setBlockedAt(new Date());
+
+            session.save(patient);
+        } catch (Exception e) {
+            throw new Ws320RuntimeException(e);
+        } finally {
+            if (session != null) session.close();
+        }
+    }
+
+    public void unblockPatient(String id) {
+        Session session = sessionFactory.openSession();
+        Criteria criteria = session.createCriteria(Patient.class);
+        try {
+            Object p = criteria.uniqueResult();
+            if (p == null) return;
+
+            Patient patient = (Patient) p;
+            patient.setIsBlocked(Patient.YesNo.NO);
+            patient.setUnblockAt(new Date());
 
             session.save(patient);
         } catch (Exception e) {

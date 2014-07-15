@@ -38,6 +38,7 @@ CREATE TABLE IF NOT EXISTS ws320.patients
   name       VARCHAR(10) NOT NULL,
   is_blocked VARCHAR(1) DEFAULT 'N',
   blocked_at DATETIME    NULL,
+  unblock_at DATETIME    NULL,
   created_at DATETIME    NOT NULL default CURRENT_TIMESTAMP,
   CONSTRAINT IF NOT EXISTS pk_patient_id PRIMARY KEY (patient_id)
 );

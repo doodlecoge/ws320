@@ -39,6 +39,10 @@ public class Patient {
     @Column(name = "blocked_at")
     private Date blockedAt;
 
+    @Column(name = "unblock_at")
+    private Date unblockAt;
+
+
     @Column(name = "created_at")
     private Date createdAt;
 
@@ -73,6 +77,14 @@ public class Patient {
 
     public void setBlockedAt(Date blockedAt) {
         this.blockedAt = blockedAt;
+    }
+
+    public Date getUnblockAt() {
+        return unblockAt;
+    }
+
+    public void setUnblockAt(Date unblockAt) {
+        this.unblockAt = unblockAt;
     }
 
     public Date getCreatedAt() {
