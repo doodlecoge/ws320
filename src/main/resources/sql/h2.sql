@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS ws320.orders
   patient_name    VARCHAR(10) NOT NULL,
   patient_phone   VARCHAR(20) NOT NULL,
 
-  insureance_type VARCHAR(20) NOT NULL,
+  insurance_type  VARCHAR(20) NOT NULL,
 
   work_date       DATE        NOT NULL,
   apm             VARCHAR(2)  NOT NULL,
