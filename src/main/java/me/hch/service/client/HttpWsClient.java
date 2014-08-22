@@ -4,7 +4,12 @@ import me.hch.Ws320RuntimeException;
 import me.hch.service.HttpEngine;
 import me.hch.util.Config;
 import me.hch.util.FileUtils;
-import org.dom4j.*;
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.DocumentHelper;
+import org.dom4j.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Set;
 
@@ -12,6 +17,7 @@ import java.util.Set;
  * Created by hch on 2014/6/27.
  */
 public class HttpWsClient implements HisClientIface {
+    private static final Logger log = LoggerFactory.getLogger(HttpWsClient.class);
     private static final String Envelope = FileUtils.load("/ds/envelope.xml");
     private static final String InfoReq = FileUtils.load("/ds/info-req.xml");
     private static final String Ns = "http://ws.apache.org/axis2";
@@ -24,12 +30,13 @@ public class HttpWsClient implements HisClientIface {
 
         Set<String> keys = WsdlConfig.getKeys();
         for (String key : keys) {
+            key = "SZET";
             try {
                 System.out.println(key + "=" + WsdlConfig.getString(key));
                 String departInfo = client.getDepartInfo(key);
                 System.out.println(departInfo);
             } catch (Exception e) {
-                System.out.println("error: " + key);
+                e.printStackTrace();
             }
             break;
         }
@@ -46,7 +53,8 @@ public class HttpWsClient implements HisClientIface {
         try {
             Eng.post(WsdlConfig.getString(hospitalId), envelope);
             String resp = Eng.getResponse();
-            System.out.println(resp);
+
+            log.debug("server response: " + resp);
 
             return extractResponse(resp, "Body/getDepartInfoResponse/return");
         } catch (Exception e) {
