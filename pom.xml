@@ -180,6 +180,12 @@
             <version>2.4.2</version>
         </dependency>
 
+
+        <dependency>
+            <groupId>org.codehaus.xfire</groupId>
+            <artifactId>xfire-all</artifactId>
+            <version>1.2.6</version>
+        </dependency>
     </dependencies>
     <build>
         <finalName>ws320</finalName>

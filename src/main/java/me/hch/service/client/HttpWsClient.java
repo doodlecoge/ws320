@@ -12,6 +12,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by hch on 2014/6/27.
@@ -30,7 +32,7 @@ public class HttpWsClient implements HisClientIface {
 
         Set<String> keys = WsdlConfig.getKeys();
         for (String key : keys) {
-            key = "SZET";
+            key = "WZYY";
             try {
                 System.out.println(key + "=" + WsdlConfig.getString(key));
                 String departInfo = client.getDepartInfo(key);
@@ -46,12 +48,15 @@ public class HttpWsClient implements HisClientIface {
 
     @Override
     public String getDepartInfo(String hospitalId) {
-        String reqxml = FileUtils.load("/ds/info-req.xml");
-        String payload = reqxml.replace("{hospital-id}", hospitalId);
-        String envelope = buildEnvelope("getDepartInfo", payload);
+        String wsdl = WsdlConfig.getString(hospitalId);
 
         try {
-            Eng.post(WsdlConfig.getString(hospitalId), envelope);
+        String ns = getNs(wsdl);
+
+        String reqxml = FileUtils.load("/ds/info-req.xml");
+        String payload = reqxml.replace("{hospital-id}", hospitalId);
+        String envelope = buildEnvelope("getDepartInfo", payload, ns);
+            Eng.post(wsdl, envelope);
             String resp = Eng.getResponse();
 
             log.debug("server response: " + resp);
@@ -78,17 +83,31 @@ public class HttpWsClient implements HisClientIface {
     }
 
 
-    private String buildEnvelope(String method, String payload) {
+    private String buildEnvelope(String method, String payload, String ns) {
+        if(ns == null) ns = Ns;
         try {
             Document document = DocumentHelper.parseText(Envelope);
             Element rootElement = document.getRootElement();
             Element envelope = rootElement.element("Body");
-            Element el = envelope.addElement(method, Ns);
-            Element arg0 = el.addElement("arg0", Ns);
+            Element el = envelope.addElement(method, ns);
+            Element arg0 = el.addElement("Xml", ns);
             arg0.addText(payload);
             return document.asXML();
         } catch (DocumentException e) {
             throw new Ws320RuntimeException(e);
+        }
+    }
+
+    private String getNs(String wsdl) throws Exception {
+        Eng.get(wsdl);
+        String xml = Eng.getResponse();
+        Pattern ptn = Pattern.compile("targetNamespace=\"([^\"]+)\"");
+        Matcher matcher = ptn.matcher(xml);
+        if(matcher.find()) {
+            log.debug("targetNamespace: " + matcher.group(1));
+            return matcher.group(1);
+        } else {
+            return null;
         }
     }
 

@@ -31,4 +31,10 @@
         <appender-ref ref="fileAppender"/>
     </logger>
 
+    <logger name="httpclient">
+        <level value="WARN"/>
+        <appender-ref ref="consoleAppender"/>
+        <appender-ref ref="fileAppender"/>
+    </logger>
+
 </log4j:configuration>
