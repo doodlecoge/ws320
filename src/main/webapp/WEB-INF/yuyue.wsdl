@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2010 (http://www.altova.com) by MESMERiZE (MiZE) -->
+<definitions targetNamespace="http://new.webservice.namespace"
+                  xmlns="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:wsoap="http://www.w3.org/ns/wsdl/soap"
+                  xmlns:whttp="http://www.w3.org/ns/wsdl/http"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                  xmlns:tns="http://new.webservice.namespace">
+    <types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="http://new.webservice.namespace"
+                    schemaLocation="yuyue.xsd"/>
+        </schema>
+    </types>
+
+    <message name="GetHospitalInfoRequest">
+        <part name="body" element="tns:GetHospInfoReq"/>
+    </message>
+    <message name="GetHospitalInfoResponse">
+        <part name="body" element="tns:GetHospInfoRsp"/>
+    </message>
+    <message name="NotifyHospitalInfoRequest">
+        <part name="body" element="tns:NotifyHospInfoReq"/>
+    </message>
+    <message name="NotifyHospitalInfoResponse">
+        <part name="body" element="tns:NotifyHospInfoRsp"/>
+    </message>
+    <message name="GetRegInfoRequest">
+        <part name="body" element="tns:GetRegInfoReq"/>
+    </message>
+    <message name="GetRegInfoResponse">
+        <part name="body" element="tns:GetRegInfoRsp"/>
+    </message>
+    <message name="GetRegPoolRequest">
+        <part name="body" element="tns:GetRegPoolReq"/>
+    </message>
+    <message name="GetRegPoolResponse">
+        <part name="body" element="tns:GetRegPoolRsp"/>
+    </message>
+    <message name="RegisterRequest">
+        <part name="body" element="tns:RegisterReq"/>
+    </message>
+    <message name="RegisterResponse">
+        <part name="body" element="tns:RegisterRsp"/>
+    </message>
+
+    <portType name="YuYuePortType">
+        <operation name="GetHospitalInfo">
+            <input message="GetHospitalInfoRequest"/>
+            <output message="GetHospitalInfoResponse"/>
+        </operation>
+        <operation name="NotifyHospitalInfo">
+            <input message="NotifyHospitalInfoRequest"/>
+            <output message="NotifyHospitalInfoResponse"/>
+        </operation>
+        <operation name="GetRegInfo">
+            <input message="GetRegInfoRequest"/>
+            <output message="GetRegInfoResponse"/>
+        </operation>
+        <operation name="GetRegPool">
+            <input message="GetRegPoolRequest"/>
+            <output message="GetRegPoolResponse"/>
+        </operation>
+        <operation name="RegisterReq">
+            <input message="RegisterRequest"/>
+            <output message="RegisterResponse"/>
+        </operation>
+    </portType>
+
+    <binding name="YuYueBinding" type="YuYuePortType">
+        <soap:binding style="document"
+                      transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="GetHospitalInfo">
+            <soap:operation soapAction="yuyue"/>
+            <input>
+                <soap:body use="literal" namespace=""/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+
+    <service name="YuYueService">
+        <port name="get" binding="YuYueBinding"/>
+    </service>
+</definitions>
