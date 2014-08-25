@@ -13,7 +13,7 @@
 
     <sws:interceptors>
         <bean class="org.springframework.ws.soap.server.endpoint.interceptor.PayloadValidatingInterceptor">
-            <property name="schema" value="/WEB-INF/ws320.xsd"/>
+            <property name="schema" value="/WEB-INF/yuyue.xsd"/>
             <property name="validateRequest" value="true"/>
             <property name="validateResponse" value="true"/>
         </bean>
@@ -24,13 +24,15 @@
         </bean>
     </sws:interceptors>
 
-    <sws:dynamic-wsdl
-            id="ws320"
-            portTypeName="ws320"
-            locationUri="http://localhost:8080/ws/ws320"
-            targetNamespace="http://service.hch.me">
-        <sws:xsd location="/WEB-INF/ws320.xsd"/>
-    </sws:dynamic-wsdl>
+    <!--<sws:dynamic-wsdl-->
+            <!--id="yuyue"-->
+            <!--portTypeName="yuyue"-->
+            <!--locationUri="http://localhost:8080/ws/yuyue"-->
+            <!--targetNamespace="http://new.webservice.namespace">-->
+        <!--<sws:xsd location="/WEB-INF/yuyue.xsd"/>-->
+    <!--</sws:dynamic-wsdl>-->
+
+    <sws:static-wsdl location="/WEB-INF/yuyue2.0.wsdl" id="yuyue"/>
 
 
 

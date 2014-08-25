@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2010 (http://www.altova.com) by MESMERiZE (MiZE) -->
+<wsdl:description
+        targetNamespace="http://new.webservice.namespace"
+        xmlns:wsdl="http://www.w3.org/ns/wsdl"
+        xmlns:wsoap="http://www.w3.org/ns/wsdl/soap"
+        xmlns:whttp="http://www.w3.org/ns/wsdl/http"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        xmlns:tns="http://new.webservice.namespace">
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="http://new.webservice.namespace"
+                        schemaLocation="yuyue.xsd"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:interface name="SZRegPlat">
+        <wsdl:operation name="GetHospInfo"
+                        pattern="http://www.w3.org/ns/wsdl/in-out">
+            <wsdl:input messageLabel="In" element="tns:GetHospInfoReq"/>
+            <wsdl:output messageLabel="Out" element="tns:GetHospInfoRsp"/>
+        </wsdl:operation>
+        <wsdl:operation name="NotifyHospInfo"
+                        pattern="http://www.w3.org/ns/wsdl/in-out">
+            <wsdl:input element="tns:NotifyHospInfoReq"/>
+            <wsdl:output element="tns:NotifyHospInfoRsp"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetRegInfo"
+                        pattern="http://www.w3.org/ns/wsdl/in-out">
+            <wsdl:input element="tns:GetRegInfoReq"/>
+            <wsdl:output element="tns:GetRegInfoRsp"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetRegPool"
+                        pattern="http://www.w3.org/ns/wsdl/in-out">
+            <wsdl:input element="tns:GetRegPoolReq"/>
+            <wsdl:output element="tns:GetRegPoolRsp"/>
+        </wsdl:operation>
+        <wsdl:operation name="Register"
+                        pattern="http://www.w3.org/ns/wsdl/in-out">
+            <wsdl:input element="tns:RegisterReq"/>
+            <wsdl:output element="tns:RegisterRsp"/>
+        </wsdl:operation>
+    </wsdl:interface>
+    <wsdl:binding name="BindingSoap"
+                  interface="tns:SZRegPlat"
+                  type="http://www.w3.org/ns/wsdl/soap"
+                  wsoap:version="1.1"
+                  wsoap:protocol="http://www.w3.org/2006/01/soap11/bindings/HTTP/">
+        <wsdl:operation ref="tns:GetHospInfo"/>
+        <wsdl:operation ref="tns:NotifyHospInfo"/>
+        <wsdl:operation ref="tns:GetRegInfo"/>
+        <wsdl:operation ref="tns:GetRegPool"/>
+        <wsdl:operation ref="tns:Register"/>
+    </wsdl:binding>
+    <wsdl:service name="Service" interface="tns:SZRegPlat">
+        <wsdl:endpoint name="Endpoint" binding="tns:BindingSoap"
+                       address="http://172.25.223.76:8080/SZRegPlat/services"/>
+    </wsdl:service>
+</wsdl:description>
